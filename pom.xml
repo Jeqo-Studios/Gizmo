@@ -6,12 +6,12 @@
 
     <groupId>net.jeqo</groupId>
     <artifactId>Gizmo</artifactId>
-    <version>1.0.2-BETA</version>
+    <version>1.0.3-BETA</version>
     <packaging>jar</packaging>
 
     <name>Gizmo</name>
 
-    <description>A unique utility plugin made by Jeqo.</description>
+    <description>Unique utility plugin by Jeqo.</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -56,6 +56,10 @@
 
     <repositories>
         <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+        <repository>
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
@@ -66,6 +70,12 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.11.2</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>

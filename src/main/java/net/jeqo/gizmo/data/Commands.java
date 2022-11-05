@@ -1,11 +1,9 @@
 package net.jeqo.gizmo.data;
 
 import jdk.jshell.execution.Util;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.jeqo.gizmo.Gizmo;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,6 +22,8 @@ public class Commands implements CommandExecutor {
     String shift36 = plugin.getConfig().getString("Unicodes.shift-36");
     String shift256 = plugin.getConfig().getString("Unicodes.shift-256");
     String shift501 = plugin.getConfig().getString("Unicodes.shift-501");
+
+    public static GameMode showGm;
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -45,9 +45,9 @@ public class Commands implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("rl")) {
                 if (p.hasPermission("gizmo.reload")) {
                     plugin.reloadConfig();
-                    p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.config-reloaded")));
+                    p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.config-reloaded"))));
                 } else {
-                    p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission")));
+                    p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission"))));
                 }
             } else if (args[0].equalsIgnoreCase("show")) {
                 if (args.length > 1) {
@@ -57,37 +57,43 @@ public class Commands implements CommandExecutor {
                             saveInv.put(t.getName(), t.getInventory().getContents());
                             t.getInventory().clear();
 
+
                             if (Objects.equals(plugin.getConfig().getString("enable-background"), "true")) {
                                 Objects.requireNonNull(t.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift256 + shift256 + plugin.getConfig().getString("Unicodes.background") + shift501 + shift36 + plugin.getConfig().getString("Unicodes.welcome-screen")));
-                                p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + Objects.requireNonNull(plugin.getConfig().getString("messages.show-screen-others")).replace("%player%", t.getName())));
+                                p.sendMessage(PlaceholderAPI.setPlaceholders(t.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + Objects.requireNonNull(plugin.getConfig().getString("messages.show-screen-others")))));
+
+
                             } else if (Objects.equals(plugin.getConfig().getString("enable-background"), "false")) {
                                 Objects.requireNonNull(t.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift36 + shift12 + plugin.getConfig().getString("Unicodes.welcome-screen")));
-                                p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + Objects.requireNonNull(plugin.getConfig().getString("messages.show-screen-others")).replace("%player%", t.getName())));
+                                p.sendMessage(PlaceholderAPI.setPlaceholders(t.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + Objects.requireNonNull(plugin.getConfig().getString("messages.show-screen-others")))));
                             }
 
+
                         } else {
-                            p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.player-not-found")));
+                            p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.player-not-found"))));
                         }
                     } else {
-                        p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission")));
+                        p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission"))));
                     }
 
 
                 } else {
                     if (p.hasPermission("gizmo.show")) {
 
+                        showGm = p.getGameMode();
+
                         saveInv.put(p.getName(), p.getInventory().getContents());
                         p.getInventory().clear();
 
                         if (Objects.equals(plugin.getConfig().getString("enable-background"), "true")) {
                             Objects.requireNonNull(p.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift256 + shift256 + plugin.getConfig().getString("Unicodes.background") + shift501 + shift36 + plugin.getConfig().getString("Unicodes.welcome-screen")));
-                            p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.show-screen")));
+                            p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.show-screen"))));
                         } else if (Objects.equals(plugin.getConfig().getString("enable-background"), "false")) {
                             Objects.requireNonNull(p.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift36 + shift12 + plugin.getConfig().getString("Unicodes.welcome-screen")));
-                            p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.show-screen")));
+                            p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.show-screen"))));
                         }
                     } else {
-                        p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + Utilities.hex(plugin.getConfig().getString("messages.no-permission"))));
+                        p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission"))));
                     }
                 }
             }

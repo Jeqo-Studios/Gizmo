@@ -1,5 +1,6 @@
 package net.jeqo.gizmo.listeners;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.jeqo.gizmo.Gizmo;
 import net.jeqo.gizmo.data.Utilities;
 import org.bukkit.*;
@@ -75,15 +76,13 @@ public class Prime implements Listener {
         } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD || e.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED) {
             p.setGameMode(Protect.joinGm);
             p.removePotionEffect(PotionEffectType.BLINDNESS);
-            p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-pack-loaded")));
+            p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-pack-loaded"))));
         }
     }
 
-    public static GameMode gamemode;
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
-        gamemode = e.getPlayer().getGameMode();
 
         if (Objects.equals(plugin.getConfig().getString("hide-join-messages"), String.valueOf(true))) {
             e.setJoinMessage("");

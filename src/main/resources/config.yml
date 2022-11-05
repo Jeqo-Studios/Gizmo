@@ -48,9 +48,9 @@ Unicodes:
 #
 # Do you want to the player to be invulnerable while their pack loads?
 # This is recommended if you don't have a plugin that keeps your players safe whilst loading the pack.
-player-invulnerable-during-load: true
+player-invulnerable-during-load: false
 # Do you want to kick the player if they don't accept the server resource pack?
-kick-on-decline: true
+kick-on-decline: false
 # Should player join messages be hidden?
 hide-join-messages: false
 # Should player quit messages be hidden?
@@ -75,7 +75,7 @@ Sound-on-Advance:
 # All messages support Minecraft and hex color codes.
 # Kick-on-decline and welcome-message also have multi-line support.
 messages:
-  config-reloaded: '#acb5bfConfig reloaded.'
+  config-reloaded: '#acb5bfConfig reloaded. %player_name%'
   # Message when a player is kicked for not accepting/loading the server resource pack.
   kick-on-decline:
     - '#fc1c1cYou must download the server resource pack to play!'

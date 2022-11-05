@@ -1,6 +1,8 @@
 package net.jeqo.gizmo.listeners;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.jeqo.gizmo.Gizmo;
+import net.jeqo.gizmo.data.Commands;
 import net.jeqo.gizmo.data.Utilities;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -13,7 +15,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Objects;
 
-import static net.jeqo.gizmo.listeners.Prime.gamemode;
 
 public class Advance implements Listener {
 
@@ -34,7 +35,6 @@ public class Advance implements Listener {
                 p.playSound(p.getLocation(), Sound.valueOf(plugin.getConfig().getString("Sound-on-Advance.sound")), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.volume"))), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.pitch"))));
             }
 
-            p.setGameMode(gamemode);
             Prime.screening = false;
 
             if (Objects.equals(plugin.getConfig().getString("enable-fade"), "true")) {
@@ -44,8 +44,16 @@ public class Advance implements Listener {
                     e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, plugin.getConfig().getInt("fade-time"), 1, false, false));
                 }
             }
-            p.setGameMode(Protect.joinGm);
-            p.sendMessage(Utilities.hex(plugin.getConfig().getString("messages.welcome-message").replace(",", "\n").replace("[", "").replace("]", "")));
+
+            if (Protect.joinGm == null) {
+                p.setGameMode(Commands.showGm);
+            } else {
+                p.setGameMode(Protect.joinGm);
+            }
+
+            String welcomeMessage = (plugin.getConfig().getString("messages.welcome-message"));
+            welcomeMessage = PlaceholderAPI.setPlaceholders((OfflinePlayer) e.getPlayer(), welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", ""));
+            p.sendMessage(Utilities.hex(welcomeMessage));
 
             if (Objects.equals(plugin.getConfig().getString("Command-on-Advance.enable"), "true")) {
                 p.performCommand(Objects.requireNonNull(plugin.getConfig().getString("Command-on-Advance.command")));
