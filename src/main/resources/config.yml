@@ -1,6 +1,6 @@
 # --------------------------------------------------#
 #
-# Gizmo 1.0.2-BETA
+# Gizmo 1.0.3-BETA
 # Made by Jeqo
 #
 # Wiki:     https://jeqo.net/wiki/gizmo
@@ -75,11 +75,11 @@ Sound-on-Advance:
 # All messages support Minecraft and hex color codes.
 # Kick-on-decline and welcome-message also have multi-line support.
 messages:
-  config-reloaded: '#acb5bfConfig reloaded. %player_name%'
+  config-reloaded: '#acb5bfConfig reloaded.'
   # Message when a player is kicked for not accepting/loading the server resource pack.
   kick-on-decline:
     - '#fc1c1cYou must download the server resource pack to play!'
-    - ''
+    - ' '
     - '#fc1c1cGizmo - Made by Jeqo'
     - '#acb5bfwww.jeqo.net/gizmo'
   # Message when a player joins and did not load/accept the server resource pack.
@@ -87,12 +87,12 @@ messages:
   no-permission: '#fc1c1cAccess denied.'
   player-not-found: '#fc1c1cPlayer not found.'
   show-screen: '#acb5bfDisplaying test screen.'
-  show-screen-others: '#acb5bfDisplaying test screen to %player%'
+  show-screen-others: '#acb5bfDisplaying test screen to %player_name%'
   # Message once the player has advanced from the welcome screen.
   welcome-message:
-    - ''
-    - ''
+    - ' '
+    - ' '
     - '                           #fc1c1cGizmo - Made by Jeqo'
     - '                             #acb5bfwww.jeqo.net/gizmo'
-    - ''
-    - ''
+    - ' '
+    - ' '
