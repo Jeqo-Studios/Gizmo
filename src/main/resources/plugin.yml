@@ -1,0 +1,12 @@
+name: Gizmo
+version: '${project.version}'
+main: net.jeqo.gizmo.Gizmo
+api-version: 1.19
+prefix: Gizmo
+authors: [ Jeqo ]
+description: A unique utility plugin made by Jeqo.
+website: https://jeqo.net
+commands:
+  gizmo:
+    aliases: g
+    usage: /gizmo
