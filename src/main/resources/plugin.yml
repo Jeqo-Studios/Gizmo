@@ -4,9 +4,10 @@ main: net.jeqo.gizmo.Gizmo
 api-version: 1.19
 prefix: Gizmo
 authors: [ Jeqo ]
-description: Unique utility plugin by Jeqo. | https://jeqo.net/discord
-website: https://jeqo.net
-softdepend: [PlaceholderAPI]
+description: A unique utility plugin.
+website: https://jeqo.net/
+softdepend:
+  - PlaceholderAPI
 commands:
   gizmo:
     aliases: g

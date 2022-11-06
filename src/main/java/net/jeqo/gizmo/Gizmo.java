@@ -19,24 +19,16 @@ public final class Gizmo extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
 
-        getLogger().info("|--[ GIZMO ]---------------------------------------------------------|");
+        getLogger().info("|---[ GIZMO ]--------------------------------------------------------|");
         getLogger().info("|                           Plugin loaded.                           |");
         getLogger().info("|-------------------------------------------------[ MADE BY JEQO ]---|");
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            /*
-             * We register the EventListener here, when PlaceholderAPI is installed.
-             * Since all events are in the main class (this class), we simply use "this"
-             */
-            getLogger().info("PlaceholderAPI found-initializing hook.");
             Bukkit.getPluginManager().registerEvents(this, this);
         } else {
-            /*
-             * We inform about the fact that PlaceholderAPI isn't installed and then
-             * disable this plugin to prevent issues.
-             */
-            getLogger().warning("Skipping PlaceholderAPI hook-plugin not found.");
-            Bukkit.getPluginManager().disablePlugin(this);
+            getLogger().warning("|---[ GIZMO - WARNING ]----------------------------------------------|");
+            getLogger().warning("|        Disabling PlaceholderAPI support--plugin not found.         |");
+            getLogger().warning("|-------------------------------------------------[ MADE BY JEQO ]---|");
         }
 
         getConfig().options().copyDefaults();
@@ -48,7 +40,7 @@ public final class Gizmo extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        getLogger().info("|--[ GIZMO ]---------------------------------------------------------|");
+        getLogger().info("|---[ GIZMO ]--------------------------------------------------------|");
         getLogger().info("|                          Shutting down...                          |");
         getLogger().info("|-------------------------------------------------[ MADE BY JEQO ]---|");
     }
