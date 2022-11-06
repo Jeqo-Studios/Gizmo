@@ -1,15 +1,14 @@
 <center><span class="bbcode-size-14"><span style="color:black"><img src="https://i.imgur.com/vTPbSFt.png" />
-<a href="#"><img src="https://i.imgur.com/TUSsRzW.png" /></a>  <a href="#"><img src="https://i.imgur.com/Dmfv2vL.png" /></a>  <a href="#"><img src="https://i.imgur.com/pGrNSLV.png" /></a><img src="https://i.imgur.com/yVh6qcc.gif" /><img src="https://i.imgur.com/I6Fu7fC.png" /></span></span>
+<img src="https://i.imgur.com/dcQlKai.png" />          <a href="#"><img src="https://i.imgur.com/Dmfv2vL.png" /></a> <img src="https://i.imgur.com/9oJ9pZM.png" />             <img src="https://i.imgur.com/yVh6qcc.gif" /><img src="https://i.imgur.com/I6Fu7fC.png" /></span></span>
 <span style="color:black">
 </span></center>
-<div style="text-align: left">
-<span class="bbcode-size-4"><span style="color:black">⬛ Vanilla-Esque, seamless, lag, and bug-free mechanics. "Did Minecraft release a new update?"</span></span>
+<div style="text-align: left"><span class="bbcode-size-4"><span style="color:black">⬛ Vanilla-Esque, seamless, lag, and bug-free mechanics. "Did Minecraft release a new update?"</span></span>
 
 <span class="bbcode-size-4"><span style="color:black">⬛ Interactive pop-up welcome screen on join with optional auto-close functionality.</span></span>
 
 <span class="bbcode-size-4"><span style="color:black">⬛ Player protection while prompted and loading the server resource pack (toggleable).</span></span>
 
-<span class="bbcode-size-4"><span style="color:black">⬛ Kick players who don't accept/fail to download the server resource pack (toggleable).</span></span>
+<span class="bbcode-size-4"><span style="color:black">⬛ Kick players who don't accept/fail to download the server resource pack (toggleable).</span></span></div>
 
 <span class="bbcode-size-4"><span style="color:black">⬛ Fully customizable welcome screen texture (256x256px max. due to Minecraft limitations) and background color.</span></span>
 
@@ -21,7 +20,7 @@
 
 <span class="bbcode-size-4"><span style="color:black">⬛ Customizable welcome message (with multi-line and color support) after advancing.</span></span>
 
-<span class="bbcode-size-4"><span style="color:black">⬛ Play a custom sound when the player loads the resource pack and advances from the welcome screen (toggleable).</span></span>
+<span class="bbcode-size-4"><span style="color:black">⬛ Play a custom sound when the player loads the pack and advances from the welcome screen (toggleable).</span></span>
 
 <span class="bbcode-size-4"><span style="color:black">⬛ Configurable unicodes; no hard lock-easy to change Unicode characters and/or merge packs.</span></span>
 
@@ -30,6 +29,8 @@
 <span class="bbcode-size-4"><span style="color:black">⬛ Customizable messages
 </span></span>
 <div style="text-align: left">⬛ Hex color + multi-line support for messages.
+
+⬛ PlaceholderAPI support
 </div>
 <span class="bbcode-size-4"><span style="color:black">❤️ Pre-made resource pack included with download!</span></span>
 
