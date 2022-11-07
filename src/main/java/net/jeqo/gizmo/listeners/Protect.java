@@ -21,6 +21,8 @@ public class Protect implements Listener {
 
     public static GameMode joinGm;
 
+    public static Location joinLoc;
+
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
@@ -28,12 +30,16 @@ public class Protect implements Listener {
 
         joinGm = p.getGameMode();
 
+        if (Objects.equals(plugin.getConfig().getString("blindness-during-prompt"), "true")) {
+            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 1, false, false));
+        }
+
+
         if (p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)) {
             p.teleport(getLocation(p));
         }
 
         if (Objects.equals(plugin.getConfig().getString("player-invulnerable-during-load"), "true")) {
-            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 1, false, false));
             p.setGameMode(GameMode.SPECTATOR);
         }
     }
@@ -50,12 +56,16 @@ public class Protect implements Listener {
                     p.removePotionEffect(PotionEffectType.BLINDNESS);
 
                 }
+
             } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED || e.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
                 p.setGameMode(joinGm);
                 p.removePotionEffect(PotionEffectType.BLINDNESS);
-                p.kickPlayer(Utilities.hex(plugin.getConfig().getString("messages.kick-on-decline").replace(",", "\n").replace("[", "").replace("]", "")));
+                p.kickPlayer(Utilities.hex(Objects.requireNonNull(plugin.getConfig().getString("messages.kick-on-decline")).replace(",", "\n").replace("[", "").replace("]", "")));
             }
+
+
         } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.SUCCESSFULLY_LOADED) {
+
             p.setGameMode(joinGm);
             p.removePotionEffect(PotionEffectType.BLINDNESS);
         }

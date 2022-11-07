@@ -2,10 +2,7 @@ package net.jeqo.gizmo;
 
 import net.jeqo.gizmo.data.Commands;
 import net.jeqo.gizmo.data.Tab;
-import net.jeqo.gizmo.listeners.Advance;
-import net.jeqo.gizmo.listeners.Prime;
-import net.jeqo.gizmo.listeners.Break;
-import net.jeqo.gizmo.listeners.Protect;
+import net.jeqo.gizmo.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.event.Listener;
@@ -23,20 +20,27 @@ public final class Gizmo extends JavaPlugin implements Listener {
         getLogger().info("|                           Plugin loaded.                           |");
         getLogger().info("|-------------------------------------------------[ MADE BY JEQO ]---|");
 
+
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            loadPHListeners();
+            loadPHCommands();
             Bukkit.getPluginManager().registerEvents(this, this);
         } else {
             getLogger().warning("|---[ GIZMO - WARNING ]----------------------------------------------|");
             getLogger().warning("|        Disabling PlaceholderAPI support--plugin not found.         |");
             getLogger().warning("|-------------------------------------------------[ MADE BY JEQO ]---|");
+            loadListeners();
+            loadCommands();
         }
+
 
         getConfig().options().copyDefaults();
         saveDefaultConfig();
-
-        loadListeners();
-        loadCommands();
     }
+
+
+    private static final Logger log = Bukkit.getLogger();
+
 
     @Override
     public void onDisable() {
@@ -45,7 +49,6 @@ public final class Gizmo extends JavaPlugin implements Listener {
         getLogger().info("|-------------------------------------------------[ MADE BY JEQO ]---|");
     }
 
-    private static final Logger log = Bukkit.getLogger();
 
     public void loadListeners() {
         Bukkit.getPluginManager().registerEvents(new Prime(), this);
@@ -60,4 +63,19 @@ public final class Gizmo extends JavaPlugin implements Listener {
         TabCompleter tc = new Tab();
         Objects.requireNonNull(this.getCommand("gizmo")).setTabCompleter(tc);
     }
+
+    public void loadPHListeners() {
+        Bukkit.getPluginManager().registerEvents(new PrimePH(), this);
+        Bukkit.getPluginManager().registerEvents(new Break(), this);
+        Bukkit.getPluginManager().registerEvents(new Advance(), this);
+        Bukkit.getPluginManager().registerEvents(new Protect(), this);
+    }
+
+    public void loadPHCommands() {
+        Objects.requireNonNull(getCommand("gizmo")).setExecutor(new Commands());
+
+        TabCompleter tc = new Tab();
+        Objects.requireNonNull(this.getCommand("gizmo")).setTabCompleter(tc);
+    }
+
 }

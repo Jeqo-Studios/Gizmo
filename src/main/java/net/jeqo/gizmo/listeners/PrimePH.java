@@ -12,17 +12,15 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-public class Prime implements Listener {
+public class PrimePH implements Listener {
 
     Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
     String shift12 = plugin.getConfig().getString("Unicodes.shift-12");
@@ -65,16 +63,25 @@ public class Prime implements Listener {
                                     int slot = keySection.getInt("slot");
                                     ItemStack item = new ItemStack(Objects.requireNonNull(Material.matchMaterial(Objects.requireNonNull(keySection.getString("material")))));
                                     ItemMeta meta = item.getItemMeta();
-                                    assert meta != null;
                                     if (plugin.getConfig().getString("Items." + key + ".lore") != null) {
                                         List<String> lore = keySection.getStringList("lore");
                                         for (int i = 0; i < lore.size(); i++) {
-                                            lore.set(i, Utilities.hex(lore.get(i)));
+                                            lore.set(i, PlaceholderAPI.setPlaceholders(e.getPlayer(), Utilities.hex(lore.get(i))));
                                         }
+                                        assert meta != null;
                                         meta.setLore(lore);
                                     }
+                                    assert meta != null;
+                                    if (keySection.getString("hide-flags") == String.valueOf(true)) {
+                                        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                                        meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+                                        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                                        meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+                                        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+                                        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+                                    }
                                     meta.setCustomModelData(keySection.getInt("custom-model-data"));
-                                    meta.setDisplayName(Utilities.hex(keySection.getString("name")));
+                                    meta.setDisplayName(PlaceholderAPI.setPlaceholders(e.getPlayer(), Utilities.hex(keySection.getString("name"))));
                                     item.setItemMeta(meta);
                                     assert screen != null;
                                     screen.setItem(slot, item);
@@ -92,16 +99,25 @@ public class Prime implements Listener {
                                     int slot = keySection.getInt("slot");
                                     ItemStack item = new ItemStack(Objects.requireNonNull(Material.matchMaterial(Objects.requireNonNull(keySection.getString("material")))));
                                     ItemMeta meta = item.getItemMeta();
-                                    assert meta != null;
                                     if (plugin.getConfig().getString("Items." + key + ".lore") != null) {
                                         List<String> lore = keySection.getStringList("lore");
                                         for (int i = 0; i < lore.size(); i++) {
-                                            lore.set(i, Utilities.hex(lore.get(i)));
+                                            lore.set(i, PlaceholderAPI.setPlaceholders(e.getPlayer(), Utilities.hex(lore.get(i))));
                                         }
+                                        assert meta != null;
                                         meta.setLore(lore);
                                     }
+                                    assert meta != null;
+                                    if (keySection.getString("hide-flags") == String.valueOf(true)) {
+                                        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                                        meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+                                        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                                        meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+                                        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+                                        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+                                    }
                                     meta.setCustomModelData(keySection.getInt("custom-model-data"));
-                                    meta.setDisplayName(Utilities.hex(keySection.getString("name")));
+                                    meta.setDisplayName(PlaceholderAPI.setPlaceholders(e.getPlayer(), Utilities.hex(keySection.getString("name"))));
                                     item.setItemMeta(meta);
                                     assert screenNoBg != null;
                                     screenNoBg.setItem(slot, item);
@@ -125,7 +141,7 @@ public class Prime implements Listener {
         } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD || e.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED) {
             p.setGameMode(Protect.joinGm);
             p.removePotionEffect(PotionEffectType.BLINDNESS);
-            p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-pack-loaded"))));
+            p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-pack-loaded")));
         }
     }
 

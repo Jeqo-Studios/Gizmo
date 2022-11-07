@@ -35,7 +35,7 @@ public class Advance implements Listener {
                 p.playSound(p.getLocation(), Sound.valueOf(plugin.getConfig().getString("Sound-on-Advance.sound")), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.volume"))), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.pitch"))));
             }
 
-            Prime.screening = false;
+            PrimePH.screening = false;
 
             if (Objects.equals(plugin.getConfig().getString("enable-fade"), "true")) {
                 if (Objects.equals(plugin.getConfig().getString("fade-mode"), "A")) {
@@ -45,15 +45,23 @@ public class Advance implements Listener {
                 }
             }
 
-            if (Protect.joinGm == null) {
-                p.setGameMode(Commands.showGm);
-            } else {
+            if (Protect.joinGm != null) {
                 p.setGameMode(Protect.joinGm);
+            } else {
+                p.setGameMode(Commands.showGm);
             }
 
-            String welcomeMessage = (plugin.getConfig().getString("messages.welcome-message"));
-            welcomeMessage = PlaceholderAPI.setPlaceholders((OfflinePlayer) e.getPlayer(), welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", ""));
-            p.sendMessage(Utilities.hex(welcomeMessage));
+            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+                String welcomeMessage = (plugin.getConfig().getString("messages.welcome-message"));
+                assert welcomeMessage != null;
+                welcomeMessage = PlaceholderAPI.setPlaceholders((OfflinePlayer) e.getPlayer(), welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", ""));
+                p.sendMessage(Utilities.hex(welcomeMessage));
+            } else {
+                String welcomeMessage = (plugin.getConfig().getString("messages.welcome-message"));
+                assert welcomeMessage != null;
+                p.sendMessage(Utilities.hex(welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "")));
+            }
+
 
             if (Objects.equals(plugin.getConfig().getString("Command-on-Advance.enable"), "true")) {
                 p.performCommand(Objects.requireNonNull(plugin.getConfig().getString("Command-on-Advance.command")));
@@ -69,7 +77,7 @@ public class Advance implements Listener {
         if ((Objects.equals(plugin.getConfig().getString("Auto-Close.enable"), "true"))) {
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 public void run() {
-                    if (Prime.screening.equals(true)) {
+                    if (PrimePH.screening.equals(true)) {
                         p.closeInventory();
                     }
                 }

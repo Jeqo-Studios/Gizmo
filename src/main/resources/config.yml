@@ -1,3 +1,4 @@
+dev-mode: false
 # --------------------------------------------------#
 #
 # Gizmo 1.0.3-BETA
@@ -25,7 +26,7 @@ fade-time: 10
 # Do you want the player to execute a command upon advancing? If enabled, enter the command without a slash.
 Command-on-Advance:
   enable: false
-  command: spawn
+  command: 'help'
 # Do you want the welcome screen to auto close after a specific amount of time? Recommended to leave on.
 Auto-Close:
   enable: true
@@ -41,15 +42,36 @@ Unicodes:
   shift-501: 
   welcome-screen: 
   background: 
+# Do you want to display any item on the welcome screen?
+# Slot values range from 0-89; 54-89 are the player's inventory.
+Items:
+  first-item:
+    material: DIAMOND_SWORD
+    custom-model-data: 1
+    slot: 46
+    name: '#ee0000The Gizmo Sword'
+    lore:
+      - '#48cfa9Multi-line'
+      - '#f2991d+ hex support!'
+    hide-flags: true
+  another-item:
+    material: BARRIER
+    custom-model-data: 1
+    slot: 81
+    name: '#ee0000Gizmo Barrier'
+    lore:
+      - '&7An item lore.'
 #
 # --------------------------------------------------#
 #                  OTHER SETTINGS                   #
 # --------------------------------------------------#
 #
+#Do you want to give players blindness when they have the pack prompt?
+blindness-during-prompt: true
 # Do you want to the player to be invulnerable while their pack loads?
 # This is recommended if you don't have a plugin that keeps your players safe whilst loading the pack.
-player-invulnerable-during-load: false
-# Do you want to kick the player if they don't accept the server resource pack?
+player-invulnerable-during-load: true
+# Do you want to kick the player if they don't accept the pack?
 kick-on-decline: false
 # Should player join messages be hidden?
 hide-join-messages: false
