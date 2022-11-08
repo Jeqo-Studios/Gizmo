@@ -14,21 +14,20 @@ import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Prime implements Listener {
 
     Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
-    String shift12 = plugin.getConfig().getString("Unicodes.shift-12");
-    String shift36 = plugin.getConfig().getString("Unicodes.shift-36");
-    String shift256 = plugin.getConfig().getString("Unicodes.shift-256");
-    String shift501 = plugin.getConfig().getString("Unicodes.shift-501");
+    String shift48 = plugin.getConfig().getString("Unicodes.shift-48");
+    String shift1013 = plugin.getConfig().getString("Unicodes.shift-1013");
+    String shift1536 = plugin.getConfig().getString("Unicodes.shift-1536");
 
     public static HashMap<String, ItemStack[]> saveInv = new HashMap<>();
 
@@ -56,7 +55,7 @@ public class Prime implements Listener {
                     if (Objects.equals(plugin.getConfig().getString("enable-welcome-screen"), "true")) {
                         e.getPlayer().setGameMode(GameMode.SPECTATOR);
                         if (Objects.equals(plugin.getConfig().getString("enable-background"), "true")) {
-                            InventoryView screen = e.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift256 + shift256 + plugin.getConfig().getString("Unicodes.background") + shift501 + shift36 + plugin.getConfig().getString("Unicodes.welcome-screen")));
+                            InventoryView screen = e.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift1013 + plugin.getConfig().getString("Unicodes.background") + shift1536 + plugin.getConfig().getString("Unicodes.welcome-screen")));
 
                             if (plugin.getConfig().getString("Items") != null) {
                                 for (String key : Objects.requireNonNull(plugin.getConfig().getConfigurationSection("Items")).getKeys(false)) {
@@ -83,7 +82,7 @@ public class Prime implements Listener {
 
 
                         } else if (Objects.equals(plugin.getConfig().getString("enable-background"), "false")) {
-                            InventoryView screenNoBg = e.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift36 + shift12 + plugin.getConfig().getString("Unicodes.welcome-screen")));
+                            InventoryView screenNoBg = e.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift48 + plugin.getConfig().getString("Unicodes.welcome-screen")));
 
                             if (plugin.getConfig().getString("Items") != null) {
                                 for (String key : Objects.requireNonNull(plugin.getConfig().getConfigurationSection("Items")).getKeys(false)) {
@@ -120,18 +119,20 @@ public class Prime implements Listener {
                     }
 
                 }
-            }, 5);
+            }, 3);
 
         } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD || e.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED) {
             p.setGameMode(Protect.joinGm);
             p.removePotionEffect(PotionEffectType.BLINDNESS);
-            p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-pack-loaded"))));
+            if (Objects.equals(plugin.getConfig().getString("messages.no-pack-loaded"), "[]")) {
+            } else {
+                p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-pack-loaded")));
+            }
         }
     }
 
-
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e){
+    public void onPlayerJoin(PlayerJoinEvent e) {
 
         if (Objects.equals(plugin.getConfig().getString("hide-join-messages"), String.valueOf(true))) {
             e.setJoinMessage("");
@@ -143,7 +144,7 @@ public class Prime implements Listener {
     public void restoreInv(InventoryCloseEvent e) {
         Player p = (Player) e.getPlayer();
 
-        if(e.getView().getTitle().equals(ChatColor.WHITE + shift256 + shift256 + plugin.getConfig().getString("Unicodes.background") + shift501 + shift36 + plugin.getConfig().getString("Unicodes.welcome-screen")) || e.getView().getTitle().equals(ChatColor.WHITE +  shift36 + shift12 + plugin.getConfig().getString("Unicodes.welcome-screen"))) {
+        if(e.getView().getTitle().equals(ChatColor.WHITE + shift1013 + plugin.getConfig().getString("Unicodes.background") + shift1536 + plugin.getConfig().getString("Unicodes.welcome-screen")) || e.getView().getTitle().equals(ChatColor.WHITE + shift48 + plugin.getConfig().getString("Unicodes.welcome-screen"))) {
             p.getInventory().setContents((ItemStack[]) saveInv.get(p.getName()));
         }
     }

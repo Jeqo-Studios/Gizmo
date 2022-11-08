@@ -16,11 +16,9 @@ public class Commands implements CommandExecutor {
 
     Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
 
-    String shift12 = plugin.getConfig().getString("Unicodes.shift-12");
-    String shift36 = plugin.getConfig().getString("Unicodes.shift-36");
-    String shift256 = plugin.getConfig().getString("Unicodes.shift-256");
-    String shift501 = plugin.getConfig().getString("Unicodes.shift-501");
-
+    String shift48 = plugin.getConfig().getString("Unicodes.shift-48");
+    String shift1013 = plugin.getConfig().getString("Unicodes.shift-1013");
+    String shift1536 = plugin.getConfig().getString("Unicodes.shift-1536");
     public static GameMode showGm;
     //if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
 
@@ -45,9 +43,15 @@ public class Commands implements CommandExecutor {
                 } else if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("rl")) {
                     if (p.hasPermission("gizmo.reload")) {
                         plugin.reloadConfig();
-                        p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.config-reloaded"))));
+                        if (Objects.equals(plugin.getConfig().getString("messages.config-reloaded"), "[]")) {
+                        } else {
+                            p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.config-reloaded"))));
+                        }
                     } else {
-                        p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission"))));
+                        if (Objects.equals(plugin.getConfig().getString("messages.no-permission"), "[]")) {
+                        } else {
+                            p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission"))));
+                        }
                     }
                 } else if (args[0].equalsIgnoreCase("show")) {
                     if (args.length > 1) {
@@ -59,21 +63,33 @@ public class Commands implements CommandExecutor {
 
 
                                 if (Objects.equals(plugin.getConfig().getString("enable-background"), "true")) {
-                                    Objects.requireNonNull(t.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift256 + shift256 + plugin.getConfig().getString("Unicodes.background") + shift501 + shift36 + plugin.getConfig().getString("Unicodes.welcome-screen")));
-                                    p.sendMessage(PlaceholderAPI.setPlaceholders(t.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + Objects.requireNonNull(plugin.getConfig().getString("messages.show-screen-others")))));
+                                    Objects.requireNonNull(t.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift1013 + plugin.getConfig().getString("Unicodes.background") + shift1536 + plugin.getConfig().getString("Unicodes.welcome-screen")));
+                                    if (Objects.equals(plugin.getConfig().getString("messages.show-screen-others"), "[]")) {
+                                    } else {
+                                        p.sendMessage(PlaceholderAPI.setPlaceholders(t.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + Objects.requireNonNull(plugin.getConfig().getString("messages.show-screen-others")))));
+                                    }
 
 
                                 } else if (Objects.equals(plugin.getConfig().getString("enable-background"), "false")) {
-                                    Objects.requireNonNull(t.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift36 + shift12 + plugin.getConfig().getString("Unicodes.welcome-screen")));
-                                    p.sendMessage(PlaceholderAPI.setPlaceholders(t.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + Objects.requireNonNull(plugin.getConfig().getString("messages.show-screen-others")))));
+                                    Objects.requireNonNull(t.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift48 + plugin.getConfig().getString("Unicodes.welcome-screen")));
+                                    if (Objects.equals(plugin.getConfig().getString("messages.show-screen-others"), "[]")) {
+                                    } else {
+                                        p.sendMessage(PlaceholderAPI.setPlaceholders(t.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + Objects.requireNonNull(plugin.getConfig().getString("messages.show-screen-others")))));
+                                    }
                                 }
 
 
                             } else {
-                                p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.player-not-found"))));
+                                if (Objects.equals(plugin.getConfig().getString("messages.player-not-found"), "[]")) {
+                                } else {
+                                    p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.player-not-found"))));
+                                }
                             }
                         } else {
-                            p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission"))));
+                            if (Objects.equals(plugin.getConfig().getString("messages.no-permission"), "[]")) {
+                            } else {
+                                p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission"))));
+                            }
                         }
 
 
@@ -86,14 +102,23 @@ public class Commands implements CommandExecutor {
                             p.getInventory().clear();
 
                             if (Objects.equals(plugin.getConfig().getString("enable-background"), "true")) {
-                                Objects.requireNonNull(p.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift256 + shift256 + plugin.getConfig().getString("Unicodes.background") + shift501 + shift36 + plugin.getConfig().getString("Unicodes.welcome-screen")));
-                                p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.show-screen"))));
+                                Objects.requireNonNull(p.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift1013 + plugin.getConfig().getString("Unicodes.background") + shift1536 + plugin.getConfig().getString("Unicodes.welcome-screen")));
+                                if (Objects.equals(plugin.getConfig().getString("messages.show-screen"), "[]")) {
+                                } else {
+                                    p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.show-screen"))));
+                                }
                             } else if (Objects.equals(plugin.getConfig().getString("enable-background"), "false")) {
-                                Objects.requireNonNull(p.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift36 + shift12 + plugin.getConfig().getString("Unicodes.welcome-screen")));
-                                p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.show-screen"))));
+                                Objects.requireNonNull(p.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift48 + plugin.getConfig().getString("Unicodes.welcome-screen")));
+                                if (Objects.equals(plugin.getConfig().getString("messages.show-screen"), "[]")) {
+                                } else {
+                                    p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.show-screen"))));
+                                }
                             }
                         } else {
-                            p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission"))));
+                            if (Objects.equals(plugin.getConfig().getString("messages.no-permission"), "[]")) {
+                            } else {
+                                p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission"))));
+                            }
                         }
                     }
                 }
@@ -124,9 +149,15 @@ public class Commands implements CommandExecutor {
                 } else if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("rl")) {
                     if (p.hasPermission("gizmo.reload")) {
                         plugin.reloadConfig();
-                        p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.config-reloaded")));
+                        if (Objects.equals(plugin.getConfig().getString("messages.config-reloaded"), "[]")) {
+                        } else {
+                            p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.config-reloaded")));
+                        }
                     } else {
-                        p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission")));
+                        if (Objects.equals(plugin.getConfig().getString("messages.no-permission"), "[]")) {
+                        } else {
+                            p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission")));
+                        }
                     }
                 } else if (args[0].equalsIgnoreCase("show")) {
                     if (args.length > 1) {
@@ -138,21 +169,31 @@ public class Commands implements CommandExecutor {
 
 
                                 if (Objects.equals(plugin.getConfig().getString("enable-background"), "true")) {
-                                    Objects.requireNonNull(t.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift256 + shift256 + plugin.getConfig().getString("Unicodes.background") + shift501 + shift36 + plugin.getConfig().getString("Unicodes.welcome-screen")));
-                                    p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + Objects.requireNonNull(plugin.getConfig().getString("messages.show-screen-others"))));
-
-
+                                    Objects.requireNonNull(t.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift1013 + plugin.getConfig().getString("Unicodes.background") + shift1536 + plugin.getConfig().getString("Unicodes.welcome-screen")));
+                                    if (Objects.equals(plugin.getConfig().getString("messages.show-screen-others"), "[]")) {
+                                    } else {
+                                        p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + Objects.requireNonNull(plugin.getConfig().getString("messages.show-screen-others"))));
+                                    }
                                 } else if (Objects.equals(plugin.getConfig().getString("enable-background"), "false")) {
-                                    Objects.requireNonNull(t.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift36 + shift12 + plugin.getConfig().getString("Unicodes.welcome-screen")));
-                                    p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + Objects.requireNonNull(plugin.getConfig().getString("messages.show-screen-others"))));
+                                    Objects.requireNonNull(t.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift48 + plugin.getConfig().getString("Unicodes.welcome-screen")));
+                                    if (Objects.equals(plugin.getConfig().getString("messages.show-screen-others"), "[]")) {
+                                    } else {
+                                        p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + Objects.requireNonNull(plugin.getConfig().getString("messages.show-screen-others"))));
+                                    }
                                 }
 
 
                             } else {
-                                p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.player-not-found")));
+                                if (Objects.equals(plugin.getConfig().getString("messages.player-not-found"), "[]")) {
+                                } else {
+                                    p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("mmessages.player-not-found")));
+                                }
                             }
                         } else {
-                            p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission")));
+                            if (Objects.equals(plugin.getConfig().getString("messages.no-permission"), "[]")) {
+                            } else {
+                                p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission")));
+                            }
                         }
 
 
@@ -165,14 +206,23 @@ public class Commands implements CommandExecutor {
                             p.getInventory().clear();
 
                             if (Objects.equals(plugin.getConfig().getString("enable-background"), "true")) {
-                                Objects.requireNonNull(p.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift256 + shift256 + plugin.getConfig().getString("Unicodes.background") + shift501 + shift36 + plugin.getConfig().getString("Unicodes.welcome-screen")));
-                                p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.show-screen")));
+                                Objects.requireNonNull(p.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift1013 + plugin.getConfig().getString("Unicodes.background") + shift1536 + plugin.getConfig().getString("Unicodes.welcome-screen")));
+                                if (Objects.equals(plugin.getConfig().getString("messages.show-screen"), "[]")) {
+                                } else {
+                                    p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.show-screen")));
+                                }
                             } else if (Objects.equals(plugin.getConfig().getString("enable-background"), "false")) {
-                                Objects.requireNonNull(p.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift36 + shift12 + plugin.getConfig().getString("Unicodes.welcome-screen")));
-                                p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.show-screen")));
+                                Objects.requireNonNull(p.getPlayer()).openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift48 + plugin.getConfig().getString("Unicodes.welcome-screen")));
+                                if (Objects.equals(plugin.getConfig().getString("messages.show-screen"), "[]")) {
+                                } else {
+                                    p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.show-screen")));
+                                }
                             }
                         } else {
-                            p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission")));
+                            if (Objects.equals(plugin.getConfig().getString("messages.no-permission"), "[]")) {
+                            } else {
+                                p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission")));
+                            }
                         }
                     }
                 }

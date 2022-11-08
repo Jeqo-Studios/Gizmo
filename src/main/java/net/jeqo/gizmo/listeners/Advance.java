@@ -19,17 +19,16 @@ import java.util.Objects;
 public class Advance implements Listener {
 
     Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
-    String shift12 = plugin.getConfig().getString("Unicodes.shift-12");
-    String shift36 = plugin.getConfig().getString("Unicodes.shift-36");
-    String shift256 = plugin.getConfig().getString("Unicodes.shift-256");
-    String shift501 = plugin.getConfig().getString("Unicodes.shift-501");
+    String shift48 = plugin.getConfig().getString("Unicodes.shift-48");
+    String shift1013 = plugin.getConfig().getString("Unicodes.shift-1013");
+    String shift1536 = plugin.getConfig().getString("Unicodes.shift-1536");
 
 
     @EventHandler
     public void onClose(InventoryCloseEvent e) {
         Player p = (Player) e.getPlayer();
 
-        if (e.getView().getTitle().equals(ChatColor.WHITE + shift256 + shift256 + plugin.getConfig().getString("Unicodes.background") + shift501 + shift36 + plugin.getConfig().getString("Unicodes.welcome-screen")) || e.getView().getTitle().equals(ChatColor.WHITE + shift36 + shift12 + plugin.getConfig().getString("Unicodes.welcome-screen"))) {
+        if (e.getView().getTitle().equals(ChatColor.WHITE + shift1013 + plugin.getConfig().getString("Unicodes.background") + shift1536 + plugin.getConfig().getString("Unicodes.welcome-screen")) || e.getView().getTitle().equals(ChatColor.WHITE + shift48 + plugin.getConfig().getString("Unicodes.welcome-screen"))) {
 
             if (Objects.equals(plugin.getConfig().getString("Sound-on-Advance.enable"), "true")) {
                 p.playSound(p.getLocation(), Sound.valueOf(plugin.getConfig().getString("Sound-on-Advance.sound")), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.volume"))), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.pitch"))));
@@ -54,12 +53,18 @@ public class Advance implements Listener {
             if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
                 String welcomeMessage = (plugin.getConfig().getString("messages.welcome-message"));
                 assert welcomeMessage != null;
-                welcomeMessage = PlaceholderAPI.setPlaceholders((OfflinePlayer) e.getPlayer(), welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", ""));
-                p.sendMessage(Utilities.hex(welcomeMessage));
+                if (welcomeMessage.equals("[]")) {
+                } else {
+                    welcomeMessage = PlaceholderAPI.setPlaceholders((OfflinePlayer) e.getPlayer(), welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", ""));
+                    p.sendMessage(Utilities.hex(welcomeMessage));
+                }
             } else {
                 String welcomeMessage = (plugin.getConfig().getString("messages.welcome-message"));
                 assert welcomeMessage != null;
-                p.sendMessage(Utilities.hex(welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "")));
+                if (welcomeMessage.equals("[]")) {
+                } else {
+                    p.sendMessage(Utilities.hex(welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "")));
+                }
             }
 
 

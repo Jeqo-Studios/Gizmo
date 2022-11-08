@@ -29,6 +29,7 @@ public class Protect implements Listener {
         Player p = e.getPlayer();
 
         joinGm = p.getGameMode();
+        p.setInvulnerable(true);
 
         if (Objects.equals(plugin.getConfig().getString("blindness-during-prompt"), "true")) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 1, false, false));
@@ -53,12 +54,14 @@ public class Protect implements Listener {
             if (e.getStatus() == PlayerResourcePackStatusEvent.Status.SUCCESSFULLY_LOADED) {
                 {
                     p.setGameMode(joinGm);
+                    p.setInvulnerable(false);
                     p.removePotionEffect(PotionEffectType.BLINDNESS);
 
                 }
 
             } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED || e.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
                 p.setGameMode(joinGm);
+                p.setInvulnerable(false);
                 p.removePotionEffect(PotionEffectType.BLINDNESS);
                 p.kickPlayer(Utilities.hex(Objects.requireNonNull(plugin.getConfig().getString("messages.kick-on-decline")).replace(",", "\n").replace("[", "").replace("]", "")));
             }
@@ -67,6 +70,7 @@ public class Protect implements Listener {
         } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.SUCCESSFULLY_LOADED) {
 
             p.setGameMode(joinGm);
+            p.setInvulnerable(false);
             p.removePotionEffect(PotionEffectType.BLINDNESS);
         }
     }

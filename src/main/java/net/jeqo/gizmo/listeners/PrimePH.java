@@ -23,10 +23,9 @@ import java.util.*;
 public class PrimePH implements Listener {
 
     Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
-    String shift12 = plugin.getConfig().getString("Unicodes.shift-12");
-    String shift36 = plugin.getConfig().getString("Unicodes.shift-36");
-    String shift256 = plugin.getConfig().getString("Unicodes.shift-256");
-    String shift501 = plugin.getConfig().getString("Unicodes.shift-501");
+    String shift48 = plugin.getConfig().getString("Unicodes.shift-48");
+    String shift1013 = plugin.getConfig().getString("Unicodes.shift-1013");
+    String shift1536 = plugin.getConfig().getString("Unicodes.shift-1536");
 
     public static HashMap<String, ItemStack[]> saveInv = new HashMap<>();
 
@@ -54,7 +53,7 @@ public class PrimePH implements Listener {
                     if (Objects.equals(plugin.getConfig().getString("enable-welcome-screen"), "true")) {
                         e.getPlayer().setGameMode(GameMode.SPECTATOR);
                         if (Objects.equals(plugin.getConfig().getString("enable-background"), "true")) {
-                            InventoryView screen = e.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift256 + shift256 + plugin.getConfig().getString("Unicodes.background") + shift501 + shift36 + plugin.getConfig().getString("Unicodes.welcome-screen")));
+                            InventoryView screen = e.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift1013 + plugin.getConfig().getString("Unicodes.background") + shift1536 + plugin.getConfig().getString("Unicodes.welcome-screen")));
 
                             if (plugin.getConfig().getString("Items") != null) {
                                 for (String key : Objects.requireNonNull(plugin.getConfig().getConfigurationSection("Items")).getKeys(false)) {
@@ -90,7 +89,7 @@ public class PrimePH implements Listener {
 
 
                         } else if (Objects.equals(plugin.getConfig().getString("enable-background"), "false")) {
-                            InventoryView screenNoBg = e.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift36 + shift12 + plugin.getConfig().getString("Unicodes.welcome-screen")));
+                            InventoryView screenNoBg = e.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift48 + plugin.getConfig().getString("Unicodes.welcome-screen")));
 
                             if (plugin.getConfig().getString("Items") != null) {
                                 for (String key : Objects.requireNonNull(plugin.getConfig().getConfigurationSection("Items")).getKeys(false)) {
@@ -136,12 +135,15 @@ public class PrimePH implements Listener {
                     }
 
                 }
-            }, 5);
+            }, 3);
 
         } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD || e.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED) {
             p.setGameMode(Protect.joinGm);
             p.removePotionEffect(PotionEffectType.BLINDNESS);
-            p.sendMessage(Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-pack-loaded")));
+            if (Objects.equals(plugin.getConfig().getString("messages.no-pack-loaded"), "[]")) {
+            } else {
+                p.sendMessage(PlaceholderAPI.setPlaceholders(e.getPlayer(), Utilities.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-pack-loaded"))));
+            }
         }
     }
 
@@ -159,7 +161,7 @@ public class PrimePH implements Listener {
     public void restoreInv(InventoryCloseEvent e) {
         Player p = (Player) e.getPlayer();
 
-        if(e.getView().getTitle().equals(ChatColor.WHITE + shift256 + shift256 + plugin.getConfig().getString("Unicodes.background") + shift501 + shift36 + plugin.getConfig().getString("Unicodes.welcome-screen")) || e.getView().getTitle().equals(ChatColor.WHITE +  shift36 + shift12 + plugin.getConfig().getString("Unicodes.welcome-screen"))) {
+        if(e.getView().getTitle().equals(ChatColor.WHITE + shift1013 + plugin.getConfig().getString("Unicodes.background") + shift1536 + plugin.getConfig().getString("Unicodes.welcome-screen")) || e.getView().getTitle().equals(ChatColor.WHITE + shift48 + plugin.getConfig().getString("Unicodes.welcome-screen"))) {
             p.getInventory().setContents((ItemStack[]) saveInv.get(p.getName()));
         }
     }

@@ -1,7 +1,7 @@
 dev-mode: false
 # --------------------------------------------------#
 #
-# Gizmo 1.0.3-BETA
+# Gizmo 1.0.7-BETA
 # Made by Jeqo
 #
 # Wiki:     https://jeqo.net/wiki/gizmo
@@ -36,10 +36,9 @@ Auto-Close:
 # These are REQUIRED for the plugin to function properly.
 # (I don't suggest touching this unless you know what you're doing.)
 Unicodes:
-  shift-12: 
-  shift-36: 
-  shift-256: 
-  shift-501: 
+  shift-48: 
+  shift-1013: 
+  shift-1536: 
   welcome-screen: 
   background: 
 # Do you want to display any item on the welcome screen?
@@ -118,3 +117,6 @@ messages:
     - '                             #acb5bfwww.jeqo.net/gizmo'
     - ' '
     - ' '
+  bedrock-players:
+    enable: false
+    starting-character: '*'
