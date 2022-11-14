@@ -1,7 +1,6 @@
-dev-mode: false
 # --------------------------------------------------#
 #
-# Gizmo 1.0.7-BETA
+# Gizmo 1.0.8-BETA
 # Made by Jeqo
 #
 # Wiki:     https://jeqo.net/wiki/gizmo
@@ -117,6 +116,3 @@ messages:
     - '                             #acb5bfwww.jeqo.net/gizmo'
     - ' '
     - ' '
-  bedrock-players:
-    enable: false
-    starting-character: '*'

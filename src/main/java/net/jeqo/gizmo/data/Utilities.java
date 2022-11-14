@@ -1,19 +1,25 @@
 package net.jeqo.gizmo.data;
 
 import net.jeqo.gizmo.Gizmo;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
 public class Utilities {
+
+    public static String getMinecraftVersion()
+    {
+        Matcher matcher = Pattern.compile("(\\(MC: )([\\d\\.]+)(\\))").matcher(Bukkit.getVersion());
+        if (matcher.find()) {
+            return matcher.group(2);
+        }
+        return null;
+    }
 
     Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
     public static String hex(String message) {
@@ -33,5 +39,13 @@ public class Utilities {
             matcher = pattern.matcher(message);
         }
         return ChatColor.translateAlternateColorCodes('&', message);
+    }
+
+    public static void log(@NotNull String text) {
+        Bukkit.getLogger().log(Level.INFO, text);
+    }
+
+    public static void warn(@NotNull String text) {
+        Bukkit.getLogger().log(Level.WARNING, text);
     }
 }

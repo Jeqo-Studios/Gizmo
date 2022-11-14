@@ -1,7 +1,9 @@
 package net.jeqo.gizmo;
 
 import net.jeqo.gizmo.data.Commands;
+import net.jeqo.gizmo.data.Metrics;
 import net.jeqo.gizmo.data.Tab;
+import net.jeqo.gizmo.data.Utilities;
 import net.jeqo.gizmo.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.command.TabCompleter;
@@ -9,16 +11,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
-import java.util.logging.Logger;
 
 public final class Gizmo extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
 
-        getLogger().info("|---[ GIZMO ]--------------------------------------------------------|");
-        getLogger().info("|                           Plugin loaded.                           |");
-        getLogger().info("|-------------------------------------------------[ MADE BY JEQO ]---|");
+        Utilities.log("|---[ GIZMO ]--------------------------------------------------------|");
+        Utilities.log("|                           Plugin loaded.                           |");
+        Utilities.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
 
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
@@ -31,6 +32,9 @@ public final class Gizmo extends JavaPlugin implements Listener {
             getLogger().warning("|-------------------------------------------------[ MADE BY JEQO ]---|");
             loadListeners();
             loadCommands();
+
+            int pluginId = 16873;
+            Metrics metrics = new Metrics(this, pluginId);
         }
 
 
@@ -39,14 +43,11 @@ public final class Gizmo extends JavaPlugin implements Listener {
     }
 
 
-    private static final Logger log = Bukkit.getLogger();
-
-
     @Override
     public void onDisable() {
-        getLogger().info("|---[ GIZMO ]--------------------------------------------------------|");
-        getLogger().info("|                          Shutting down...                          |");
-        getLogger().info("|-------------------------------------------------[ MADE BY JEQO ]---|");
+        Utilities.log("|---[ GIZMO ]--------------------------------------------------------|");
+        Utilities.log("|                          Shutting down...                          |");
+        Utilities.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
     }
 
 

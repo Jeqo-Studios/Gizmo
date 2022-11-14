@@ -30,8 +30,12 @@ public class Advance implements Listener {
 
         if (e.getView().getTitle().equals(ChatColor.WHITE + shift1013 + plugin.getConfig().getString("Unicodes.background") + shift1536 + plugin.getConfig().getString("Unicodes.welcome-screen")) || e.getView().getTitle().equals(ChatColor.WHITE + shift48 + plugin.getConfig().getString("Unicodes.welcome-screen"))) {
 
-            if (Objects.equals(plugin.getConfig().getString("Sound-on-Advance.enable"), "true")) {
-                p.playSound(p.getLocation(), Sound.valueOf(plugin.getConfig().getString("Sound-on-Advance.sound")), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.volume"))), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.pitch"))));
+            try {
+                if (Objects.equals(plugin.getConfig().getString("Sound-on-Advance.enable"), "true")) {
+                    p.playSound(p.getLocation(), Sound.valueOf(plugin.getConfig().getString("minecraft" + "Sound-on-Advance.sound")), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.volume"))), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.pitch"))));
+                }
+            } catch (NullPointerException ex) {
+                Utilities.log("Sound-on-Advance is not configured correctly. Please check your config.yml file.");
             }
 
             PrimePH.screening = false;
