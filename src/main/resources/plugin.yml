@@ -1,7 +1,7 @@
 name: Gizmo
 version: '${project.version}'
 main: net.jeqo.gizmo.Gizmo
-api-version: 1.19
+api-version: 1.18
 prefix: Gizmo
 authors: [ Jeqo ]
 description: A unique utility plugin.

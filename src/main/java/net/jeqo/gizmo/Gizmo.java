@@ -10,7 +10,9 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.UUID;
 
 public final class Gizmo extends JavaPlugin implements Listener {
 
@@ -22,24 +24,16 @@ public final class Gizmo extends JavaPlugin implements Listener {
         Utilities.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
 
 
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            loadPHListeners();
-            loadPHCommands();
-            Bukkit.getPluginManager().registerEvents(this, this);
-        } else {
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
             getLogger().warning("|---[ GIZMO - WARNING ]----------------------------------------------|");
             getLogger().warning("|        Disabling PlaceholderAPI support--plugin not found.         |");
             getLogger().warning("|-------------------------------------------------[ MADE BY JEQO ]---|");
-            loadListeners();
-            loadCommands();
-
-            int pluginId = 16873;
-            Metrics metrics = new Metrics(this, pluginId);
         }
 
 
-        getConfig().options().copyDefaults();
-        saveDefaultConfig();
+        loadListeners(); loadCommands();
+        int pluginId = 16873; Metrics metrics = new Metrics(this, pluginId);
+        getConfig().options().copyDefaults(); saveDefaultConfig();
     }
 
 
@@ -60,23 +54,10 @@ public final class Gizmo extends JavaPlugin implements Listener {
 
     public void loadCommands() {
         Objects.requireNonNull(getCommand("gizmo")).setExecutor(new Commands());
-
-        TabCompleter tc = new Tab();
-        Objects.requireNonNull(this.getCommand("gizmo")).setTabCompleter(tc);
+        TabCompleter tc = new Tab(); Objects.requireNonNull(this.getCommand("gizmo")).setTabCompleter(tc);
     }
 
-    public void loadPHListeners() {
-        Bukkit.getPluginManager().registerEvents(new PrimePH(), this);
-        Bukkit.getPluginManager().registerEvents(new Break(), this);
-        Bukkit.getPluginManager().registerEvents(new Advance(), this);
-        Bukkit.getPluginManager().registerEvents(new Protect(), this);
+    public boolean papiLoaded() {
+        return Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
     }
-
-    public void loadPHCommands() {
-        Objects.requireNonNull(getCommand("gizmo")).setExecutor(new Commands());
-
-        TabCompleter tc = new Tab();
-        Objects.requireNonNull(this.getCommand("gizmo")).setTabCompleter(tc);
-    }
-
 }

@@ -30,16 +30,6 @@ public class Advance implements Listener {
 
         if (e.getView().getTitle().equals(ChatColor.WHITE + shift1013 + plugin.getConfig().getString("Unicodes.background") + shift1536 + plugin.getConfig().getString("Unicodes.welcome-screen")) || e.getView().getTitle().equals(ChatColor.WHITE + shift48 + plugin.getConfig().getString("Unicodes.welcome-screen"))) {
 
-            try {
-                if (Objects.equals(plugin.getConfig().getString("Sound-on-Advance.enable"), "true")) {
-                    p.playSound(p.getLocation(), Sound.valueOf(plugin.getConfig().getString("minecraft" + "Sound-on-Advance.sound")), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.volume"))), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.pitch"))));
-                }
-            } catch (NullPointerException ex) {
-                Utilities.log("Sound-on-Advance is not configured correctly. Please check your config.yml file.");
-            }
-
-            PrimePH.screening = false;
-
             if (Objects.equals(plugin.getConfig().getString("enable-fade"), "true")) {
                 if (Objects.equals(plugin.getConfig().getString("fade-mode"), "A")) {
                     p.sendTitle((String) plugin.getConfig().get("Unicodes.background"), "", 0, 5, plugin.getConfig().getInt("fade-time"));
@@ -47,6 +37,16 @@ public class Advance implements Listener {
                     e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, plugin.getConfig().getInt("fade-time"), 1, false, false));
                 }
             }
+
+            try {
+                if (Objects.equals(plugin.getConfig().getString("Sound-on-Advance.enable"), "true")) {
+                    p.playSound(p.getLocation(), Sound.valueOf(plugin.getConfig().getString("minecraft" + "Sound-on-Advance.sound")), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.volume"))), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.pitch"))));
+                }
+            } catch (NullPointerException ex) {
+                Utilities.warn("Sound-on-Advance is not configured correctly. Please check your config.yml file.");
+            }
+
+            Prime.screening = false;
 
             if (Protect.joinGm != null) {
                 p.setGameMode(Protect.joinGm);
@@ -86,8 +86,10 @@ public class Advance implements Listener {
         if ((Objects.equals(plugin.getConfig().getString("Auto-Close.enable"), "true"))) {
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 public void run() {
-                    if (PrimePH.screening.equals(true)) {
+                    if (Prime.screening.equals(true)) {
                         p.closeInventory();
+                    } else {
+                        Utilities.log("Screen is already closed. If this is not the case, make sure your server resource pack is enabled.");
                     }
                 }
             }, Long.parseLong(Objects.requireNonNull(plugin.getConfig().getString("Auto-Close.time"))));

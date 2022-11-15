@@ -1,6 +1,6 @@
 # --------------------------------------------------#
 #
-# Gizmo 1.0.8-BETA
+# Gizmo 1.0.9-BETA
 # Made by Jeqo
 #
 # Wiki:     https://jeqo.net/wiki/gizmo
@@ -103,7 +103,7 @@ messages:
     - '#fc1c1cGizmo - Made by Jeqo'
     - '#acb5bfwww.jeqo.net/gizmo'
   # Message when a player joins and did not load/accept the server resource pack.
-  no-pack-loaded: '#acb5bfPack load not detected-skipping welcome screen.'
+  no-pack-loaded: '#acb5bfServer resource pack not detected-skipping welcome screen.'
   no-permission: '#fc1c1cAccess denied.'
   player-not-found: '#fc1c1cPlayer not found.'
   show-screen: '#acb5bfDisplaying test screen.'

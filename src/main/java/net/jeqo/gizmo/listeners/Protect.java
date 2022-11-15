@@ -1,8 +1,10 @@
 package net.jeqo.gizmo.listeners;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.jeqo.gizmo.Gizmo;
 import net.jeqo.gizmo.data.Utilities;
-import org.bukkit.*;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,7 +14,6 @@ import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class Protect implements Listener {
@@ -31,18 +32,21 @@ public class Protect implements Listener {
         joinGm = p.getGameMode();
         p.setInvulnerable(true);
 
-        if (Objects.equals(plugin.getConfig().getString("blindness-during-prompt"), "true")) {
-            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 1, false, false));
-        }
-
-
         if (p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)) {
             p.teleport(getLocation(p));
         }
 
-        if (Objects.equals(plugin.getConfig().getString("player-invulnerable-during-load"), "true")) {
-            p.setGameMode(GameMode.SPECTATOR);
+        if (plugin.getConfig().getString("resource-pack.url") == null) {
+                Utilities.warn("A server resource pack has not been configured and Gizmo may not function correctly.");
+        } else {
+            if (Objects.equals(plugin.getConfig().getString("blindness-during-prompt"), "true")) {
+                p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 1, false, false));
+            }
+            if (Objects.equals(plugin.getConfig().getString("player-invulnerable-during-load"), "true")) {
+                p.setGameMode(GameMode.SPECTATOR);
+            }
         }
+
     }
 
 
@@ -56,7 +60,6 @@ public class Protect implements Listener {
                     p.setGameMode(joinGm);
                     p.setInvulnerable(false);
                     p.removePotionEffect(PotionEffectType.BLINDNESS);
-
                 }
 
             } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED || e.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
@@ -67,14 +70,27 @@ public class Protect implements Listener {
             }
 
 
-        } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.SUCCESSFULLY_LOADED) {
-
-            p.setGameMode(joinGm);
-            p.setInvulnerable(false);
-            p.removePotionEffect(PotionEffectType.BLINDNESS);
+        } else if (Objects.equals(plugin.getConfig().getString("kick-on-decline"), "false")) {
+            if (e.getStatus() == PlayerResourcePackStatusEvent.Status.SUCCESSFULLY_LOADED) {
+                p.setGameMode(joinGm);
+                p.setInvulnerable(false);
+                p.removePotionEffect(PotionEffectType.BLINDNESS);
+            } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED || e.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
+                p.setGameMode(joinGm);
+                p.setInvulnerable(false);
+                p.removePotionEffect(PotionEffectType.BLINDNESS);
+                if (plugin.papiLoaded()) {
+                    for (String msg : plugin.getConfig().getStringList("messages.no-pack-loaded")) {
+                        p.sendMessage(PlaceholderAPI.setPlaceholders(p, Utilities.hex(msg)));
+                    }
+                } else {
+                    for (String msg : plugin.getConfig().getStringList("messages.no-pack-loaded")) {
+                        p.sendMessage(Utilities.hex(msg));
+                    }
+                }
+            }
         }
     }
-
 
     public Location getLocation(Player player){
         Location location = player.getLocation().clone();
@@ -87,7 +103,7 @@ public class Protect implements Listener {
             return player.getLocation();
         }
 
-        location.add(0, 2.25, 0);
+        location.add(0, 2.5, 0);
         return location;
     }
 }

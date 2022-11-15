@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-import static net.jeqo.gizmo.listeners.PrimePH.saveInv;
+import static net.jeqo.gizmo.listeners.Prime.saveInv;
 
 public class Commands implements CommandExecutor {
 
@@ -133,18 +133,7 @@ public class Commands implements CommandExecutor {
         } else {
             if (sender instanceof Player p) {
                 if (args.length == 0) {
-                    if (p.hasPermission("gizmo.reload")) {
-                        p.sendMessage("");
-                        p.sendMessage(Utilities.hex("   #ee0000/gizmo reload &7- Reloads the Gizmo config."));
-                        p.sendMessage(Utilities.hex("   #ee0000/gizmo test &7- Displays a test welcome screen."));
-                        p.sendMessage("");
-                        p.sendMessage(Utilities.hex("   #ee0000Gizmo 1.0.2-BETA &7- Made by Jeqo"));
-                        p.sendMessage("");
-                    } else {
-                        p.sendMessage("");
-                        p.sendMessage(Utilities.hex("   #ee0000Gizmo 1.0.2-BETA &7- Made by Jeqo"));
-                        p.sendMessage("");
-                    }
+                    usage(p);
                     return true;
                 } else if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("rl")) {
                     if (p.hasPermission("gizmo.reload")) {
@@ -232,6 +221,22 @@ public class Commands implements CommandExecutor {
                 plugin.getLogger().info("|                          Config reloaded.                          |");
                 plugin.getLogger().info("|-------------------------------------------------[ MADE BY JEQO ]---|");
             } return true;
+        }
+    }
+
+    // create a usage method
+    void usage(CommandSender sender) {
+        if (sender.hasPermission("gizmo.reload")) {
+            sender.sendMessage("");
+            sender.sendMessage(Utilities.hex("   #ee0000/gizmo reload &7- Reloads the Gizmo config."));
+            sender.sendMessage(Utilities.hex("   #ee0000/gizmo show <player> &7- Displays a test welcome screen."));
+            sender.sendMessage("");
+            sender.sendMessage(Utilities.hex("   #ee0000Gizmo 1.0.9-BETA &7- Made by Jeqo (https://jeqo.net)"));
+            sender.sendMessage("");
+        } else {
+            sender.sendMessage("");
+            sender.sendMessage(Utilities.hex("   #ee0000Gizmo 1.0.9-BETA &7- Made by Jeqo (https://jeqo.net)"));
+            sender.sendMessage("");
         }
     }
 }
