@@ -57,28 +57,20 @@ public class Protect implements Listener {
         if (Objects.equals(plugin.getConfig().getString("kick-on-decline"), "true")) {
             if (e.getStatus() == PlayerResourcePackStatusEvent.Status.SUCCESSFULLY_LOADED) {
                 {
-                    p.setGameMode(joinGm);
-                    p.setInvulnerable(false);
-                    p.removePotionEffect(PotionEffectType.BLINDNESS);
+                    disableEffects(p);
                 }
 
             } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED || e.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
-                p.setGameMode(joinGm);
-                p.setInvulnerable(false);
-                p.removePotionEffect(PotionEffectType.BLINDNESS);
+                disableEffects(p);
                 p.kickPlayer(Utilities.hex(Objects.requireNonNull(plugin.getConfig().getString("messages.kick-on-decline")).replace(",", "\n").replace("[", "").replace("]", "")));
             }
 
 
         } else if (Objects.equals(plugin.getConfig().getString("kick-on-decline"), "false")) {
             if (e.getStatus() == PlayerResourcePackStatusEvent.Status.SUCCESSFULLY_LOADED) {
-                p.setGameMode(joinGm);
-                p.setInvulnerable(false);
-                p.removePotionEffect(PotionEffectType.BLINDNESS);
+                disableEffects(p);
             } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED || e.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
-                p.setGameMode(joinGm);
-                p.setInvulnerable(false);
-                p.removePotionEffect(PotionEffectType.BLINDNESS);
+                disableEffects(p);
                 if (plugin.papiLoaded()) {
                     for (String msg : plugin.getConfig().getStringList("messages.no-pack-loaded")) {
                         p.sendMessage(PlaceholderAPI.setPlaceholders(p, Utilities.hex(msg)));
@@ -92,6 +84,12 @@ public class Protect implements Listener {
         }
     }
 
+    private void disableEffects(Player p) {
+        p.setGameMode(joinGm);
+        p.setInvulnerable(false);
+        p.removePotionEffect(PotionEffectType.BLINDNESS);
+    }
+
     public Location getLocation(Player player){
         Location location = player.getLocation().clone();
 
@@ -103,7 +101,7 @@ public class Protect implements Listener {
             return player.getLocation();
         }
 
-        location.add(0, 4, 0);
+        location.add(0, 4.75, 0);
         return location;
     }
 }

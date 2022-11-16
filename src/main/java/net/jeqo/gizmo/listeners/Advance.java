@@ -43,7 +43,7 @@ public class Advance implements Listener {
                     p.playSound(p.getLocation(), Sound.valueOf(plugin.getConfig().getString("minecraft" + "Sound-on-Advance.sound")), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.volume"))), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.pitch"))));
                 }
             } catch (NullPointerException ex) {
-                Utilities.warn("Sound-on-Advance is not configured correctly. Check your config.yml file.");
+                Utilities.warn("Sound-on-Advance is not configured correctly.");
             }
 
             Prime.screening = false;
@@ -76,7 +76,7 @@ public class Advance implements Listener {
 
     private void welcomeMessage(Player p) {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            String welcomeMessage = (plugin.getConfig().getString("messages.welcome-message"));
+            String welcomeMessage = (plugin.getConfig().getString("welcome-message"));
             assert welcomeMessage != null;
             if (welcomeMessage.equals("[]")) {
             } else {
@@ -84,7 +84,7 @@ public class Advance implements Listener {
                 p.sendMessage(Utilities.hex(welcomeMessage));
             }
         } else {
-            String welcomeMessage = (plugin.getConfig().getString("messages.welcome-message"));
+            String welcomeMessage = (plugin.getConfig().getString("welcome-message"));
             assert welcomeMessage != null;
             if (welcomeMessage.equals("[]")) {
             } else {
@@ -97,7 +97,7 @@ public class Advance implements Listener {
 
     private void welcomeMessageInitial(Player p) {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            String welcomeMessage = (plugin.getConfig().getString("messages.first-join-welcome-message"));
+            String welcomeMessage = (plugin.getConfig().getString("first-join-welcome-message"));
             assert welcomeMessage != null;
             if (welcomeMessage.equals("[]")) {
             } else {
@@ -105,7 +105,7 @@ public class Advance implements Listener {
                 p.sendMessage(Utilities.hex(welcomeMessage));
             }
         } else {
-            String welcomeMessage = (plugin.getConfig().getString("messages.first-join-welcome-message"));
+            String welcomeMessage = (plugin.getConfig().getString("first-join-welcome-message"));
             assert welcomeMessage != null;
             if (welcomeMessage.equals("[]")) {
             } else {
