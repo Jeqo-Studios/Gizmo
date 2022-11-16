@@ -12,15 +12,6 @@ import java.util.regex.Pattern;
 
 public class Utilities {
 
-    public static String getMinecraftVersion()
-    {
-        Matcher matcher = Pattern.compile("(\\(MC: )([\\d\\.]+)(\\))").matcher(Bukkit.getVersion());
-        if (matcher.find()) {
-            return matcher.group(2);
-        }
-        return null;
-    }
-
     Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
     public static String hex(String message) {
         Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
@@ -42,10 +33,10 @@ public class Utilities {
     }
 
     public static void log(@NotNull String text) {
-        Bukkit.getLogger().log(Level.INFO, text);
+        Bukkit.getLogger().log(Level.INFO, "[Gizmo] " + text);
     }
 
     public static void warn(@NotNull String text) {
-        Bukkit.getLogger().log(Level.WARNING, text);
+        Bukkit.getLogger().log(Level.WARNING, "[Gizmo] " + text);
     }
 }

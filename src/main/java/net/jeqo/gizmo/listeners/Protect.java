@@ -33,12 +33,12 @@ public class Protect implements Listener {
         p.setInvulnerable(true);
 
         if (p.getGameMode().equals(GameMode.SURVIVAL) || p.getGameMode().equals(GameMode.ADVENTURE)) {
+            p.setInvulnerable(true);
             p.teleport(getLocation(p));
+            p.setInvulnerable(false);
         }
 
-        if (plugin.getConfig().getString("resource-pack.url") == null) {
-                Utilities.warn("A server resource pack has not been configured and Gizmo may not function correctly.");
-        } else {
+        if (!Objects.equals(plugin.getConfig().getString("enable-welcome-screen"), "false")) {
             if (Objects.equals(plugin.getConfig().getString("blindness-during-prompt"), "true")) {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 999999, 1, false, false));
             }
@@ -103,7 +103,7 @@ public class Protect implements Listener {
             return player.getLocation();
         }
 
-        location.add(0, 2.5, 0);
+        location.add(0, 4, 0);
         return location;
     }
 }

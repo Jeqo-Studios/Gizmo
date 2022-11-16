@@ -16,6 +16,8 @@ import java.util.UUID;
 
 public final class Gizmo extends JavaPlugin implements Listener {
 
+    public static HashMap<UUID, String> playerTracker = new HashMap<>();
+
     @Override
     public void onEnable() {
 

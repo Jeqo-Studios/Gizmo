@@ -20,7 +20,6 @@ public class Commands implements CommandExecutor {
     String shift1013 = plugin.getConfig().getString("Unicodes.shift-1013");
     String shift1536 = plugin.getConfig().getString("Unicodes.shift-1536");
     public static GameMode showGm;
-    //if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

@@ -43,7 +43,7 @@ public class Advance implements Listener {
                     p.playSound(p.getLocation(), Sound.valueOf(plugin.getConfig().getString("minecraft" + "Sound-on-Advance.sound")), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.volume"))), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.pitch"))));
                 }
             } catch (NullPointerException ex) {
-                Utilities.warn("Sound-on-Advance is not configured correctly. Please check your config.yml file.");
+                Utilities.warn("Sound-on-Advance is not configured correctly. Check your config.yml file.");
             }
 
             Prime.screening = false;
@@ -54,26 +54,62 @@ public class Advance implements Listener {
                 p.setGameMode(Commands.showGm);
             }
 
-            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-                String welcomeMessage = (plugin.getConfig().getString("messages.welcome-message"));
-                assert welcomeMessage != null;
-                if (welcomeMessage.equals("[]")) {
-                } else {
-                    welcomeMessage = PlaceholderAPI.setPlaceholders((OfflinePlayer) e.getPlayer(), welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", ""));
-                    p.sendMessage(Utilities.hex(welcomeMessage));
+
+            if (!p.hasPlayedBefore()) {
+                if (plugin.getConfig().getString("first-join-welcome-screen").equalsIgnoreCase("true")) {
+                    welcomeMessageInitial(p);
+                    return;
                 }
             } else {
-                String welcomeMessage = (plugin.getConfig().getString("messages.welcome-message"));
-                assert welcomeMessage != null;
-                if (welcomeMessage.equals("[]")) {
-                } else {
-                    p.sendMessage(Utilities.hex(welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "")));
-                }
+                welcomeMessage(p);
             }
+
 
 
             if (Objects.equals(plugin.getConfig().getString("Command-on-Advance.enable"), "true")) {
                 p.performCommand(Objects.requireNonNull(plugin.getConfig().getString("Command-on-Advance.command")));
+            }
+        }
+    }
+
+
+
+    private void welcomeMessage(Player p) {
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            String welcomeMessage = (plugin.getConfig().getString("messages.welcome-message"));
+            assert welcomeMessage != null;
+            if (welcomeMessage.equals("[]")) {
+            } else {
+                welcomeMessage = PlaceholderAPI.setPlaceholders((OfflinePlayer) p, welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", ""));
+                p.sendMessage(Utilities.hex(welcomeMessage));
+            }
+        } else {
+            String welcomeMessage = (plugin.getConfig().getString("messages.welcome-message"));
+            assert welcomeMessage != null;
+            if (welcomeMessage.equals("[]")) {
+            } else {
+                p.sendMessage(Utilities.hex(welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "")));
+            }
+        }
+    }
+
+
+
+    private void welcomeMessageInitial(Player p) {
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            String welcomeMessage = (plugin.getConfig().getString("messages.first-join-welcome-message"));
+            assert welcomeMessage != null;
+            if (welcomeMessage.equals("[]")) {
+            } else {
+                welcomeMessage = PlaceholderAPI.setPlaceholders((OfflinePlayer) p, welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", ""));
+                p.sendMessage(Utilities.hex(welcomeMessage));
+            }
+        } else {
+            String welcomeMessage = (plugin.getConfig().getString("messages.first-join-welcome-message"));
+            assert welcomeMessage != null;
+            if (welcomeMessage.equals("[]")) {
+            } else {
+                p.sendMessage(Utilities.hex(welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "")));
             }
         }
     }
@@ -88,8 +124,6 @@ public class Advance implements Listener {
                 public void run() {
                     if (Prime.screening.equals(true)) {
                         p.closeInventory();
-                    } else {
-                        Utilities.log("Screen is already closed. If this is not the case, make sure your server resource pack is enabled.");
                     }
                 }
             }, Long.parseLong(Objects.requireNonNull(plugin.getConfig().getString("Auto-Close.time"))));

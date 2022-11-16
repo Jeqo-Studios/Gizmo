@@ -16,6 +16,8 @@ enable-welcome-screen: true
 enable-background: true
 # Do you want the screen to fade from black when advancing?
 enable-fade: true
+#
+once-per-restart: true
 # Change the style of fade when the player advances.
 # Mode A: Uses background color; smoother and fades near.
 # Mode B: Always uses black; smooth and fades into the distance.
