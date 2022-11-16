@@ -16,8 +16,8 @@ enable-welcome-screen: true
 enable-background: true
 # Do you want the screen to fade from black when advancing?
 enable-fade: true
-#
-once-per-restart: true
+# Do you want to show the screen to each player only once every time the server restarts?
+once-per-restart: false
 # Change the style of fade when the player advances.
 # Mode A: Uses background color; smoother and fades near.
 # Mode B: Always uses black; smooth and fades into the distance.
@@ -42,6 +42,14 @@ Unicodes:
   shift-1536: 
   welcome-screen: 
   background: 
+# Message once the player has advanced from the welcome screen.
+welcome-message:
+  - ' '
+  - ' '
+  - '                           #fc1c1cGizmo - Made by Jeqo'
+  - '                             #acb5bfwww.jeqo.net/gizmo'
+  - ' '
+  - ' '
 # Do you want to display any item on the welcome screen?
 # Slot values range from 0-89; 54-89 are the player's inventory.
 Items:
@@ -61,6 +69,27 @@ Items:
     name: '#ee0000Gizmo Barrier'
     lore:
       - '&7An item lore.'
+#
+# --------------------------------------------------#
+#        FIRST JOIN WELCOME SCREEN SETTINGS         #
+# --------------------------------------------------#
+#
+# Do you want to display a different welcome screen on the player's first join?
+first-join-welcome-screen: true
+# The unicode character of your first join welcome screen.
+# This should match the provider in your /assets/minecraft/font/default.json.
+first-join-welcome-screen-unicode: 
+# Message once the player has advanced from the welcome screen.
+first-join-welcome-message:
+  - ' '
+  - ' '
+  - '                           #fc1c1cGizmo - Made by Jeqo'
+  - '                             #acb5bfwww.jeqo.net/gizmo'
+  - ' '
+  - ' '
+# Do you want to display any item on the first join welcome screen?
+# Slot values range from 0-89; 54-89 are the player's inventory.
+First-Join-Items: [] # Disabled by default. Use the item templates from the welcome screen above if needed.
 #
 # --------------------------------------------------#
 #                  OTHER SETTINGS                   #
@@ -110,11 +139,3 @@ messages:
   player-not-found: '#fc1c1cPlayer not found.'
   show-screen: '#acb5bfDisplaying test screen.'
   show-screen-others: '#acb5bfDisplaying test screen to %player_name%'
-  # Message once the player has advanced from the welcome screen.
-  welcome-message:
-    - ' '
-    - ' '
-    - '                           #fc1c1cGizmo - Made by Jeqo'
-    - '                             #acb5bfwww.jeqo.net/gizmo'
-    - ' '
-    - ' '

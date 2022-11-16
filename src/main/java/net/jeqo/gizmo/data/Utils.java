@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Utilities {
+public class Utils {
 
     Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
     public static String hex(String message) {

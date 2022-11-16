@@ -2,7 +2,7 @@ package net.jeqo.gizmo.listeners;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.jeqo.gizmo.Gizmo;
-import net.jeqo.gizmo.data.Utilities;
+import net.jeqo.gizmo.data.Utils;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
@@ -62,7 +62,7 @@ public class Protect implements Listener {
 
             } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED || e.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
                 disableEffects(p);
-                p.kickPlayer(Utilities.hex(Objects.requireNonNull(plugin.getConfig().getString("messages.kick-on-decline")).replace(",", "\n").replace("[", "").replace("]", "")));
+                p.kickPlayer(Utils.hex(Objects.requireNonNull(plugin.getConfig().getString("messages.kick-on-decline")).replace(",", "\n").replace("[", "").replace("]", "")));
             }
 
 
@@ -73,11 +73,11 @@ public class Protect implements Listener {
                 disableEffects(p);
                 if (plugin.papiLoaded()) {
                     for (String msg : plugin.getConfig().getStringList("messages.no-pack-loaded")) {
-                        p.sendMessage(PlaceholderAPI.setPlaceholders(p, Utilities.hex(msg)));
+                        p.sendMessage(PlaceholderAPI.setPlaceholders(p, Utils.hex(msg)));
                     }
                 } else {
                     for (String msg : plugin.getConfig().getStringList("messages.no-pack-loaded")) {
-                        p.sendMessage(Utilities.hex(msg));
+                        p.sendMessage(Utils.hex(msg));
                     }
                 }
             }

@@ -2,7 +2,8 @@ package net.jeqo.gizmo.listeners;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.jeqo.gizmo.Gizmo;
-import net.jeqo.gizmo.data.Utilities;
+import net.jeqo.gizmo.data.UpdateChecker;
+import net.jeqo.gizmo.data.Utils;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -70,11 +71,11 @@ public class Prime implements Listener {
             } else {
                 if (plugin.papiLoaded()) {
                     for (String msg : plugin.getConfig().getStringList("messages.no-pack-loaded")) {
-                        p.sendMessage(PlaceholderAPI.setPlaceholders(p, Utilities.hex(msg)));
+                        p.sendMessage(PlaceholderAPI.setPlaceholders(p, Utils.hex(msg)));
                     }
                 } else {
                     for (String msg : plugin.getConfig().getStringList("messages.no-pack-loaded")) {
-                        p.sendMessage(Utilities.hex(msg));
+                        p.sendMessage(Utils.hex(msg));
                     }
                 }
             }
@@ -116,7 +117,7 @@ public class Prime implements Listener {
                                         if (plugin.papiLoaded()) {
                                             lore.set(i, PlaceholderAPI.setPlaceholders(e.getPlayer(), lore.get(i)));
                                         } else {
-                                            lore.set(i, Utilities.hex(lore.get(i)));
+                                            lore.set(i, Utils.hex(lore.get(i)));
                                         }
                                     }
                                     assert meta != null;
@@ -133,9 +134,9 @@ public class Prime implements Listener {
                                 }
                                 meta.setCustomModelData(keySection.getInt("custom-model-data"));
                                 if (plugin.papiLoaded()) {
-                                    meta.setDisplayName(PlaceholderAPI.setPlaceholders(e.getPlayer(), Utilities.hex(keySection.getString("name"))));
+                                    meta.setDisplayName(PlaceholderAPI.setPlaceholders(e.getPlayer(), Utils.hex(keySection.getString("name"))));
                                 } else {
-                                    meta.setDisplayName(Utilities.hex(keySection.getString("name")));
+                                    meta.setDisplayName(Utils.hex(keySection.getString("name")));
                                 }
                                 item.setItemMeta(meta);
                                 assert screen != null;
@@ -159,9 +160,9 @@ public class Prime implements Listener {
                                     List<String> lore = keySection.getStringList("lore");
                                     for (int i = 0; i < lore.size(); i++) {
                                         if (plugin.papiLoaded()) {
-                                            lore.set(i, PlaceholderAPI.setPlaceholders(e.getPlayer(), Utilities.hex(lore.get(i))));
+                                            lore.set(i, PlaceholderAPI.setPlaceholders(e.getPlayer(), Utils.hex(lore.get(i))));
                                         } else {
-                                            lore.set(i, Utilities.hex(lore.get(i)));
+                                            lore.set(i, Utils.hex(lore.get(i)));
                                         }
                                     }
                                     assert meta != null;
@@ -178,9 +179,9 @@ public class Prime implements Listener {
                                 }
                                 meta.setCustomModelData(keySection.getInt("custom-model-data"));
                                 if (plugin.papiLoaded()) {
-                                    meta.setDisplayName(PlaceholderAPI.setPlaceholders(e.getPlayer(), Utilities.hex(keySection.getString("name"))));
+                                    meta.setDisplayName(PlaceholderAPI.setPlaceholders(e.getPlayer(), Utils.hex(keySection.getString("name"))));
                                 } else {
-                                    meta.setDisplayName(Utilities.hex(keySection.getString("name")));
+                                    meta.setDisplayName(Utils.hex(keySection.getString("name")));
                                 }
                                 item.setItemMeta(meta);
                                 assert screenNoBg != null;
@@ -236,7 +237,7 @@ public class Prime implements Listener {
                                         if (plugin.papiLoaded()) {
                                             lore.set(i, PlaceholderAPI.setPlaceholders(e.getPlayer(), lore.get(i)));
                                         } else {
-                                            lore.set(i, Utilities.hex(lore.get(i)));
+                                            lore.set(i, Utils.hex(lore.get(i)));
                                         }
                                     }
                                     assert meta != null;
@@ -253,9 +254,9 @@ public class Prime implements Listener {
                                 }
                                 meta.setCustomModelData(keySection.getInt("custom-model-data"));
                                 if (plugin.papiLoaded()) {
-                                    meta.setDisplayName(PlaceholderAPI.setPlaceholders(e.getPlayer(), Utilities.hex(keySection.getString("name"))));
+                                    meta.setDisplayName(PlaceholderAPI.setPlaceholders(e.getPlayer(), Utils.hex(keySection.getString("name"))));
                                 } else {
-                                    meta.setDisplayName(Utilities.hex(keySection.getString("name")));
+                                    meta.setDisplayName(Utils.hex(keySection.getString("name")));
                                 }
                                 item.setItemMeta(meta);
                                 assert screen != null;
@@ -279,9 +280,9 @@ public class Prime implements Listener {
                                     List<String> lore = keySection.getStringList("lore");
                                     for (int i = 0; i < lore.size(); i++) {
                                         if (plugin.papiLoaded()) {
-                                            lore.set(i, PlaceholderAPI.setPlaceholders(e.getPlayer(), Utilities.hex(lore.get(i))));
+                                            lore.set(i, PlaceholderAPI.setPlaceholders(e.getPlayer(), Utils.hex(lore.get(i))));
                                         } else {
-                                            lore.set(i, Utilities.hex(lore.get(i)));
+                                            lore.set(i, Utils.hex(lore.get(i)));
                                         }
                                     }
                                     assert meta != null;
@@ -298,9 +299,9 @@ public class Prime implements Listener {
                                 }
                                 meta.setCustomModelData(keySection.getInt("custom-model-data"));
                                 if (plugin.papiLoaded()) {
-                                    meta.setDisplayName(PlaceholderAPI.setPlaceholders(e.getPlayer(), Utilities.hex(keySection.getString("name"))));
+                                    meta.setDisplayName(PlaceholderAPI.setPlaceholders(e.getPlayer(), Utils.hex(keySection.getString("name"))));
                                 } else {
-                                    meta.setDisplayName(Utilities.hex(keySection.getString("name")));
+                                    meta.setDisplayName(Utils.hex(keySection.getString("name")));
                                 }
                                 item.setItemMeta(meta);
                                 assert screenNoBg != null;
@@ -333,6 +334,19 @@ public class Prime implements Listener {
 
         if (Objects.equals(plugin.getConfig().getString("hide-join-messages"), String.valueOf(true))) {
             e.setJoinMessage("");
+        }
+
+
+        if (e.getPlayer().isOp()) {
+            Player p = e.getPlayer();
+            new UpdateChecker(Gizmo.getInstance(), 106243).getVersion(version -> {
+                if (!Gizmo.getInstance().getDescription().getVersion().equals(version)) {
+                    p.sendMessage("");
+                    p.sendMessage(Utils.hex(Gizmo.getMessage("prefix") + "&eNew update! " + version + " is now available."));
+                    p.sendMessage(Utils.hex(Gizmo.getMessage("prefix") + "&eDownload it here: &nhttps://jeqo.net/spigot/bloons"));
+                    p.sendMessage("");
+                }
+            });
         }
 
     }

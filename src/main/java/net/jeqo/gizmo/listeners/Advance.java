@@ -3,7 +3,7 @@ package net.jeqo.gizmo.listeners;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.jeqo.gizmo.Gizmo;
 import net.jeqo.gizmo.data.Commands;
-import net.jeqo.gizmo.data.Utilities;
+import net.jeqo.gizmo.data.Utils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,10 +40,10 @@ public class Advance implements Listener {
 
             try {
                 if (Objects.equals(plugin.getConfig().getString("Sound-on-Advance.enable"), "true")) {
-                    p.playSound(p.getLocation(), Sound.valueOf(plugin.getConfig().getString("minecraft" + "Sound-on-Advance.sound")), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.volume"))), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.pitch"))));
+                    p.playSound(p.getLocation(), Sound.valueOf(plugin.getConfig().getString("Sound-on-Advance.sound")), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.volume"))), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("Sound-on-Advance.pitch"))));
                 }
             } catch (NullPointerException ex) {
-                Utilities.warn("Sound-on-Advance is not configured correctly.");
+                Utils.warn("Sound-on-Advance is not configured correctly.");
             }
 
             Prime.screening = false;
@@ -55,6 +55,14 @@ public class Advance implements Listener {
             }
 
 
+
+            if (Objects.equals(plugin.getConfig().getString("Command-on-Advance.enable"), "true")) {
+                p.performCommand(Objects.requireNonNull(plugin.getConfig().getString("Command-on-Advance.command")));
+            }
+
+
+
+
             if (!p.hasPlayedBefore()) {
                 if (plugin.getConfig().getString("first-join-welcome-screen").equalsIgnoreCase("true")) {
                     welcomeMessageInitial(p);
@@ -62,12 +70,6 @@ public class Advance implements Listener {
                 }
             } else {
                 welcomeMessage(p);
-            }
-
-
-
-            if (Objects.equals(plugin.getConfig().getString("Command-on-Advance.enable"), "true")) {
-                p.performCommand(Objects.requireNonNull(plugin.getConfig().getString("Command-on-Advance.command")));
             }
         }
     }
@@ -81,14 +83,14 @@ public class Advance implements Listener {
             if (welcomeMessage.equals("[]")) {
             } else {
                 welcomeMessage = PlaceholderAPI.setPlaceholders((OfflinePlayer) p, welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", ""));
-                p.sendMessage(Utilities.hex(welcomeMessage));
+                p.sendMessage(Utils.hex(welcomeMessage));
             }
         } else {
             String welcomeMessage = (plugin.getConfig().getString("welcome-message"));
             assert welcomeMessage != null;
             if (welcomeMessage.equals("[]")) {
             } else {
-                p.sendMessage(Utilities.hex(welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "")));
+                p.sendMessage(Utils.hex(welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "")));
             }
         }
     }
@@ -102,14 +104,14 @@ public class Advance implements Listener {
             if (welcomeMessage.equals("[]")) {
             } else {
                 welcomeMessage = PlaceholderAPI.setPlaceholders((OfflinePlayer) p, welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", ""));
-                p.sendMessage(Utilities.hex(welcomeMessage));
+                p.sendMessage(Utils.hex(welcomeMessage));
             }
         } else {
             String welcomeMessage = (plugin.getConfig().getString("first-join-welcome-message"));
             assert welcomeMessage != null;
             if (welcomeMessage.equals("[]")) {
             } else {
-                p.sendMessage(Utilities.hex(welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "")));
+                p.sendMessage(Utils.hex(welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "")));
             }
         }
     }

@@ -1,9 +1,6 @@
 package net.jeqo.gizmo;
 
-import net.jeqo.gizmo.data.Commands;
-import net.jeqo.gizmo.data.Metrics;
-import net.jeqo.gizmo.data.Tab;
-import net.jeqo.gizmo.data.Utilities;
+import net.jeqo.gizmo.data.*;
 import net.jeqo.gizmo.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.command.TabCompleter;
@@ -17,14 +14,14 @@ import java.util.UUID;
 public final class Gizmo extends JavaPlugin implements Listener {
 
     public static HashMap<UUID, String> playerTracker = new HashMap<>();
+    public static Gizmo instance;
 
     @Override
     public void onEnable() {
 
-        Utilities.log("|---[ GIZMO ]--------------------------------------------------------|");
-        Utilities.log("|                           Plugin loaded.                           |");
-        Utilities.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
-
+        Utils.log("|---[ GIZMO ]--------------------------------------------------------|");
+        Utils.log("|                           Plugin loaded.                           |");
+        Utils.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
             getLogger().warning("|---[ GIZMO - WARNING ]----------------------------------------------|");
@@ -32,18 +29,44 @@ public final class Gizmo extends JavaPlugin implements Listener {
             getLogger().warning("|-------------------------------------------------[ MADE BY JEQO ]---|");
         }
 
-
+        instance = this;
         loadListeners(); loadCommands();
-        int pluginId = 16873; Metrics metrics = new Metrics(this, pluginId);
+        Metrics metrics = new Metrics(this, pluginId); updateChecker();
         getConfig().options().copyDefaults(); saveDefaultConfig();
     }
 
 
     @Override
     public void onDisable() {
-        Utilities.log("|---[ GIZMO ]--------------------------------------------------------|");
-        Utilities.log("|                          Shutting down...                          |");
-        Utilities.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
+        Utils.log("|---[ GIZMO ]--------------------------------------------------------|");
+        Utils.log("|                          Shutting down...                          |");
+        Utils.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    int pluginId = 16873;
+    public void updateChecker() {
+        new UpdateChecker(this, 106024).getVersion(version -> {
+            if (!this.getDescription().getVersion().equals(version)) {
+                Utils.warn("|---[ BLOONS ]-------------------------------------------------------|");
+                Utils.warn("|                  There is a new update available!                  |");
+                Utils.warn("|                   https://jeqo.net/spigot/gizmo                    |");
+                Utils.warn("|-------------------------------------------------[ MADE BY JEQO ]---|");
+            }
+        });
     }
 
 
@@ -57,6 +80,16 @@ public final class Gizmo extends JavaPlugin implements Listener {
     public void loadCommands() {
         Objects.requireNonNull(getCommand("gizmo")).setExecutor(new Commands());
         TabCompleter tc = new Tab(); Objects.requireNonNull(this.getCommand("gizmo")).setTabCompleter(tc);
+    }
+
+
+    public static String getMessage(String id) {
+        return Utils.hex(getInstance().getConfig().getString("messages." + id, ""));
+    }
+
+
+    public static Gizmo getInstance() {
+        return instance;
     }
 
     public boolean papiLoaded() {
