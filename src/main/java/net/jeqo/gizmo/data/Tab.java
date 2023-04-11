@@ -14,10 +14,11 @@ public class Tab implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (sender.hasPermission("gizmo.reload")) {
-            if (args.length == 1)
-                return StringUtil.copyPartialMatches(args[0], Arrays.asList("reload", "rl", "show"), new ArrayList<>());
-            else
+            if (args.length == 1) {
+                return StringUtil.copyPartialMatches(args[0], Arrays.asList("reload", "rl", "show", "fade"), new ArrayList<>());
+            } else {
                 return Collections.emptyList();
+            }
         }
         return null;
     }

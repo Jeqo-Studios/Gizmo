@@ -2,14 +2,12 @@ package net.jeqo.gizmo.listeners;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.jeqo.gizmo.Gizmo;
-import net.jeqo.gizmo.data.Commands;
 import net.jeqo.gizmo.data.Utils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -46,13 +44,8 @@ public class Advance implements Listener {
                 Utils.warn("Sound-on-Advance is not configured correctly.");
             }
 
-            Prime.screening = false;
 
-            if (Protect.joinGm != null) {
-                p.setGameMode(Protect.joinGm);
-            } else {
-                p.setGameMode(Commands.showGm);
-            }
+            Initiate.screeningPlayers.put(p.getUniqueId(), false);
 
 
 
@@ -117,6 +110,7 @@ public class Advance implements Listener {
     }
 
 
+    /* Auto-close feature -- temporarily disabled; with new handlers (invincibility, item pickup, etc.) all players not screened get effects when auto-close triggers
     @EventHandler
     public void onOpen(InventoryOpenEvent e) {
         Player p = (Player) e.getPlayer();
@@ -124,11 +118,12 @@ public class Advance implements Listener {
         if ((Objects.equals(plugin.getConfig().getString("Auto-Close.enable"), "true"))) {
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                 public void run() {
-                    if (Prime.screening.equals(true)) {
+                    if (Boolean.TRUE.equals(Initiate.screeningPlayers.put(p.getUniqueId(), true))) {
                         p.closeInventory();
                     }
                 }
             }, Long.parseLong(Objects.requireNonNull(plugin.getConfig().getString("Auto-Close.time"))));
         }
     }
+    */
 }

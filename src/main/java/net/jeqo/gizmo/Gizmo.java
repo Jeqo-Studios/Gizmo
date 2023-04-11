@@ -61,7 +61,7 @@ public final class Gizmo extends JavaPlugin implements Listener {
     public void updateChecker() {
         new UpdateChecker(this, 106024).getVersion(version -> {
             if (!this.getDescription().getVersion().equals(version)) {
-                Utils.warn("|---[ BLOONS ]-------------------------------------------------------|");
+                Utils.warn("|---[ GIZMO ]--------------------------------------------------------|");
                 Utils.warn("|                  There is a new update available!                  |");
                 Utils.warn("|                   https://jeqo.net/spigot/gizmo                    |");
                 Utils.warn("|-------------------------------------------------[ MADE BY JEQO ]---|");
@@ -71,10 +71,9 @@ public final class Gizmo extends JavaPlugin implements Listener {
 
 
     public void loadListeners() {
-        Bukkit.getPluginManager().registerEvents(new Prime(), this);
-        Bukkit.getPluginManager().registerEvents(new Break(), this);
+        Bukkit.getPluginManager().registerEvents(new Initiate(), this);
         Bukkit.getPluginManager().registerEvents(new Advance(), this);
-        Bukkit.getPluginManager().registerEvents(new Protect(), this);
+        Bukkit.getPluginManager().registerEvents(new Handlers(), this);
     }
 
     public void loadCommands() {

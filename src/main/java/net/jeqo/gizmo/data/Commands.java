@@ -10,7 +10,8 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-import static net.jeqo.gizmo.listeners.Prime.saveInv;
+import static net.jeqo.gizmo.listeners.Initiate.saveInv;
+import static org.apache.commons.lang.StringUtils.isNumeric;
 
 public class Commands implements CommandExecutor {
 
@@ -19,26 +20,32 @@ public class Commands implements CommandExecutor {
     String shift48 = plugin.getConfig().getString("Unicodes.shift-48");
     String shift1013 = plugin.getConfig().getString("Unicodes.shift-1013");
     String shift1536 = plugin.getConfig().getString("Unicodes.shift-1536");
-    public static GameMode showGm;
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (Bukkit.getPluginManager().getPlugin("PlacehoderAPI") != null) {
+
             if (sender instanceof Player p) {
                 if (args.length == 0) {
-                    if (p.hasPermission("gizmo.reload")) {
-                        p.sendMessage("");
-                        p.sendMessage(Utils.hex("   #ee0000/gizmo reload &7- Reloads the Gizmo config."));
-                        p.sendMessage(Utils.hex("   #ee0000/gizmo test &7- Displays a test welcome screen."));
-                        p.sendMessage("");
-                        p.sendMessage(Utils.hex("   #ee0000Gizmo 1.0.2-BETA &7- Made by Jeqo"));
-                        p.sendMessage("");
-                    } else {
-                        p.sendMessage("");
-                        p.sendMessage(Utils.hex("   #ee0000Gizmo 1.0.2-BETA &7- Made by Jeqo"));
-                        p.sendMessage("");
-                    }
+                    usage(p);
                     return true;
+                } else if (args[0].equalsIgnoreCase("fade")) {
+                    if (p.hasPermission("gizmo.fade")) {
+                        if (args.length == 4) {
+                            if (isNumeric(args[1]) && isNumeric(args[2]) && isNumeric(args[3])) {
+                                p.sendTitle((String) plugin.getConfig().get("Unicodes.background"), "", Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+                            } else {
+                                p.sendMessage(Utils.hex("#ee0000[Gizmo] " + "Only numbers can be used for time values!"));
+                            }
+                        } else {
+                            p.sendMessage(Utils.hex("#ee0000[Gizmo] " + "Usage: /gizmo fade <in> <stay> <out>"));
+                        }
+                    } else {
+                        if (Objects.equals(plugin.getConfig().getString("messages.no-permission"), "[]")) {
+                        } else {
+                            p.sendMessage(PlaceholderAPI.setPlaceholders(p.getPlayer(), Utils.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission"))));
+                        }
+                    }
                 } else if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("rl")) {
                     if (p.hasPermission("gizmo.reload")) {
                         plugin.reloadConfig();
@@ -95,8 +102,6 @@ public class Commands implements CommandExecutor {
                     } else {
                         if (p.hasPermission("gizmo.show")) {
 
-                            showGm = p.getGameMode();
-
                             saveInv.put(p.getName(), p.getInventory().getContents());
                             p.getInventory().clear();
 
@@ -128,12 +133,32 @@ public class Commands implements CommandExecutor {
                 plugin.getLogger().info("|-------------------------------------------------[ MADE BY JEQO ]---|");
             } return true;
 
+
+
+
             // If PlaceholderAPI is not installed
         } else {
             if (sender instanceof Player p) {
                 if (args.length == 0) {
                     usage(p);
                     return true;
+                } else if (args[0].equalsIgnoreCase("fade")) {
+                    if (p.hasPermission("gizmo.fade")) {
+                        if (args.length == 4) {
+                            if (isNumeric(args[1]) && isNumeric(args[2]) && isNumeric(args[3])) {
+                                p.sendTitle((String) plugin.getConfig().get("Unicodes.background"), "", Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+                            } else {
+                                p.sendMessage(Utils.hex("#ee0000[Gizmo] " + "Only numbers can be used for time values!"));
+                            }
+                        } else {
+                            p.sendMessage(Utils.hex("#ee0000[Gizmo] " + "Usage: /gizmo fade <in> <stay> <out>"));
+                        }
+                    } else {
+                        if (Objects.equals(plugin.getConfig().getString("messages.no-permission"), "[]")) {
+                        } else {
+                            p.sendMessage(Utils.hex("#ee0000[Gizmo] " + plugin.getConfig().getString("messages.no-permission")));
+                        }
+                    }
                 } else if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("rl")) {
                     if (p.hasPermission("gizmo.reload")) {
                         plugin.reloadConfig();
@@ -188,8 +213,6 @@ public class Commands implements CommandExecutor {
                     } else {
                         if (p.hasPermission("gizmo.show")) {
 
-                            showGm = p.getGameMode();
-
                             saveInv.put(p.getName(), p.getInventory().getContents());
                             p.getInventory().clear();
 
@@ -223,18 +246,18 @@ public class Commands implements CommandExecutor {
         }
     }
 
-    // create a usage method
     void usage(CommandSender sender) {
         if (sender.hasPermission("gizmo.reload")) {
             sender.sendMessage("");
             sender.sendMessage(Utils.hex("   #ee0000/gizmo reload &7- Reloads the Gizmo config."));
             sender.sendMessage(Utils.hex("   #ee0000/gizmo show <player> &7- Displays a test welcome screen."));
+            sender.sendMessage(Utils.hex("   #ee0000/gizmo fade <in> <stay> <out> &7- Display a fade/transition."));
             sender.sendMessage("");
-            sender.sendMessage(Utils.hex("   #ee0000Gizmo 1.0.9-BETA &7- Made by Jeqo (https://jeqo.net)"));
+            sender.sendMessage(Utils.hex("   #ee0000Gizmo 1.1.3-BETA &7- Made by Jeqo (https://jeqo.net)"));
             sender.sendMessage("");
         } else {
             sender.sendMessage("");
-            sender.sendMessage(Utils.hex("   #ee0000Gizmo 1.0.9-BETA &7- Made by Jeqo (https://jeqo.net)"));
+            sender.sendMessage(Utils.hex("   #ee0000Gizmo 1.1.3-BETA &7- Made by Jeqo (https://jeqo.net)"));
             sender.sendMessage("");
         }
     }

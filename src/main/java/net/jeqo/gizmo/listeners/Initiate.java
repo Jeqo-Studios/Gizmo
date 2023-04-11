@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemFlag;
@@ -21,7 +22,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 
-public class Prime implements Listener {
+public class Initiate implements Listener {
 
     Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
     String shift48 = plugin.getConfig().getString("Unicodes.shift-48");
@@ -30,7 +31,9 @@ public class Prime implements Listener {
 
     public static HashMap<String, ItemStack[]> saveInv = new HashMap<>();
 
-    public static Boolean screening;
+    public static HashMap<UUID, Boolean> screeningPlayers = new HashMap<>();
+
+
 
     @EventHandler
     public void onPackAccept(PlayerResourcePackStatusEvent e) {
@@ -65,7 +68,6 @@ public class Prime implements Listener {
 
 
         } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD || e.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED) {
-            p.setGameMode(Protect.joinGm);
             p.removePotionEffect(PotionEffectType.BLINDNESS);
             if (Objects.equals(plugin.getConfig().getString("messages.no-pack-loaded"), "[]")) {
             } else {
@@ -88,7 +90,9 @@ public class Prime implements Listener {
 
 
     public void welcomeScreen(Player e) {
-        screening = true;
+
+        screeningPlayers.put(e.getUniqueId(), true);
+
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
 
@@ -99,7 +103,6 @@ public class Prime implements Listener {
 
 
                 if (Objects.equals(plugin.getConfig().getString("enable-welcome-screen"), "true")) {
-                    e.getPlayer().setGameMode(GameMode.SPECTATOR);
 
                     if (Objects.equals(plugin.getConfig().getString("enable-background"), "true")) {
                         InventoryView screen = e.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift1013 + plugin.getConfig().getString("Unicodes.background") + shift1536 + plugin.getConfig().getString("Unicodes.welcome-screen")));
@@ -115,7 +118,7 @@ public class Prime implements Listener {
                                     List<String> lore = keySection.getStringList("lore");
                                     for (int i = 0; i < lore.size(); i++) {
                                         if (plugin.papiLoaded()) {
-                                            lore.set(i, PlaceholderAPI.setPlaceholders(e.getPlayer(), lore.get(i)));
+                                            lore.set(i, PlaceholderAPI.setPlaceholders(e.getPlayer(), Utils.hex(lore.get(i))));
                                         } else {
                                             lore.set(i, Utils.hex(lore.get(i)));
                                         }
@@ -208,7 +211,9 @@ public class Prime implements Listener {
     }
 
     public void welcomeScreenInitial(Player e) {
-        screening = true;
+
+        screeningPlayers.put(e.getUniqueId(), true);
+
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             public void run() {
 
@@ -217,9 +222,7 @@ public class Prime implements Listener {
 
 
 
-
                 if (Objects.equals(plugin.getConfig().getString("enable-welcome-screen"), "true")) {
-                    e.getPlayer().setGameMode(GameMode.SPECTATOR);
 
                     if (Objects.equals(plugin.getConfig().getString("enable-background"), "true")) {
                         InventoryView screen = e.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, ChatColor.WHITE + shift1013 + plugin.getConfig().getString("Unicodes.background") + shift1536 + plugin.getConfig().getString("first-join-welcome-screen-unicode")));
@@ -244,7 +247,7 @@ public class Prime implements Listener {
                                     meta.setLore(lore);
                                 }
                                 assert meta != null;
-                                if (keySection.getString("hide-flags") == String.valueOf(true)) {
+                                if (Objects.equals(keySection.getString("hide-flags"), String.valueOf(true))) {
                                     meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
                                     meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
                                     meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -289,7 +292,7 @@ public class Prime implements Listener {
                                     meta.setLore(lore);
                                 }
                                 assert meta != null;
-                                if (keySection.getString("hide-flags") == String.valueOf(true)) {
+                                if (Objects.equals(keySection.getString("hide-flags"), String.valueOf(true))) {
                                     meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
                                     meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
                                     meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -339,17 +342,33 @@ public class Prime implements Listener {
 
         if (e.getPlayer().isOp()) {
             Player p = e.getPlayer();
-            new UpdateChecker(Gizmo.getInstance(), 106243).getVersion(version -> {
+            new UpdateChecker(Gizmo.getInstance(), 106024).getVersion(version -> {
                 if (!Gizmo.getInstance().getDescription().getVersion().equals(version)) {
                     p.sendMessage("");
-                    p.sendMessage(Utils.hex(Gizmo.getMessage("prefix") + "&eNew update! " + version + " is now available."));
-                    p.sendMessage(Utils.hex(Gizmo.getMessage("prefix") + "&eDownload it here: &nhttps://jeqo.net/spigot/bloons"));
+                    p.sendMessage(Utils.hex("#ee0000[Gizmo] " + "&eNew update! " + version + " is now available."));
+                    p.sendMessage(Utils.hex("#ee0000[Gizmo] " + "&eDownload it here: &nhttps://jeqo.net/spigot/gizmo"));
                     p.sendMessage("");
                 }
             });
         }
 
     }
+
+
+
+
+
+    @EventHandler
+    public void onPlayerLeave(PlayerQuitEvent e) {
+
+        if (plugin.getConfig().getString("hide-quit-messages") == String.valueOf(true)) {
+            e.setQuitMessage("");
+        }
+
+    }
+
+
+
 
 
     @EventHandler
