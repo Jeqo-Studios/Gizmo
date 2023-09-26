@@ -15,12 +15,6 @@
   </a>
 </div>
 
-## What is Bloons?
-Bloons is a Minecraft cosmetic plugin that allows for players to have balloons.
-
-## Features
-
-
 ## What is Gizmo?
 Gizmo is a Minecraft utility plugin that allows for unique utilities. Currently Gizmo is capable of custom info screens and screen fade effects through resource pack utilization.
 
