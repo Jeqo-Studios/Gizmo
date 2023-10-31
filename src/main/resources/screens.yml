@@ -1,0 +1,70 @@
+# Unicodes
+# -------------------------
+# The unicode characters of your welcome screen, background, and shifts.
+# These should match the providers in your /assets/minecraft/font/default.json.
+# These are REQUIRED for the plugin to function properly.
+# (Do not change or touch these unless you know what you are doing.)
+Unicodes:
+  shift-48: 
+  shift-1013: 
+  shift-1536: 
+  background: 
+  welcome-screen: 
+  first-join-welcome-screen-unicode: 
+  first-join-background: 
+
+
+
+# Welcome Screen
+# -------------------------
+enable-welcome-screen: true
+once-per-restart: false # If true, the welcome screen will only be displayed once per server session.
+
+Items:
+  first-item: # The item ID; can be whatever.
+    material: DIAMOND_SWORD
+    custom-model-data: 1
+    slot: 8 # Valid slot values: 0-89; 54-89 are the player's inventory.
+    name: '#ee0000The Gizmo Sword'
+    lore:
+      - '#48cfa9Multi-line'
+      - '#f2991d+ hex support!'
+    hide-flags: true # If true, lines in the lore such as "Damage: 4" will be hidden.
+  another-item:
+    material: BARRIER
+    custom-model-data: 1
+    slot: 81
+    name: '#ee0000Gizmo Barrier'
+    lore:
+      - '&7An item lore'
+  a-shiny-diamond:
+    material: DIAMOND
+    custom-model-data: 1
+    slot: 80
+    name: '&bShiny Diamond'
+    lore:
+      - '&3Property of Jeqo'
+
+
+
+# First Join Welcome Screen
+# -------------------------
+enable-first-join-welcome-screen: true
+
+First-Join-Items:
+  first-item:
+    material: DIAMOND_SWORD
+    custom-model-data: 1
+    slot: 46
+    name: '#ee0000The Gizmo Sword'
+    lore:
+      - '#48cfa9Multi-line'
+      - '#f2991d+ hex support!'
+    hide-flags: true
+  another-item:
+    material: BARRIER
+    custom-model-data: 1
+    slot: 81
+    name: '#ee0000Gizmo Barrier'
+    lore:
+      - '&7An item lore.'

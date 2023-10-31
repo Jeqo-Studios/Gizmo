@@ -1,141 +1,52 @@
-# --------------------------------------------------#
+debug-mode: false
+# -------------------------------------------------- #
 #
-# Gizmo 1.1.3-BETA
-# Made by Jeqo
+# Gizmo 1.2.0 - Made by Jeqo
 #
-# Wiki:     https://jeqo.net/gizmo/wiki
-# Discord:     https://jeqo.net/discord
+# Discord:
+# https://jeqo.net/discord
 #
-# --------------------------------------------------#
-#              WELCOME SCREEN SETTINGS              #
-# --------------------------------------------------#
+# Resource & Data Pack Guides:
+# https://jeqo.net/guides
 #
-# Do you want the welcome screen to show on join?
-enable-welcome-screen: true
-# Do you want the background to be a solid color? If this is disabled, make sure to put a background on your welcome screen texture!
-enable-background: true
-# Do you want the screen to fade from black when advancing?
-enable-fade: true
-# Do you want to show the screen to each player only once every time the server restarts?
-once-per-restart: false
-# Change the style of fade when the player advances.
-# Mode A: Uses background color; smoother and fades near.
-# Mode B: Always uses black; smooth and fades into the distance.
-fade-mode: A
-# The amount of time in ticks for the fade.
-fade-time: 10
-# Do you want the player to execute a command upon advancing? If enabled, enter the command without a slash.
-Command-on-Advance:
+# -------------------------------------------------- #
+background-color: '&0' # Minecraft color and hex code supported.
+
+delay: 0 # The delay (in ticks) for the welcome screen to be displayed after joining.
+delay-background: true # Display the background texture while the delay is active.
+
+enable-fade: true # Fade the screen with your background texture when advancing.
+fade-time: 10 # The duration (in ticks) for the fade.
+
+player-command-on-advance: # Force the player to execute commands when advancing.
   enable: false
-  command: 'help'
-# Do you want the welcome screen to auto close after a specific amount of time? Recommended to leave on.
-Auto-Close:
-  enable: true
-  time: 1200 # Time in ticks (Default: 1200)
-# The unicode characters of your welcome screen, background, and shifts.
-# These should match the providers in your /assets/minecraft/font/default.json.
-# These are REQUIRED for the plugin to function properly.
-# (I don't suggest touching this unless you know what you're doing.)
-Unicodes:
-  shift-48: 
-  shift-1013: 
-  shift-1536: 
-  welcome-screen: 
-  background: 
-# Message once the player has advanced from the welcome screen.
-welcome-message:
-  - ' '
-  - ' '
-  - '                           #fc1c1cGizmo - Made by Jeqo'
-  - '                             #acb5bfwww.jeqo.net/gizmo'
-  - ' '
-  - ' '
-# Do you want to display any item on the welcome screen?
-# Slot values range from 0-89; 54-89 are the player's inventory.
-Items:
-  first-item:
-    material: DIAMOND_SWORD
-    custom-model-data: 1
-    slot: 46
-    name: '#ee0000The Gizmo Sword'
-    lore:
-      - '#48cfa9Multi-line'
-      - '#f2991d+ hex support!'
-    hide-flags: true
-  another-item:
-    material: BARRIER
-    custom-model-data: 1
-    slot: 81
-    name: '#ee0000Gizmo Barrier'
-    lore:
-      - '&7An item lore.'
-#
-# --------------------------------------------------#
-#        FIRST JOIN WELCOME SCREEN SETTINGS         #
-# --------------------------------------------------#
-#
-# Do you want to display a different welcome screen on the player's first join?
-first-join-welcome-screen: true
-# The unicode character of your first join welcome screen.
-# This should match the provider in your /assets/minecraft/font/default.json.
-first-join-welcome-screen-unicode: 
-# Message once the player has advanced from the welcome screen.
-first-join-welcome-message:
-  - ' '
-  - ' '
-  - '                           #fc1c1cGizmo - Made by Jeqo'
-  - '                             #acb5bfwww.jeqo.net/gizmo'
-  - ' '
-  - ' '
-# Do you want to display any item on the first join welcome screen?
-# Slot values range from 0-89; 54-89 are the player's inventory.
-First-Join-Items: [] # Disabled by default. Use the item templates from the welcome screen above if needed.
-#
-# --------------------------------------------------#
-#                  OTHER SETTINGS                   #
-# --------------------------------------------------#
-#
-#Do you want to give players blindness when they have the pack prompt?
-blindness-during-prompt: true
-# Do you want to the player to be invulnerable while their pack loads?
-# This is recommended if you don't have a plugin that keeps your players safe whilst loading the pack.
+  commands: # Make sure to enter the command without a "/". Use a new line for each command.
+    - 'msg Jeqo Gizmo is the best!'
+
+console-command-on-advance: # Execute commands from console when the player advances.
+  enable: false
+  commands:
+    - 'give %player% diamond 1'
+    - 'playsound minecraft:ui.toast.in ambient %player% ~ ~ ~ 5 1'
+
+# Give the player invulnerability when loading the pack.
+# Recommended if you don't have a plugin that keeps your players safe whilst loading the pack.
 player-invulnerable-during-load: true
-# Do you want to kick the player if they don't accept the pack?
-kick-on-decline: false
-# Should player join messages be hidden?
-hide-join-messages: false
-# Should player quit messages be hidden?
-hide-quit-messages: false
-# Do you want a sound to play when the player's pack finishes loading?
-Sound-on-Pack-Load:
+blindness-during-prompt: true # Give players blindness when they have the pack prompt.
+
+kick-on-decline: false # Kick the player if they don't accept the pack.
+
+hide-join-messages: false # If true, player join messages will be hidden.
+hide-quit-messages: false # If true, player quit messages will be hidden.
+
+sound-on-pack-load: # Play a sound when the player's pack finishes loading.
   enable: true
   sound: ENTITY_PLAYER_LEVELUP
   volume: 0.5
   pitch: 1
-# Do you want a sound to play when the player advances from the welcome screen?
-Sound-on-Advance:
+
+sound-on-advance: # Play a sound when the player advances from the welcome screen.
   enable: true
   sound: ENTITY_CHICKEN_EGG
   volume: 0.5
   pitch: 1
-#
-# --------------------------------------------------#
-#                     MESSAGES                      #
-# --------------------------------------------------#
-#
-# All messages support Minecraft and hex color codes.
-# Kick-on-decline and welcome-message also have multi-line support.
-messages:
-  config-reloaded: '#acb5bfConfig reloaded.'
-  # Message when a player is kicked for not accepting/loading the server resource pack.
-  kick-on-decline:
-    - '#fc1c1cYou must download the server resource pack to play!'
-    - ' '
-    - '#fc1c1cGizmo - Made by Jeqo'
-    - '#acb5bfwww.jeqo.net/gizmo'
-  # Message when a player joins and did not load/accept the server resource pack.
-  no-pack-loaded: '#acb5bfServer resource pack not detected-skipping welcome screen.'
-  no-permission: '#fc1c1cAccess denied.'
-  player-not-found: '#fc1c1cPlayer not found.'
-  show-screen: '#acb5bfDisplaying test screen.'
-  show-screen-others: '#acb5bfDisplaying test screen to %player_name%'
