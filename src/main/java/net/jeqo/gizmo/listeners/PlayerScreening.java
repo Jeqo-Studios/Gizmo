@@ -67,12 +67,11 @@ public class PlayerScreening implements Listener {
                 }
                 break;
             case DECLINED:
-                break;
             case FAILED_DOWNLOAD:
                 // Debug mode check; if enabled it will still send the player the welcome screen
                 if (plugin.getConfig().getString("debug-mode").equalsIgnoreCase("true")) {
-                    p.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "#acb5bfNo server resource pack detected."));
-                    p.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "#acb5bfDebug mode is enabled."));
+                    p.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "#acb5bfNo server resource pack detected and/or debug mode is enabled."));
+                    p.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "#acb5bfSending welcome screen..."));
                     welcomeScreen(p);
                 } else {
                     p.removePotionEffect(PotionEffectType.BLINDNESS);

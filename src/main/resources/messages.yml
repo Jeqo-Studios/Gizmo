@@ -1,5 +1,5 @@
 # All messages support Minecraft (&f) and hex (#ffffff) color codes.
-# Kick-on-decline and welcome-message also have multi-line support.
+# Kick-on-decline and welcome messages have multi-line support.
 welcome-message:
   - ' '
   - ' '
