@@ -25,14 +25,25 @@ public class Commands implements CommandExecutor {
                 return true;
             } else if (args[0].equalsIgnoreCase("fade")) {
                 if (p.hasPermission("gizmo.fade")) {
-                    if (args.length == 4) {
+                    if (args.length == 5) {
+                        Player target = Bukkit.getPlayer(args[4]);
+                        if (target == null) {
+                            p.sendMessage(chatTranslate(gizmoPrefix() + "&7That player is not online!"));
+                            return true;
+                        }
+                        if (args[1].matches("[0-9]+") && args[2].matches("[0-9]+") && args[3].matches("[0-9]+")) {
+                            target.sendTitle((String) pullScreensConfig("Unicodes.background"), "", Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+                        } else {
+                            p.sendMessage(chatTranslate(gizmoPrefix() + "&7Only numbers can be used for time values!"));
+                        }
+                    } else if (args.length == 4) {
                         if (args[1].matches("[0-9]+") && args[2].matches("[0-9]+") && args[3].matches("[0-9]+")) {
                             p.sendTitle((String) pullScreensConfig("Unicodes.background"), "", Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
                         } else {
                             p.sendMessage(chatTranslate(gizmoPrefix() + "&7Only numbers can be used for time values!"));
                         }
                     } else {
-                        p.sendMessage(chatTranslate(gizmoPrefix() + "&7Usage: /gizmo fade <in> <stay> <out>"));
+                        p.sendMessage(chatTranslate(gizmoPrefix() + "&7Usage: /gizmo fade <in> <stay> <out> [player]"));
                     }
                 } else {
                     if (Objects.equals(pullMessagesConfig("no-permission"), "[]")) {

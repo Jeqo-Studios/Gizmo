@@ -10,13 +10,13 @@ debug-mode: false
 # https://jeqo.net/guides
 #
 # -------------------------------------------------- #
-background-color: '&0' # Minecraft color and hex code supported.
+background-color: '&0' # Minecraft color and hex code supported (i.e. &0 or #000000).
 
-delay: 0 # The delay (in ticks) for the welcome screen to be displayed after joining.
-delay-background: true # Display the background texture while the delay is active.
+delay: 0 # The delay (in ticks; 20 ticks per second) for the welcome screen to be displayed after joining.
+delay-background: false # Display the background texture while the delay is active.
 
 enable-fade: true # Fade the screen with your background texture when advancing.
-fade-time: 10 # The duration (in ticks) for the fade.
+fade-time: 10 # The duration (in ticks; 20 ticks per second) for the fade.
 
 player-command-on-advance: # Force the player to execute commands when advancing.
   enable: false
