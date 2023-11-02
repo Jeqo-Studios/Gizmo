@@ -1,9 +1,7 @@
 package net.jeqo.gizmo;
 
 import net.jeqo.gizmo.data.*;
-import net.jeqo.gizmo.listeners.PlayerScreening;
-import net.jeqo.gizmo.listeners.ScreenAdvance;
-import net.jeqo.gizmo.listeners.ScreenHandlers;
+import net.jeqo.gizmo.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -53,6 +51,7 @@ public final class Gizmo extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new PlayerScreening(), this);
         Bukkit.getPluginManager().registerEvents(new ScreenHandlers(), this);
         Bukkit.getPluginManager().registerEvents(new ScreenAdvance(), this);
+        Bukkit.getPluginManager().registerEvents(new ClickableItems(), this);
     }
     public void loadCommands() {
         Objects.requireNonNull(getCommand("gizmo")).setExecutor(new Commands());

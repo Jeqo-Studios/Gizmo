@@ -1,7 +1,7 @@
 debug-mode: false
 # -------------------------------------------------- #
 #
-# Gizmo 1.2.0 - Made by Jeqo
+# Gizmo 1.2.1 - Made by Jeqo
 #
 # Discord:
 # https://jeqo.net/discord
@@ -18,16 +18,13 @@ delay-background: false # Display the background texture while the delay is acti
 enable-fade: true # Fade the screen with your background texture when advancing.
 fade-time: 10 # The duration (in ticks; 20 ticks per second) for the fade.
 
-player-command-on-advance: # Force the player to execute commands when advancing.
-  enable: false
-  commands: # Make sure to enter the command without a "/". Use a new line for each command.
-    - 'msg Jeqo Gizmo is the best!'
-
-console-command-on-advance: # Execute commands from console when the player advances.
-  enable: false
-  commands:
-    - 'give %player% diamond 1'
-    - 'playsound minecraft:ui.toast.in ambient %player% ~ ~ ~ 5 1'
+# Execute commands from the player or console, or send a message.
+# Valid prefixes: [player], [console], [message]
+# To disable commands -> commands-on-advance: []
+commands-on-advance:
+  - '[player] balance'
+  - '[console] give %player% dirt 1'
+  - '[message] Is that dirt in your inventory? Ew...'
 
 # Give the player invulnerability when loading the pack.
 # Recommended if you don't have a plugin that keeps your players safe whilst loading the pack.

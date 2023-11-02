@@ -1,6 +1,7 @@
 package net.jeqo.gizmo.listeners;
 
 import net.jeqo.gizmo.Gizmo;
+import net.jeqo.gizmo.data.Placeholders;
 import net.jeqo.gizmo.data.Utilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -44,21 +45,25 @@ public class ScreenAdvance implements Listener {
             PlayerScreening.playersScreenActive.remove(p.getUniqueId());
 
 
-            if (pullConfig("player-command-on-advance.enable").equals("true")) {
-                for (String command : plugin.getConfig().getStringList("player-command-on-advance.commands")) {
-                    p.performCommand(command.replace("%player%", p.getName()));
-                }
-            }
-
-            if (pullConfig("console-command-on-advance.enable").equals("true")) {
-                for (String command : plugin.getConfig().getStringList("console-command-on-advance.commands")) {
+            for (String command : plugin.getConfig().getStringList("commands-on-advance")) {
+                if (command.contains("[console]")) {
+                    command = command.replace("[console] ", "");
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", p.getName()));
+                } else if (command.contains("[message]")) {
+                    command = command.replace("[message] ", "");
+                    p.sendMessage(Utilities.chatTranslate(command.replace("%player%", p.getName())));
+                } else if (command.contains("[player]")) {
+                    command = command.replace("[player] ", "");
+                    p.performCommand(command);
+                } else {
+                    p.sendMessage(Placeholders.gizmoPrefix() + "An error occurred. Please review the console for more information.");
+                    Utilities.warn("Commands-on-advance (config.yml) has a command with an invalid format.");
                 }
             }
 
 
             if (!p.hasPlayedBefore()) {
-                if (plugin.getScreensConfig().getString("first-join-welcome-screen").equalsIgnoreCase("true")) {
+                if (Objects.requireNonNull(plugin.getScreensConfig().getString("first-join-welcome-screen")).equalsIgnoreCase("true")) {
                     welcomeMessageFirstJoin(p);
                 }
             } else {

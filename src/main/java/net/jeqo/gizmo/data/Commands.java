@@ -23,6 +23,8 @@ public class Commands implements CommandExecutor {
             if (args.length == 0) {
                 usage(p);
                 return true;
+            } else if (args[0].equalsIgnoreCase("help")) {
+                usage(p);
             } else if (args[0].equalsIgnoreCase("fade")) {
                 if (p.hasPermission("gizmo.fade")) {
                     if (args.length == 5) {
@@ -108,15 +110,16 @@ public class Commands implements CommandExecutor {
     void usage(CommandSender sender) {
         if (sender.hasPermission("gizmo.reload")) {
             sender.sendMessage("");
-            sender.sendMessage(chatTranslate("   " + "#ee0000/gizmo reload &7- Reloads the Gizmo config."));
-            sender.sendMessage(chatTranslate("   " + "#ee0000/gizmo show <player> &7- Displays a test welcome screen."));
-            sender.sendMessage(chatTranslate("   " + "#ee0000/gizmo fade <in> <stay> <out> &7- Display a fade/transition."));
+            sender.sendMessage(chatTranslate("#ee0000Usages:"));
+            sender.sendMessage(chatTranslate("&f/gizmo fade <in> <stay> <out> [player] &7- Displays a fade."));
+            sender.sendMessage(chatTranslate("&f/gizmo reload &7- Reloads the Gizmo configs (not recommended)."));
+            sender.sendMessage(chatTranslate("&f/gizmo show <player> &7- Force displays the welcome screen."));
             sender.sendMessage("");
-            sender.sendMessage(chatTranslate("   " + gizmoPrefixNoDec() + " " + plugin.getDescription().getVersion() + " &7- Made by Jeqo (https://jeqo.net)"));
+            sender.sendMessage(chatTranslate(gizmoPrefixNoDec() + " " + plugin.getDescription().getVersion() + " &f- Made by Jeqo (&nhttps://jeqo.net&r)"));
             sender.sendMessage("");
         } else {
             sender.sendMessage("");
-            sender.sendMessage(chatTranslate("   " + gizmoPrefixNoDec() + " " + plugin.getDescription().getVersion() + " &7- Made by Jeqo (https://jeqo.net)"));
+            sender.sendMessage(chatTranslate(gizmoPrefixNoDec() + " " + plugin.getDescription().getVersion() + " &f- Made by Jeqo (&nhttps://jeqo.net&r)"));
             sender.sendMessage("");
         }
     }

@@ -15,7 +15,7 @@ public class CommandsTabManager implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (sender.hasPermission("gizmo.reload")) {
             if (args.length == 1) {
-                return StringUtil.copyPartialMatches(args[0], Arrays.asList("reload", "rl", "show", "fade"), new ArrayList<>());
+                return StringUtil.copyPartialMatches(args[0], Arrays.asList("fade", "help", "reload", "rl", "show"), new ArrayList<>());
             } else {
                 return Collections.emptyList();
             }

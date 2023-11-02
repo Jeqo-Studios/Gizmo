@@ -30,16 +30,22 @@ Items:
       - '#48cfa9Lores have multi-line'
       - '#f2991dand hex support!'
     hide-flags: true # If true, lines in the lore such as "Damage: 4" will be hidden.
+    # Execute commands from the player or console, or send a message.
+    # Valid prefixes: [player], [console], [message]
+    # Here you can remove the commands section if you don't want to execute commands.
+    commands:
+      - '[player] i diamond 1'
+      - '[console] give %player% emerald 1'
+      - '[message] A diamond and emerald, such a dynamic duo.'
+    close-on-click: true # If true, the welcome screen will close when the player clicks this item.
   another-item:
     material: GLOW_BERRIES
-    custom-model-data: 1
     slot: 53
     name: '&6Gizmo Glow Berries'
     lore:
       - '&7This is an item lore'
   a-shiny-diamond:
     material: DIAMOND
-    custom-model-data: 1
     slot: 62
     name: '&bShiny Diamond'
     lore:
