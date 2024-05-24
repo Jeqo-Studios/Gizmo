@@ -5,7 +5,6 @@ import net.jeqo.gizmo.listeners.PlayerScreeningListener;
 import net.jeqo.gizmo.listeners.ScreenAdvanceListener;
 import net.jeqo.gizmo.listeners.ScreenHandlers;
 import net.jeqo.gizmo.Managers.ConfigManager;
-import net.jeqo.gizmo.Managers.PlayerManager;
 import net.jeqo.gizmo.Managers.ScreeningManager;
 import net.jeqo.gizmo.data.*;
 import org.bukkit.Bukkit;
@@ -22,8 +21,6 @@ public class Gizmo extends JavaPlugin {
 
     public ConfigManager configManager;
     public ScreeningManager screeningManager;
-
-    public PlayerManager playerManager;
 
     @Override
     public void onEnable() {
@@ -48,7 +45,6 @@ public class Gizmo extends JavaPlugin {
     private void loadManagers() {
         configManager = new ConfigManager(this);
         screeningManager = new ScreeningManager(this);
-        playerManager = new PlayerManager();
     }
 
     public void loadCommands() {

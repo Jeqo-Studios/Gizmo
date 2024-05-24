@@ -9,7 +9,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.UUID;
 
 import static net.jeqo.gizmo.data.Placeholders.*;
 import static net.jeqo.gizmo.data.Utilities.*;
@@ -17,6 +19,7 @@ import static net.jeqo.gizmo.data.Utilities.*;
 public class PlayerScreeningListener implements Listener {
 
     private final Gizmo plugin;
+    private final HashMap<UUID, String> playerTracker = new HashMap<>();
 
     public PlayerScreeningListener(Gizmo plugin) {
         this.plugin = plugin;
@@ -52,8 +55,8 @@ public class PlayerScreeningListener implements Listener {
                 // Display the screen once per restart
                 if (plugin.configManager.getScreens().getBoolean("once-per-restart")) {
                     // Check if the player has already seen the screen this server session
-                    if (plugin.playerManager.playerTracker.get(player.getUniqueId()) == null) {
-                        plugin.playerManager.playerTracker.put(player.getUniqueId(), String.valueOf(1));
+                    if (playerTracker.get(player.getUniqueId()) == null) {
+                        playerTracker.put(player.getUniqueId(), String.valueOf(1));
                         plugin.screeningManager.welcomeScreen(player);
                     }
                 } else if (!plugin.configManager.getScreens().getBoolean("once-per-restart")) {
