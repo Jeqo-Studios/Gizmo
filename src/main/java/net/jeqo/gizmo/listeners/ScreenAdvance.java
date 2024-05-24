@@ -63,7 +63,7 @@ public class ScreenAdvance implements Listener {
 
 
             if (!p.hasPlayedBefore()) {
-                if (Objects.requireNonNull(plugin.getScreensConfig().getString("first-join-welcome-screen")).equalsIgnoreCase("true")) {
+                if (Objects.requireNonNull(plugin.configManager.getScreens().getString("first-join-welcome-screen")).equalsIgnoreCase("true")) {
                     welcomeMessageFirstJoin(p);
                 }
             } else {
@@ -72,10 +72,8 @@ public class ScreenAdvance implements Listener {
         }
     }
 
-
-
     private void welcomeMessage(Player p) {
-        String welcomeMessage = (plugin.getMessagesConfig().getString("welcome-message"));
+        String welcomeMessage = (plugin.configManager.getLang().getString("welcome-message"));
         assert welcomeMessage != null;
         if (welcomeMessage.equals("[]")) {
         } else {
@@ -84,10 +82,8 @@ public class ScreenAdvance implements Listener {
         }
     }
 
-
-
     private void welcomeMessageFirstJoin(Player p) {
-        String welcomeMessage = (plugin.getMessagesConfig().getString("first-join-welcome-message"));
+        String welcomeMessage = (plugin.configManager.getLang().getString("first-join-welcome-message"));
         assert welcomeMessage != null;
         if (welcomeMessage.equals("[]")) {
             return;

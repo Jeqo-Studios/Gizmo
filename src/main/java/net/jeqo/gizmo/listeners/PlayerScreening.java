@@ -30,8 +30,6 @@ public class PlayerScreening implements Listener {
     public static HashMap<String, ItemStack[]> saveInv = new HashMap<>();
     public static HashMap<UUID, Boolean> playersScreenActive = new HashMap<>();
 
-
-
     // Resource pack status event
     @EventHandler
     public boolean onPackAccept(PlayerResourcePackStatusEvent e) {
@@ -58,8 +56,8 @@ public class PlayerScreening implements Listener {
                 // Display the screen once per restart
                 if (pullScreensConfig("once-per-restart").equals("true")) {
                     // Check if the player has already seen the screen this server session
-                    if (Gizmo.playerTracker.get(p.getUniqueId()) == null) {
-                        Gizmo.playerTracker.put(p.getUniqueId(), String.valueOf(1));
+                    if (plugin.playerManager.playerTracker.get(p.getUniqueId()) == null) {
+                        plugin.playerManager.playerTracker.put(p.getUniqueId(), String.valueOf(1));
                         welcomeScreen(p);
                     }
                 } else if (pullScreensConfig("once-per-restart").equals("false")) {
@@ -78,7 +76,7 @@ public class PlayerScreening implements Listener {
                     if (Objects.equals(pullMessagesConfig("no-pack-loaded"), "[]")) {
                         return false;
                     } else {
-                        for (String msg : plugin.getMessagesConfig().getStringList("no-pack-loaded")) {
+                        for (String msg : plugin.configManager.getLang().getStringList("no-pack-loaded")) {
                             p.sendMessage(Utilities.chatTranslate(msg));
                         }
                     }
@@ -111,8 +109,8 @@ public class PlayerScreening implements Listener {
                         InventoryView screen = e.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, screenTitle()));
 
                         if (pullScreensConfig("Items") != null) {
-                            for (String key : Objects.requireNonNull(plugin.getScreensConfig().getConfigurationSection("Items")).getKeys(false)) {
-                                ConfigurationSection keySection = Objects.requireNonNull(plugin.getScreensConfig().getConfigurationSection("Items")).getConfigurationSection(key);
+                            for (String key : Objects.requireNonNull(plugin.configManager.getScreens().getConfigurationSection("Items")).getKeys(false)) {
+                                ConfigurationSection keySection = Objects.requireNonNull(plugin.configManager.getScreens().getConfigurationSection("Items")).getConfigurationSection(key);
                                 assert keySection != null;
                                 int slot = keySection.getInt("slot");
                                 ItemStack item = new ItemStack(Objects.requireNonNull(Material.matchMaterial(Objects.requireNonNull(keySection.getString("material")))));
@@ -171,8 +169,8 @@ public class PlayerScreening implements Listener {
                         InventoryView screen = e.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, screenTitleFirstJoin()));
 
                         if (pullScreensConfig("First-Join-Items") != null) {
-                            for (String key : Objects.requireNonNull(plugin.getScreensConfig().getConfigurationSection("First-Join-Items")).getKeys(false)) {
-                                ConfigurationSection keySection = Objects.requireNonNull(plugin.getScreensConfig().getConfigurationSection("First-Join-Items")).getConfigurationSection(key);
+                            for (String key : Objects.requireNonNull(plugin.configManager.getScreens().getConfigurationSection("First-Join-Items")).getKeys(false)) {
+                                ConfigurationSection keySection = Objects.requireNonNull(plugin.configManager.getScreens().getConfigurationSection("First-Join-Items")).getConfigurationSection(key);
                                 assert keySection != null;
                                 int slot = keySection.getInt("slot");
                                 ItemStack item = new ItemStack(Objects.requireNonNull(Material.matchMaterial(Objects.requireNonNull(keySection.getString("material")))));

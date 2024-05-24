@@ -10,6 +10,7 @@ debug-mode: false
 # https://jeqo.net/guides
 #
 # -------------------------------------------------- #
+lang: uk-lang.yml
 background-color: '&0' # Minecraft color and hex code supported (i.e. &0 or #000000).
 
 delay: 0 # The delay (in ticks; 20 ticks per second) for the welcome screen to be displayed after joining.

@@ -27,15 +27,18 @@ public class ClickableItems implements Listener {
             Player p = (Player) e.getWhoClicked();
 
             ItemStack clickedItem = e.getCurrentItem();
+
+            if (clickedItem == null) return;
+
             int rawSlot = e.getRawSlot();
 
-            for (String key : plugin.getScreensConfig().getConfigurationSection("Items").getKeys(false)) {
-                if (plugin.getScreensConfig().getInt("Items." + key + ".slot") == rawSlot) {
-                    if (plugin.getScreensConfig().getString("Items." + key + ".commands") != null) {
-                        if (plugin.getScreensConfig().getString("Items." + key + ".close-on-click").equals("true")) {
+            for (String key : plugin.configManager.getScreens().getConfigurationSection("Items").getKeys(false)) {
+                if (plugin.configManager.getScreens().getInt("Items." + key + ".slot") == rawSlot) {
+                    if (plugin.configManager.getScreens().getString("Items." + key + ".commands") != null) {
+                        if (plugin.configManager.getScreens().getString("Items." + key + ".close-on-click").equals("true")) {
                             p.closeInventory();
                         }
-                        for (String command : plugin.getScreensConfig().getStringList("Items." + key + ".commands")) {
+                        for (String command : plugin.configManager.getScreens().getStringList("Items." + key + ".commands")) {
                             if (command.contains("[console]")) {
                                 command = command.replace("[console] ", "");
                                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", p.getName()));

@@ -34,24 +34,23 @@ public class Utilities {
         return PlaceholderAPI.setPlaceholders(null, ChatColor.translateAlternateColorCodes('&', message));
     }
 
-
-
     public static void log(@NotNull String text) {
         Bukkit.getLogger().log(Level.INFO, "[Gizmo] " + text);
     }
+
     public static void warn(@NotNull String text) {
         Bukkit.getLogger().log(Level.WARNING, "[Gizmo] " + text);
     }
 
-
-
     public static String pullConfig(String id) {
         return Utilities.chatTranslate(plugin.getConfig().getString(id, ""));
     }
+
     public static String pullScreensConfig(String id) {
-        return Utilities.chatTranslate(plugin.getScreensConfig().getString(id, ""));
+        return Utilities.chatTranslate(plugin.configManager.getScreens().getString(id, ""));
     }
+
     public static String pullMessagesConfig(String id) {
-        return Utilities.chatTranslate(plugin.getMessagesConfig().getString(id, ""));
+        return Utilities.chatTranslate(plugin.configManager.getLang().getString(id, ""));
     }
 }
