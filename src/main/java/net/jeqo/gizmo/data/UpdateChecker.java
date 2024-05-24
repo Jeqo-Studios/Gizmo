@@ -18,17 +18,17 @@ import static net.jeqo.gizmo.data.Placeholders.gizmoPrefix;
 
 public class UpdateChecker implements Listener {
 
-    private final JavaPlugin plugin;
+    private final Gizmo plugin;
     private final int resourceId;
-    public UpdateChecker(JavaPlugin plugin, int resourceId) {
+
+    public UpdateChecker(Gizmo plugin, int resourceId) {
         this.plugin = plugin;
         this.resourceId = resourceId;
     }
 
-
     // Check for updates
     public void getVersion(final Consumer<String> consumer) {
-        Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId).openStream(); Scanner scanner = new Scanner(inputStream)) {
                 if (scanner.hasNext()) {
                     consumer.accept(scanner.next());
@@ -39,20 +39,20 @@ public class UpdateChecker implements Listener {
         });
     }
 
-
     // Send a message to the player if there is a new update available
     @EventHandler
-    public void playerJoin(PlayerJoinEvent e) {
-        if (e.getPlayer().isOp()) {
-            Player p = e.getPlayer();
-            new UpdateChecker(Gizmo.getInstance(), 106024).getVersion(version -> {
-                if (!Gizmo.getInstance().getDescription().getVersion().equals(version)) {
-                    p.sendMessage("");
-                    p.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "&eNew update! " + version + " is now available."));
-                    p.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "&eDownload it here: &nhttps://jeqo.net/gizmo"));
-                    p.sendMessage("");
-                }
-            });
-        }
+    public void playerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+
+        if (!player.hasPermission("gizmo.updatechecker")) return;
+
+        new UpdateChecker(plugin, 106024).getVersion(version -> {
+            if (plugin.getDescription().getVersion().equals(version)) return;
+
+            player.sendMessage("");
+            player.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "&eNew update! " + version + " is now available."));
+            player.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "&eDownload it here: &nhttps://jeqo.net/gizmo"));
+            player.sendMessage("");
+        });
     }
 }

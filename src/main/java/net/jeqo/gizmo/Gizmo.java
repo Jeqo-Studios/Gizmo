@@ -18,7 +18,12 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 
-public final class Gizmo extends JavaPlugin implements Listener {
+public class Gizmo extends JavaPlugin implements Listener {
+
+    //TODO change colour support to minimessage
+
+    private static Gizmo instance;
+    private final int pluginId = 16873;
 
     public ConfigManager configManager;
     public PlayerManager playerManager;
@@ -48,23 +53,16 @@ public final class Gizmo extends JavaPlugin implements Listener {
         playerManager = new PlayerManager();
     }
 
-
-
-    public static Gizmo instance;
-    int pluginId = 16873;
-    public static Gizmo getInstance() {
-        return instance;
+    public void loadCommands() {
+        getCommand("gizmo").setExecutor(new Commands());
+        TabCompleter tc = new CommandsTabManager(); Objects.requireNonNull(this.getCommand("gizmo")).setTabCompleter(tc);
     }
 
     public void loadListeners() {
         Bukkit.getPluginManager().registerEvents(new PlayerScreening(), this);
         Bukkit.getPluginManager().registerEvents(new ScreenHandlers(), this);
         Bukkit.getPluginManager().registerEvents(new ScreenAdvance(), this);
-        Bukkit.getPluginManager().registerEvents(new ClickableItems(), this);
-    }
-    public void loadCommands() {
-        getCommand("gizmo").setExecutor(new Commands());
-        TabCompleter tc = new CommandsTabManager(); Objects.requireNonNull(this.getCommand("gizmo")).setTabCompleter(tc);
+        Bukkit.getPluginManager().registerEvents(new ClickableItems(this), this);
     }
 
     public void updateChecker() {
@@ -76,5 +74,9 @@ public final class Gizmo extends JavaPlugin implements Listener {
                 Utilities.warn("|-------------------------------------------------[ MADE BY JEQO ]---|");
             }
         });
+    }
+
+    public static Gizmo getInstance() {
+        return instance;
     }
 }

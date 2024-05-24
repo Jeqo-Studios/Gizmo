@@ -90,59 +90,61 @@ public class PlayerScreening implements Listener {
 
 
     // Welcome screen
-    public static void welcomeScreen(Player e) {
+    public static void welcomeScreen(Player player) {
 
         // Store the player's ID and set the screen to active
-        playersScreenActive.put(e.getUniqueId(), true);
+        playersScreenActive.put(player.getUniqueId(), true);
+
         // Store and clear the player's inventory
-        saveInv.put(e.getPlayer().getName(), e.getPlayer().getInventory().getContents());
-        e.getPlayer().getInventory().clear();
+        saveInv.put(player.getPlayer().getName(), player.getPlayer().getInventory().getContents());
 
+        player.getPlayer().getInventory().clear();
 
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            public void run() {
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
 
-                // Begin the screen sequence
-                // check if screens.yml enable-welcome-screen = true
-                if (pullScreensConfig("enable-welcome-screen").equalsIgnoreCase("true")) {
+            // Begin the screen sequence
+            // check if screens.yml enable-welcome-screen = true
 
-                        InventoryView screen = e.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, screenTitle()));
+            if (pullScreensConfig("enable-welcome-screen").equalsIgnoreCase("true")) {
 
-                        if (pullScreensConfig("Items") != null) {
-                            for (String key : Objects.requireNonNull(plugin.configManager.getScreens().getConfigurationSection("Items")).getKeys(false)) {
-                                ConfigurationSection keySection = Objects.requireNonNull(plugin.configManager.getScreens().getConfigurationSection("Items")).getConfigurationSection(key);
-                                assert keySection != null;
-                                int slot = keySection.getInt("slot");
-                                ItemStack item = new ItemStack(Objects.requireNonNull(Material.matchMaterial(Objects.requireNonNull(keySection.getString("material")))));
-                                ItemMeta meta = item.getItemMeta();
-                                if (pullScreensConfig("Items." + key + ".lore") != null) {
-                                    List<String> lore = keySection.getStringList("lore");
-                                    for (int i = 0; i < lore.size(); i++) {
-                                        lore.set(i, Utilities.chatTranslate(lore.get(i)));
-                                    }
-                                    assert meta != null;
-                                    meta.setLore(lore);
+                    InventoryView screen = player.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, screenTitle()));
+
+                    if (pullScreensConfig("Items") != null) {
+                        for (String key : plugin.configManager.getScreens().getConfigurationSection("Items").getKeys(false)) {
+                            ConfigurationSection keySection = Objects.requireNonNull(plugin.configManager.getScreens().getConfigurationSection("Items")).getConfigurationSection(key);
+                            assert keySection != null;
+                            int slot = keySection.getInt("slot");
+                            ItemStack item = new ItemStack(Objects.requireNonNull(Material.matchMaterial(Objects.requireNonNull(keySection.getString("material")))));
+                            ItemMeta meta = item.getItemMeta();
+
+                            if (pullScreensConfig("Items." + key + ".lore") != null) {
+                                List<String> lore = keySection.getStringList("lore");
+                                for (int i = 0; i < lore.size(); i++) {
+                                    lore.set(i, Utilities.chatTranslate(lore.get(i)));
                                 }
-                                assert meta != null;
-                                if (keySection.getString("hide-flags") == String.valueOf(true)) {
-                                    meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                                    meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
-                                    meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-                                    meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
-                                    meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-                                    meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-                                }
-                                meta.setCustomModelData(keySection.getInt("custom-model-data"));
-                                meta.setDisplayName(Utilities.chatTranslate(keySection.getString("name")));
-                                item.setItemMeta(meta);
-                                assert screen != null;
-                                screen.setItem(slot, item);
+
+                                meta.setLore(lore);
                             }
-                        }
 
-                } else {
-                    return;
-                }
+                            if (keySection.getString("hide-flags") == String.valueOf(true)) {
+                                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                                meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+                                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                                meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+                                meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+                                meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+                            }
+
+                            meta.setCustomModelData(keySection.getInt("custom-model-data"));
+                            meta.setDisplayName(Utilities.chatTranslate(keySection.getString("name")));
+                            item.setItemMeta(meta);
+
+                            screen.setItem(slot, item);
+                        }
+                    }
+
+            } else {
+                return;
             }
         }, plugin.getConfig().getInt("delay"));
     }
@@ -183,7 +185,7 @@ public class PlayerScreening implements Listener {
                                     assert meta != null;
                                     meta.setLore(lore);
                                 }
-                                assert meta != null;
+
                                 if (Objects.equals(keySection.getString("hide-flags"), String.valueOf(true))) {
                                     meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
                                     meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
@@ -195,7 +197,7 @@ public class PlayerScreening implements Listener {
                                 meta.setCustomModelData(keySection.getInt("custom-model-data"));
                                 meta.setDisplayName(Utilities.chatTranslate(keySection.getString("name")));
                                 item.setItemMeta(meta);
-                                assert screen != null;
+
                                 screen.setItem(slot, item);
                             }
                         }
