@@ -2,6 +2,7 @@ package net.jeqo.gizmo;
 
 import net.jeqo.gizmo.Managers.ConfigManager;
 import net.jeqo.gizmo.Managers.PlayerManager;
+import net.jeqo.gizmo.Managers.ScreeningManager;
 import net.jeqo.gizmo.data.*;
 import net.jeqo.gizmo.listeners.*;
 import org.bukkit.Bukkit;
@@ -26,6 +27,8 @@ public class Gizmo extends JavaPlugin implements Listener {
     private final int pluginId = 16873;
 
     public ConfigManager configManager;
+    public ScreeningManager screeningManager;
+
     public PlayerManager playerManager;
 
     @Override
@@ -50,6 +53,7 @@ public class Gizmo extends JavaPlugin implements Listener {
 
     private void loadManagers() {
         configManager = new ConfigManager(this);
+        screeningManager = new ScreeningManager(this);
         playerManager = new PlayerManager();
     }
 
@@ -58,8 +62,8 @@ public class Gizmo extends JavaPlugin implements Listener {
         TabCompleter tc = new CommandsTabManager(); Objects.requireNonNull(this.getCommand("gizmo")).setTabCompleter(tc);
     }
 
-    public void loadListeners() {
-        Bukkit.getPluginManager().registerEvents(new PlayerScreening(), this);
+    private void loadListeners() {
+        Bukkit.getPluginManager().registerEvents(new PlayerScreening(this), this);
         Bukkit.getPluginManager().registerEvents(new ScreenHandlers(), this);
         Bukkit.getPluginManager().registerEvents(new ScreenAdvance(), this);
         Bukkit.getPluginManager().registerEvents(new ClickableItems(this), this);

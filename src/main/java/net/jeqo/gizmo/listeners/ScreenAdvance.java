@@ -42,7 +42,7 @@ public class ScreenAdvance implements Listener {
             }
 
 
-            PlayerScreening.playersScreenActive.remove(p.getUniqueId());
+            plugin.screeningManager.playersScreenActive.remove(p.getUniqueId());
 
 
             for (String command : plugin.getConfig().getStringList("commands-on-advance")) {

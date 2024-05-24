@@ -25,140 +25,83 @@ import static net.jeqo.gizmo.data.Utilities.*;
 
 public class PlayerScreening implements Listener {
 
+    private final Gizmo plugin;
 
-    static Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
-    public static HashMap<String, ItemStack[]> saveInv = new HashMap<>();
-    public static HashMap<UUID, Boolean> playersScreenActive = new HashMap<>();
+    public PlayerScreening(Gizmo plugin) {
+        this.plugin = plugin;
+    }
 
     // Resource pack status event
     @EventHandler
-    public boolean onPackAccept(PlayerResourcePackStatusEvent e) {
-        Player p = e.getPlayer();
-        switch (e.getStatus()) {
+    public boolean onPackAccept(PlayerResourcePackStatusEvent event) {
+        Player player = event.getPlayer();
+
+        switch (event.getStatus()) {
             case ACCEPTED:
                 // Display the background unicode during the delay
-                if (plugin.getConfig().getString("delay-background").equals("true")) {
-                    p.sendTitle(pullConfig("background-color") + (String) pullScreensConfig("Unicodes.background"), "", 0, 999999, 0);
-                }
+                if (!plugin.configManager.getConfig().getBoolean("delay-background")) return true;
+                player.sendTitle(pullConfig("background-color") + pullScreensConfig("Unicodes.background"), "", 0, 999999, 0);
                 break;
             case SUCCESSFULLY_LOADED:
                 // Play a configured sound when the pack is loaded
-                if (Objects.equals(plugin.getConfig().getString("sound-on-pack-load.enable"), "true")) {
-                    p.playSound(p.getLocation(), Sound.valueOf(plugin.getConfig().getString("sound-on-pack-load.sound")), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("sound-on-pack-load.volume"))), Float.parseFloat(Objects.requireNonNull(plugin.getConfig().getString("sound-on-pack-load.pitch"))));
+                if (plugin.configManager.getConfig().getBoolean("sound-on-pack-load.enable")) {
+                    player.playSound(player.getLocation(), Sound.valueOf(plugin.getConfig().getString("sound-on-pack-load.sound")),
+                            Float.parseFloat(plugin.getConfig().getString("sound-on-pack-load.volume")),
+                            Float.parseFloat(plugin.getConfig().getString("sound-on-pack-load.pitch")));
                 }
+
                 // Display first time welcome screen
-                if (!p.hasPlayedBefore()) {
-                    if (pullScreensConfig("first-join-welcome-screen").equalsIgnoreCase("true")) {
-                        welcomeScreenInitial(p);
+                if (!player.hasPlayedBefore()) {
+                    if (plugin.configManager.getScreens().getBoolean("first-join-welcome-screen")) {
+                        welcomeScreenInitial(player);
                         return false;
                     }
                 }
+
                 // Display the screen once per restart
-                if (pullScreensConfig("once-per-restart").equals("true")) {
+                if (plugin.configManager.getScreens().getBoolean("once-per-restart")) {
                     // Check if the player has already seen the screen this server session
-                    if (plugin.playerManager.playerTracker.get(p.getUniqueId()) == null) {
-                        plugin.playerManager.playerTracker.put(p.getUniqueId(), String.valueOf(1));
-                        welcomeScreen(p);
+                    if (plugin.playerManager.playerTracker.get(player.getUniqueId()) == null) {
+                        plugin.playerManager.playerTracker.put(player.getUniqueId(), String.valueOf(1));
+                        plugin.screeningManager.welcomeScreen(player);
                     }
-                } else if (pullScreensConfig("once-per-restart").equals("false")) {
-                    welcomeScreen(p);
+                } else if (!plugin.configManager.getScreens().getBoolean("once-per-restart")) {
+                    plugin.screeningManager.welcomeScreen(player);
                 }
+
                 break;
             case DECLINED:
             case FAILED_DOWNLOAD:
                 // Debug mode check; if enabled it will still send the player the welcome screen
-                if (plugin.getConfig().getString("debug-mode").equalsIgnoreCase("true")) {
-                    p.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "#acb5bfNo server resource pack detected and/or debug mode is enabled."));
-                    p.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "#acb5bfSending welcome screen..."));
-                    welcomeScreen(p);
+                if (plugin.configManager.getConfig().getBoolean("debug-mode")) {
+                    player.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "#acb5bfNo server resource pack detected and/or debug mode is enabled."));
+                    player.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "#acb5bfSending welcome screen..."));
+                    plugin.screeningManager.welcomeScreen(player);
                 } else {
-                    p.removePotionEffect(PotionEffectType.BLINDNESS);
+                    player.removePotionEffect(PotionEffectType.BLINDNESS);
+
+                    //TODO fix this
                     if (Objects.equals(pullMessagesConfig("no-pack-loaded"), "[]")) {
                         return false;
                     } else {
                         for (String msg : plugin.configManager.getLang().getStringList("no-pack-loaded")) {
-                            p.sendMessage(Utilities.chatTranslate(msg));
+                            player.sendMessage(Utilities.chatTranslate(msg));
                         }
                     }
                 }
+
                 break;
         }
         return false;
     }
 
-
-
-
-    // Welcome screen
-    public static void welcomeScreen(Player player) {
-
-        // Store the player's ID and set the screen to active
-        playersScreenActive.put(player.getUniqueId(), true);
-
-        // Store and clear the player's inventory
-        saveInv.put(player.getPlayer().getName(), player.getPlayer().getInventory().getContents());
-
-        player.getPlayer().getInventory().clear();
-
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-
-            // Begin the screen sequence
-            // check if screens.yml enable-welcome-screen = true
-
-            if (pullScreensConfig("enable-welcome-screen").equalsIgnoreCase("true")) {
-
-                    InventoryView screen = player.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, screenTitle()));
-
-                    if (pullScreensConfig("Items") != null) {
-                        for (String key : plugin.configManager.getScreens().getConfigurationSection("Items").getKeys(false)) {
-                            ConfigurationSection keySection = Objects.requireNonNull(plugin.configManager.getScreens().getConfigurationSection("Items")).getConfigurationSection(key);
-                            assert keySection != null;
-                            int slot = keySection.getInt("slot");
-                            ItemStack item = new ItemStack(Objects.requireNonNull(Material.matchMaterial(Objects.requireNonNull(keySection.getString("material")))));
-                            ItemMeta meta = item.getItemMeta();
-
-                            if (pullScreensConfig("Items." + key + ".lore") != null) {
-                                List<String> lore = keySection.getStringList("lore");
-                                for (int i = 0; i < lore.size(); i++) {
-                                    lore.set(i, Utilities.chatTranslate(lore.get(i)));
-                                }
-
-                                meta.setLore(lore);
-                            }
-
-                            if (keySection.getString("hide-flags") == String.valueOf(true)) {
-                                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                                meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
-                                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-                                meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
-                                meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-                                meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-                            }
-
-                            meta.setCustomModelData(keySection.getInt("custom-model-data"));
-                            meta.setDisplayName(Utilities.chatTranslate(keySection.getString("name")));
-                            item.setItemMeta(meta);
-
-                            screen.setItem(slot, item);
-                        }
-                    }
-
-            } else {
-                return;
-            }
-        }, plugin.getConfig().getInt("delay"));
-    }
-
-
-
-
     // Welcome screen first join
     public void welcomeScreenInitial(Player e) {
 
         // Store the player's ID and set the screen to active
-        playersScreenActive.put(e.getUniqueId(), true);
+        plugin.screeningManager.playersScreenActive.put(e.getUniqueId(), true);
         // Store and clear the player's inventory
-        saveInv.put(e.getPlayer().getName(), e.getPlayer().getInventory().getContents());
+        plugin.screeningManager.saveInv.put(e.getPlayer().getName(), e.getPlayer().getInventory().getContents());
         e.getPlayer().getInventory().clear();
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -205,6 +148,6 @@ public class PlayerScreening implements Listener {
                     return;
                 }
             }
-        }, plugin.getConfig().getInt("delay"));
+        }, plugin.configManager.getConfig().getInt("delay"));
     }
 }

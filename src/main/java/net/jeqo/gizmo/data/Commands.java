@@ -71,7 +71,7 @@ public class Commands implements CommandExecutor {
                     Player t = Bukkit.getPlayer(args [1]);
                     if (p.hasPermission("gizmo.show")) {
                         if (t != null) {
-                            PlayerScreening.welcomeScreen(t);
+                            plugin.screeningManager.welcomeScreen(t);
                             if (Objects.equals(pullMessagesConfig("show-screen-others"), "[]")) {
                             } else {
                                 p.sendMessage(chatTranslate(gizmoPrefix() + pullMessagesConfig("show-screen-others")));
@@ -90,7 +90,7 @@ public class Commands implements CommandExecutor {
                     }
                 } else {
                     if (p.hasPermission("gizmo.show")) {
-                        PlayerScreening.welcomeScreen(p);
+                        plugin.screeningManager.welcomeScreen(p);
                     } else {
                         if (Objects.equals(pullMessagesConfig("no-permission"), "[]")) {
                         } else {

@@ -21,7 +21,6 @@ import java.util.Objects;
 
 import static net.jeqo.gizmo.data.Placeholders.screenTitle;
 import static net.jeqo.gizmo.data.Placeholders.screenTitleFirstJoin;
-import static net.jeqo.gizmo.listeners.PlayerScreening.saveInv;
 
 public class ScreenHandlers implements Listener {
 
@@ -70,7 +69,7 @@ public class ScreenHandlers implements Listener {
     public void restoreInv(InventoryCloseEvent e) {
         Player p = (Player) e.getPlayer();
         if (e.getView().getTitle().equals(screenTitle()) || e.getView().getTitle().equals(screenTitleFirstJoin())) {
-            p.getInventory().setContents((ItemStack[]) saveInv.get(p.getName()));
+            p.getInventory().setContents((ItemStack[]) plugin.screeningManager.saveInv.get(p.getName()));
         }
     }
 
@@ -95,8 +94,8 @@ public class ScreenHandlers implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
-        if (PlayerScreening.playersScreenActive.get(p.getUniqueId()) != null) {
-            if (PlayerScreening.playersScreenActive.get(p.getUniqueId())) {
+        if (plugin.screeningManager.playersScreenActive.get(p.getUniqueId()) != null) {
+            if (plugin.screeningManager.playersScreenActive.get(p.getUniqueId())) {
                 e.setCancelled(true);
             }
         }
@@ -107,8 +106,8 @@ public class ScreenHandlers implements Listener {
         Entity entity = e.getEntity();
         if (entity instanceof Player) {
             Player p = (Player) e.getEntity();
-            if (PlayerScreening.playersScreenActive.get(p.getUniqueId()) != null) {
-                if (PlayerScreening.playersScreenActive.get(p.getUniqueId())) {
+            if (plugin.screeningManager.playersScreenActive.get(p.getUniqueId()) != null) {
+                if (plugin.screeningManager.playersScreenActive.get(p.getUniqueId())) {
                     e.setCancelled(true);
                 }
             }
@@ -118,8 +117,8 @@ public class ScreenHandlers implements Listener {
     @EventHandler
     public void onSlotClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
-        if (PlayerScreening.playersScreenActive.get(p.getUniqueId()) != null) {
-            if (PlayerScreening.playersScreenActive.get(p.getUniqueId())) {
+        if (plugin.screeningManager.playersScreenActive.get(p.getUniqueId()) != null) {
+            if (plugin.screeningManager.playersScreenActive.get(p.getUniqueId())) {
                 e.setCancelled(true);
             }
         }
@@ -136,8 +135,8 @@ public class ScreenHandlers implements Listener {
         if (Objects.equals(plugin.getConfig().getString("player-invulnerable-during-load"), "true")) {
             if (entity instanceof Player) {
                 Player p = (Player) e.getEntity();
-                if (PlayerScreening.playersScreenActive.get(p.getUniqueId()) != null) {
-                    if (PlayerScreening.playersScreenActive.get(p.getUniqueId())) {
+                if (plugin.screeningManager.playersScreenActive.get(p.getUniqueId()) != null) {
+                    if (plugin.screeningManager.playersScreenActive.get(p.getUniqueId())) {
                         e.setCancelled(true);
                     }
                 }
@@ -151,8 +150,8 @@ public class ScreenHandlers implements Listener {
         if (Objects.equals(plugin.getConfig().getString("player-invulnerable-during-load"), "true")) {
             if (entity instanceof Player) {
                 Player p = (Player) e.getEntity();
-                if (PlayerScreening.playersScreenActive.get(p.getUniqueId()) != null) {
-                    if (PlayerScreening.playersScreenActive.get(p.getUniqueId())) {
+                if (plugin.screeningManager.playersScreenActive.get(p.getUniqueId()) != null) {
+                    if (plugin.screeningManager.playersScreenActive.get(p.getUniqueId())) {
                         e.setCancelled(true);
                     }
                 }
@@ -164,8 +163,8 @@ public class ScreenHandlers implements Listener {
     public void onPlayerItemDamage(PlayerItemDamageEvent e) {
         if (Objects.equals(plugin.getConfig().getString("player-invulnerable-during-load"), "true")) {
             Player p = (Player) e.getPlayer();
-            if (PlayerScreening.playersScreenActive.get(p.getUniqueId()) != null) {
-                if (PlayerScreening.playersScreenActive.get(p.getUniqueId())) {
+            if (plugin.screeningManager.playersScreenActive.get(p.getUniqueId()) != null) {
+                if (plugin.screeningManager.playersScreenActive.get(p.getUniqueId())) {
                     e.setCancelled(true);
                 }
             }

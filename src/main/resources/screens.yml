@@ -20,6 +20,7 @@ Unicodes:
 enable-welcome-screen: true
 once-per-restart: false # If true, the welcome screen will only be displayed once per server session.
 
+# If wish to remove, remove the entire section
 Items:
   first-item: # The item ID; can be whatever.
     material: DIAMOND_SWORD
