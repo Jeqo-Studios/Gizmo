@@ -24,9 +24,11 @@ import static net.jeqo.gizmo.data.Placeholders.screenTitleFirstJoin;
 
 public class ScreenHandlers implements Listener {
 
-    Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
+    private final Gizmo plugin;
 
-
+    public ScreenHandlers(Gizmo plugin) {
+        this.plugin = plugin;
+    }
 
     // Player join handlers
     @EventHandler

@@ -1,29 +1,23 @@
 package net.jeqo.gizmo;
 
+import net.jeqo.gizmo.listeners.ClickableItems;
+import net.jeqo.gizmo.listeners.PlayerScreeningListener;
+import net.jeqo.gizmo.listeners.ScreenAdvanceListener;
+import net.jeqo.gizmo.listeners.ScreenHandlers;
 import net.jeqo.gizmo.Managers.ConfigManager;
 import net.jeqo.gizmo.Managers.PlayerManager;
 import net.jeqo.gizmo.Managers.ScreeningManager;
 import net.jeqo.gizmo.data.*;
-import net.jeqo.gizmo.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Objects;
-import java.util.UUID;
 
-public class Gizmo extends JavaPlugin implements Listener {
+public class Gizmo extends JavaPlugin {
 
     //TODO change colour support to minimessage
 
-    private static Gizmo instance;
     private final int pluginId = 16873;
 
     public ConfigManager configManager;
@@ -38,9 +32,9 @@ public class Gizmo extends JavaPlugin implements Listener {
         Utilities.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
 
         loadManagers();
+        loadListeners();
 
-        instance = this;
-        loadListeners(); loadCommands();
+        loadCommands();
         Metrics metrics = new Metrics(this, pluginId); updateChecker();
     }
 
@@ -63,9 +57,9 @@ public class Gizmo extends JavaPlugin implements Listener {
     }
 
     private void loadListeners() {
-        Bukkit.getPluginManager().registerEvents(new PlayerScreening(this), this);
-        Bukkit.getPluginManager().registerEvents(new ScreenHandlers(), this);
-        Bukkit.getPluginManager().registerEvents(new ScreenAdvance(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerScreeningListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new ScreenHandlers(this), this);
+        Bukkit.getPluginManager().registerEvents(new ScreenAdvanceListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ClickableItems(this), this);
     }
 
@@ -78,9 +72,5 @@ public class Gizmo extends JavaPlugin implements Listener {
                 Utilities.warn("|-------------------------------------------------[ MADE BY JEQO ]---|");
             }
         });
-    }
-
-    public static Gizmo getInstance() {
-        return instance;
     }
 }

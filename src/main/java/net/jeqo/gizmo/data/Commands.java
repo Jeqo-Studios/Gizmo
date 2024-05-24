@@ -1,7 +1,6 @@
 package net.jeqo.gizmo.data;
 
 import net.jeqo.gizmo.Gizmo;
-import net.jeqo.gizmo.listeners.PlayerScreening;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

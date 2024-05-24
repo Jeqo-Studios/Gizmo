@@ -10,8 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Objects;
-
 import static net.jeqo.gizmo.data.Placeholders.screenTitle;
 
 public class ClickableItems implements Listener {

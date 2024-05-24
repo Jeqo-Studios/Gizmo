@@ -17,6 +17,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import static net.jeqo.gizmo.data.Placeholders.screenTitle;
+import static net.jeqo.gizmo.data.Placeholders.screenTitleFirstJoin;
 
 public class ScreeningManager {
 
@@ -74,6 +75,56 @@ public class ScreeningManager {
 
                     meta.setCustomModelData(plugin.configManager.getScreens().getInt("Items." + key + ".custom-model-data"));
                     meta.setDisplayName(Utilities.chatTranslate(plugin.configManager.getScreens().getString("Items." + key + ".name")));
+                    item.setItemMeta(meta);
+
+                    screen.setItem(slot, item);
+                }
+            }
+        }, plugin.configManager.getConfig().getInt("delay"));
+    }
+
+    // Welcome screen first join
+    public void welcomeScreenInitial(Player player) {
+        // Store the player's ID and set the screen to active
+        plugin.screeningManager.playersScreenActive.put(player.getUniqueId(), true);
+        // Store and clear the player's inventory
+        plugin.screeningManager.saveInv.put(player.getPlayer().getName(), player.getPlayer().getInventory().getContents());
+        player.getPlayer().getInventory().clear();
+
+        // Begin the screen sequence
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            // check if screens.yml enable-first-join-welcome-screen = true
+            if (!plugin.configManager.getScreens().getBoolean("enable-first-join-welcome-screen")) return;
+
+            InventoryView screen = player.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, screenTitleFirstJoin()));
+
+            if (plugin.configManager.getScreens().get("First-Join-Items") != null) {
+                for (String key : Objects.requireNonNull(plugin.configManager.getScreens().getConfigurationSection("First-Join-Items")).getKeys(false)) {
+
+                    int slot = plugin.configManager.getScreens().getInt("First-Join-Items" + key + ".slot");
+                    ItemStack item = new ItemStack(Material.matchMaterial(plugin.configManager.getScreens().getString("First-Join-Items." + key + ".material")));
+                    ItemMeta meta = item.getItemMeta();
+
+                    if (plugin.configManager.getScreens().get("First-Join-Items." + key + ".lore") != null) {
+                        List<String> lore = plugin.configManager.getScreens().getStringList("First-Join-Items." + key + ".lore");
+                        for (int i = 0; i < lore.size(); i++) {
+                            lore.set(i, Utilities.chatTranslate(lore.get(i)));
+                        }
+
+                        meta.setLore(lore);
+                    }
+
+                    if (plugin.configManager.getScreens().getBoolean("First-Join-Items." + key + ".hide-flags")) {
+                        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                        meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+                        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                        meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+                        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+                        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+                    }
+
+                    meta.setCustomModelData(plugin.configManager.getScreens().getInt("First-Join-Items." + key + ".custom-model-data"));
+                    meta.setDisplayName(Utilities.chatTranslate(plugin.configManager.getScreens().getString("First-Join-Items." + key + ".name")));
                     item.setItemMeta(meta);
 
                     screen.setItem(slot, item);
