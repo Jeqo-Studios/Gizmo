@@ -36,18 +36,19 @@ public class ScreenAdvanceListener implements Listener {
         if (!event.getView().getTitle().equals(screenTitle())) return;
         if (!plugin.screeningManager.playersScreenActive.get(player.getUniqueId())) return;
 
+        if (processingPlayers.contains(player.getUniqueId())) return;
+
         if (plugin.configManager.getConfig().getBoolean("enable-fade")) {
             player.sendTitle(Utilities.chatTranslate(pullConfig("background-color") + pullScreensConfig("Unicodes.background")), "", 0, 5, plugin.getConfig().getInt("fade-time"));
         }
 
-        if (processingPlayers.contains(player.getUniqueId())) return;
         processingPlayers.add(player.getUniqueId());
 
         try {
             if (plugin.configManager.getConfig().getBoolean("sound-on-advance.enable")) {
-                player.playSound(player.getLocation(), Sound.valueOf(plugin.getConfig().getString("sound-on-advance.sound")),
-                        Float.parseFloat(plugin.getConfig().getString("sound-on-advance.volume")),
-                        Float.parseFloat(plugin.getConfig().getString("sound-on-advance.pitch")));
+                player.playSound(player.getLocation(), Sound.valueOf(plugin.configManager.getConfig().getString("sound-on-advance.sound")),
+                        Float.parseFloat(plugin.configManager.getConfig().getString("sound-on-advance.volume")),
+                        Float.parseFloat(plugin.configManager.getConfig().getString("sound-on-advance.pitch")));
             }
         } catch (NullPointerException ex) {
             Utilities.warn("sound-on-advance is not configured correctly.");

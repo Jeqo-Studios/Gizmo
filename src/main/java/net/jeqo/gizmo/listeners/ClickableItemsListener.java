@@ -12,11 +12,11 @@ import org.bukkit.inventory.ItemStack;
 
 import static net.jeqo.gizmo.data.Placeholders.screenTitle;
 
-public class ClickableItems implements Listener {
+public class ClickableItemsListener implements Listener {
 
     private final Gizmo plugin;
 
-    public ClickableItems(Gizmo plugin) {
+    public ClickableItemsListener(Gizmo plugin) {
         this.plugin = plugin;
     }
 

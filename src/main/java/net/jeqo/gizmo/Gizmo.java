@@ -1,9 +1,9 @@
 package net.jeqo.gizmo;
 
-import net.jeqo.gizmo.listeners.ClickableItems;
+import net.jeqo.gizmo.listeners.ClickableItemsListener;
 import net.jeqo.gizmo.listeners.PlayerScreeningListener;
 import net.jeqo.gizmo.listeners.ScreenAdvanceListener;
-import net.jeqo.gizmo.listeners.ScreenHandlers;
+import net.jeqo.gizmo.listeners.ScreenHandlersListener;
 import net.jeqo.gizmo.Managers.ConfigManager;
 import net.jeqo.gizmo.Managers.ScreeningManager;
 import net.jeqo.gizmo.data.*;
@@ -47,19 +47,19 @@ public class Gizmo extends JavaPlugin {
         screeningManager = new ScreeningManager(this);
     }
 
-    public void loadCommands() {
+    private void loadCommands() {
         getCommand("gizmo").setExecutor(new Commands());
         TabCompleter tc = new CommandsTabManager(); Objects.requireNonNull(this.getCommand("gizmo")).setTabCompleter(tc);
     }
 
     private void loadListeners() {
         Bukkit.getPluginManager().registerEvents(new PlayerScreeningListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new ScreenHandlers(this), this);
+        Bukkit.getPluginManager().registerEvents(new ScreenHandlersListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ScreenAdvanceListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new ClickableItems(this), this);
+        Bukkit.getPluginManager().registerEvents(new ClickableItemsListener(this), this);
     }
 
-    public void updateChecker() {
+    private void updateChecker() {
         new UpdateChecker(this, 106024).getVersion(version -> {
             if (!this.getDescription().getVersion().equals(version)) {
                 Utilities.warn("|---[ GIZMO ]--------------------------------------------------------|");
