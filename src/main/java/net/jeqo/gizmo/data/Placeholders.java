@@ -1,10 +1,6 @@
 package net.jeqo.gizmo.data;
 
 import net.jeqo.gizmo.Gizmo;
-import org.bukkit.ChatColor;
-
-import static net.jeqo.gizmo.data.Utilities.pullConfig;
-import static net.jeqo.gizmo.data.Utilities.pullScreensConfig;
 
 public class Placeholders {
 

@@ -1,5 +1,6 @@
 package net.jeqo.gizmo;
 
+import net.jeqo.gizmo.Managers.Commands.GizmoCommandManager;
 import net.jeqo.gizmo.data.UpdateChecker;
 import net.jeqo.gizmo.listeners.ClickableItemsListener;
 import net.jeqo.gizmo.listeners.PlayerScreeningListener;
@@ -9,7 +10,6 @@ import net.jeqo.gizmo.Managers.ConfigManager;
 import net.jeqo.gizmo.Managers.ScreeningManager;
 import net.jeqo.gizmo.data.*;
 import org.bukkit.Bukkit;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
@@ -51,9 +51,7 @@ public class Gizmo extends JavaPlugin {
     }
 
     private void loadCommands() {
-        getCommand("gizmo").setExecutor(new Commands());
-        TabCompleter tc = new CommandsTabManager();
-        this.getCommand("gizmo").setTabCompleter(tc);
+        new GizmoCommandManager(this);
     }
 
     private void loadListeners() {

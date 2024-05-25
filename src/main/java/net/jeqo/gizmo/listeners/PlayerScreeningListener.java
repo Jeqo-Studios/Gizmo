@@ -2,7 +2,6 @@ package net.jeqo.gizmo.listeners;
 
 import net.jeqo.gizmo.Gizmo;
 import net.jeqo.gizmo.Utils.ColourUtils;
-import net.jeqo.gizmo.data.Utilities;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
