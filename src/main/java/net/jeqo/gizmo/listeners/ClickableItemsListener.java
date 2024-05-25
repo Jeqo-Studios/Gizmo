@@ -1,6 +1,7 @@
 package net.jeqo.gizmo.listeners;
 
 import net.jeqo.gizmo.Gizmo;
+import net.jeqo.gizmo.Utils.ColourUtils;
 import net.jeqo.gizmo.data.Placeholders;
 import net.jeqo.gizmo.data.Utilities;
 import org.bukkit.Bukkit;
@@ -16,6 +17,8 @@ public class ClickableItemsListener implements Listener {
 
     private final Gizmo plugin;
 
+    private final ColourUtils colourUtils = new ColourUtils();
+
     public ClickableItemsListener(Gizmo plugin) {
         this.plugin = plugin;
     }
@@ -24,7 +27,7 @@ public class ClickableItemsListener implements Listener {
     public void onCommandItemClick(InventoryClickEvent event) {
         if (!event.getView().getTitle().equals(screenTitle())) return;
 
-        Player p = (Player) event.getWhoClicked();
+        Player player = (Player) event.getWhoClicked();
 
         ItemStack clickedItem = event.getCurrentItem();
 
@@ -36,22 +39,22 @@ public class ClickableItemsListener implements Listener {
             if (plugin.configManager.getScreens().getInt("Items." + key + ".slot") == rawSlot) {
                 if (plugin.configManager.getScreens().getString("Items." + key + ".commands") != null) {
                     if (plugin.configManager.getScreens().getString("Items." + key + ".close-on-click").equals("true")) {
-                        p.closeInventory();
+                        player.closeInventory();
                     }
 
                     for (String command : plugin.configManager.getScreens().getStringList("Items." + key + ".commands")) {
                         if (command.contains("[console]")) {
                             command = command.replace("[console] ", "");
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", p.getName()));
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", player.getName()));
                         } else if (command.contains("[message]")) {
                             command = command.replace("[message] ", "");
-                            p.sendMessage(Utilities.chatTranslate(command.replace("%player%", p.getName())));
+                            player.sendMessage(colourUtils.oldFormat(command.replace("%player%", player.getName())));
                         } else if (command.contains("[player]")) {
                             command = command.replace("[player] ", "");
-                            p.performCommand(command);
+                            player.performCommand(command);
                         } else {
-                            p.sendMessage(Placeholders.gizmoPrefix() + "An error occurred. Please review the console for more information.");
-                            Utilities.warn("\"" + key + "\"" + " (screens.yml) has a command with an invalid format.");
+                            player.sendMessage(Placeholders.gizmoPrefix() + "An error occurred. Please review the console for more information.");
+                            plugin.getLogger().warning("\"" + key + "\"" + " (screens.yml) has a command with an invalid format.");
                         }
                     }
                 }

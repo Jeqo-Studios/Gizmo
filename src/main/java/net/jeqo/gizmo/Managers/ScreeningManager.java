@@ -1,10 +1,9 @@
 package net.jeqo.gizmo.Managers;
 
 import net.jeqo.gizmo.Gizmo;
-import net.jeqo.gizmo.data.Utilities;
+import net.jeqo.gizmo.Utils.ColourUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemFlag;
@@ -13,7 +12,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 import static net.jeqo.gizmo.data.Placeholders.screenTitle;
@@ -25,6 +23,8 @@ public class ScreeningManager {
 
     public HashMap<String, ItemStack[]> saveInv = new HashMap<>();
     public HashMap<UUID, Boolean> playersScreenActive = new HashMap<>();
+
+    private final ColourUtils colourUtils = new ColourUtils();
 
     public ScreeningManager(Gizmo plugin) {
         this.plugin = plugin;
@@ -58,7 +58,7 @@ public class ScreeningManager {
                         List<String> lore = plugin.configManager.getScreens().getStringList("Items." + key + ".lore");
 
                         for (int i = 0; i < lore.size(); i++) {
-                            lore.set(i, Utilities.chatTranslate(lore.get(i)));
+                            lore.set(i, colourUtils.oldFormat(lore.get(i)));
                         }
 
                         meta.setLore(lore);
@@ -74,7 +74,7 @@ public class ScreeningManager {
                     }
 
                     meta.setCustomModelData(plugin.configManager.getScreens().getInt("Items." + key + ".custom-model-data"));
-                    meta.setDisplayName(Utilities.chatTranslate(plugin.configManager.getScreens().getString("Items." + key + ".name")));
+                    meta.setDisplayName(colourUtils.oldFormat(plugin.configManager.getScreens().getString("Items." + key + ".name")));
                     item.setItemMeta(meta);
 
                     screen.setItem(slot, item);
@@ -99,7 +99,7 @@ public class ScreeningManager {
             InventoryView screen = player.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, screenTitleFirstJoin()));
 
             if (plugin.configManager.getScreens().get("First-Join-Items") != null) {
-                for (String key : Objects.requireNonNull(plugin.configManager.getScreens().getConfigurationSection("First-Join-Items")).getKeys(false)) {
+                for (String key : plugin.configManager.getScreens().getConfigurationSection("First-Join-Items").getKeys(false)) {
 
                     int slot = plugin.configManager.getScreens().getInt("First-Join-Items" + key + ".slot");
                     ItemStack item = new ItemStack(Material.matchMaterial(plugin.configManager.getScreens().getString("First-Join-Items." + key + ".material")));
@@ -108,7 +108,7 @@ public class ScreeningManager {
                     if (plugin.configManager.getScreens().get("First-Join-Items." + key + ".lore") != null) {
                         List<String> lore = plugin.configManager.getScreens().getStringList("First-Join-Items." + key + ".lore");
                         for (int i = 0; i < lore.size(); i++) {
-                            lore.set(i, Utilities.chatTranslate(lore.get(i)));
+                            lore.set(i, colourUtils.oldFormat(lore.get(i)));
                         }
 
                         meta.setLore(lore);
@@ -124,7 +124,7 @@ public class ScreeningManager {
                     }
 
                     meta.setCustomModelData(plugin.configManager.getScreens().getInt("First-Join-Items." + key + ".custom-model-data"));
-                    meta.setDisplayName(Utilities.chatTranslate(plugin.configManager.getScreens().getString("First-Join-Items." + key + ".name")));
+                    meta.setDisplayName(colourUtils.oldFormat(plugin.configManager.getScreens().getString("First-Join-Items." + key + ".name")));
                     item.setItemMeta(meta);
 
                     screen.setItem(slot, item);

@@ -1,5 +1,6 @@
 package net.jeqo.gizmo;
 
+import net.jeqo.gizmo.data.UpdateChecker;
 import net.jeqo.gizmo.listeners.ClickableItemsListener;
 import net.jeqo.gizmo.listeners.PlayerScreeningListener;
 import net.jeqo.gizmo.listeners.ScreenAdvanceListener;
@@ -11,11 +12,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Objects;
+import java.util.logging.Level;
 
 public class Gizmo extends JavaPlugin {
 
-    //TODO change colour support to minimessage
+    //TODO change colour support to minimessage as the & will be removed in the future
 
     private final int pluginId = 16873;
 
@@ -24,9 +25,9 @@ public class Gizmo extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Utilities.log("|---[ GIZMO ]--------------------------------------------------------|");
-        Utilities.log("|                           Plugin loaded.                           |");
-        Utilities.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
+        this.getLogger().log(Level.INFO, "|---[ GIZMO ]--------------------------------------------------------|");
+        this.getLogger().log(Level.INFO, "|                           Plugin loaded.                           |");
+        this.getLogger().log(Level.INFO, "|-------------------------------------------------[ MADE BY JEQO ]---|");
 
         loadManagers();
         loadListeners();
@@ -37,9 +38,9 @@ public class Gizmo extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        Utilities.log("|---[ GIZMO ]--------------------------------------------------------|");
-        Utilities.log("|                          Shutting down...                          |");
-        Utilities.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
+        this.getLogger().log(Level.INFO, "|---[ GIZMO ]--------------------------------------------------------|");
+        this.getLogger().log(Level.INFO, "|                          Shutting down...                          |");
+        this.getLogger().log(Level.INFO, "|-------------------------------------------------[ MADE BY JEQO ]---|");
     }
 
     private void loadManagers() {
@@ -49,7 +50,8 @@ public class Gizmo extends JavaPlugin {
 
     private void loadCommands() {
         getCommand("gizmo").setExecutor(new Commands());
-        TabCompleter tc = new CommandsTabManager(); Objects.requireNonNull(this.getCommand("gizmo")).setTabCompleter(tc);
+        TabCompleter tc = new CommandsTabManager();
+        this.getCommand("gizmo").setTabCompleter(tc);
     }
 
     private void loadListeners() {
@@ -61,12 +63,12 @@ public class Gizmo extends JavaPlugin {
 
     private void updateChecker() {
         new UpdateChecker(this, 106024).getVersion(version -> {
-            if (!this.getDescription().getVersion().equals(version)) {
-                Utilities.warn("|---[ GIZMO ]--------------------------------------------------------|");
-                Utilities.warn("|                  There is a new update available!                  |");
-                Utilities.warn("|                       https://jeqo.net/gizmo                       |");
-                Utilities.warn("|-------------------------------------------------[ MADE BY JEQO ]---|");
-            }
+            if (this.getDescription().getVersion().equals(version)) return;
+            
+            this.getLogger().warning("|---[ GIZMO ]--------------------------------------------------------|");
+            this.getLogger().warning("|                  There is a new update available!                  |");
+            this.getLogger().warning("|                       https://jeqo.net/gizmo                       |");
+            this.getLogger().warning("|-------------------------------------------------[ MADE BY JEQO ]---|");
         });
     }
 }

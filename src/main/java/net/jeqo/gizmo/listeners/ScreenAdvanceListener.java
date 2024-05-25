@@ -1,6 +1,7 @@
 package net.jeqo.gizmo.listeners;
 
 import net.jeqo.gizmo.Gizmo;
+import net.jeqo.gizmo.Utils.ColourUtils;
 import net.jeqo.gizmo.data.Placeholders;
 import net.jeqo.gizmo.data.Utilities;
 import org.bukkit.Bukkit;
@@ -15,15 +16,14 @@ import java.util.Set;
 import java.util.UUID;
 
 import static net.jeqo.gizmo.data.Placeholders.screenTitle;
-import static net.jeqo.gizmo.data.Utilities.pullConfig;
-import static net.jeqo.gizmo.data.Utilities.pullScreensConfig;
-
 
 public class ScreenAdvanceListener implements Listener {
 
     private final Gizmo plugin;
 
     private final Set<UUID> processingPlayers = new HashSet<>();
+
+    private final ColourUtils colourUtils = new ColourUtils();
 
     public ScreenAdvanceListener(Gizmo plugin) {
         this.plugin = plugin;
@@ -39,7 +39,7 @@ public class ScreenAdvanceListener implements Listener {
         if (processingPlayers.contains(player.getUniqueId())) return;
 
         if (plugin.configManager.getConfig().getBoolean("enable-fade")) {
-            player.sendTitle(Utilities.chatTranslate(pullConfig("background-color") + pullScreensConfig("Unicodes.background")), "", 0, 5, plugin.getConfig().getInt("fade-time"));
+            player.sendTitle(colourUtils.oldFormat(plugin.configManager.getConfig().getString("background-color") + plugin.configManager.getScreens().getString("Unicodes.background")), "", 0, 5, plugin.getConfig().getInt("fade-time"));
         }
 
         processingPlayers.add(player.getUniqueId());
@@ -51,7 +51,7 @@ public class ScreenAdvanceListener implements Listener {
                         Float.parseFloat(plugin.configManager.getConfig().getString("sound-on-advance.pitch")));
             }
         } catch (NullPointerException ex) {
-            Utilities.warn("sound-on-advance is not configured correctly.");
+            plugin.getLogger().warning("sound-on-advance is not configured correctly.");
         }
 
         try {
@@ -61,13 +61,13 @@ public class ScreenAdvanceListener implements Listener {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", player.getName()));
                 } else if (command.contains("[message]")) {
                     command = command.replace("[message] ", "");
-                    player.sendMessage(Utilities.chatTranslate(command.replace("%player%", player.getName())));
+                    player.sendMessage(colourUtils.oldFormat(command.replace("%player%", player.getName())));
                 } else if (command.contains("[player]")) {
                     command = command.replace("[player] ", "");
                     player.performCommand(command);
                 } else {
                     player.sendMessage(Placeholders.gizmoPrefix() + "An error occurred. Please review the console for more information.");
-                    Utilities.warn("Commands-on-advance (config.yml) has a command with an invalid format.");
+                    plugin.getLogger().warning("Commands-on-advance (config.yml) has a command with an invalid format.");
                 }
             });
         } finally {
@@ -90,7 +90,7 @@ public class ScreenAdvanceListener implements Listener {
         if (welcomeMessage.equals("[]")) return;
 
         welcomeMessage = welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "");
-        player.sendMessage(Utilities.chatTranslate(welcomeMessage));
+        player.sendMessage(colourUtils.oldFormat(welcomeMessage));
     }
 
     private void welcomeMessageFirstJoin(Player player) {
@@ -99,6 +99,6 @@ public class ScreenAdvanceListener implements Listener {
         if (welcomeMessage.equals("[]")) return;
 
         welcomeMessage = welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "");
-        player.sendMessage(Utilities.chatTranslate(welcomeMessage));
+        player.sendMessage(colourUtils.oldFormat(welcomeMessage));
     }
 }

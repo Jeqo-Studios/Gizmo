@@ -1,12 +1,12 @@
 package net.jeqo.gizmo.data;
 
 import net.jeqo.gizmo.Gizmo;
+import net.jeqo.gizmo.Utils.ColourUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +20,8 @@ public class UpdateChecker implements Listener {
 
     private final Gizmo plugin;
     private final int resourceId;
+
+    private final ColourUtils colourUtils = new ColourUtils();
 
     public UpdateChecker(Gizmo plugin, int resourceId) {
         this.plugin = plugin;
@@ -50,8 +52,8 @@ public class UpdateChecker implements Listener {
             if (plugin.getDescription().getVersion().equals(version)) return;
 
             player.sendMessage("");
-            player.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "&eNew update! " + version + " is now available."));
-            player.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "&eDownload it here: &nhttps://jeqo.net/gizmo"));
+            player.sendMessage(colourUtils.oldFormat(gizmoPrefix() + "&eNew update! " + version + " is now available."));
+            player.sendMessage(colourUtils.oldFormat(gizmoPrefix() + "&eDownload it here: &nhttps://jeqo.net/gizmo"));
             player.sendMessage("");
         });
     }

@@ -1,7 +1,7 @@
 package net.jeqo.gizmo.listeners;
 
 import net.jeqo.gizmo.Gizmo;
-import net.jeqo.gizmo.data.Utilities;
+import net.jeqo.gizmo.Utils.ColourUtils;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +16,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.bukkit.potion.PotionEffectType;
-import java.util.Objects;
 
 import static net.jeqo.gizmo.data.Placeholders.screenTitle;
 import static net.jeqo.gizmo.data.Placeholders.screenTitleFirstJoin;
@@ -24,6 +23,8 @@ import static net.jeqo.gizmo.data.Placeholders.screenTitleFirstJoin;
 public class ScreenHandlersListener implements Listener {
 
     private final Gizmo plugin;
+
+    private final ColourUtils colourUtils = new ColourUtils();
 
     public ScreenHandlersListener(Gizmo plugin) {
         this.plugin = plugin;
@@ -47,15 +48,15 @@ public class ScreenHandlersListener implements Listener {
                 disableEffects(player);
             } else if (event.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED || event.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
                 disableEffects(player);
-                player.kickPlayer(Utilities.chatTranslate(plugin.configManager.getConfig().getString("messages.kick-on-decline")).replace(",", "\n").replace("[", "").replace("]", ""));
+                player.kickPlayer(colourUtils.oldFormat(plugin.configManager.getConfig().getString("messages.kick-on-decline")).replace(",", "\n").replace("[", "").replace("]", ""));
             }
         } else if (!plugin.configManager.getConfig().getBoolean("kick-on-decline")) {
             if (event.getStatus() == PlayerResourcePackStatusEvent.Status.SUCCESSFULLY_LOADED) {
                 disableEffects(player);
             } else if (event.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED || event.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
                 disableEffects(player);
-                for (String msg : plugin.getConfig().getStringList("messages.no-pack-loaded")) {
-                    player.sendMessage(Utilities.chatTranslate(msg));
+                for (String msg : plugin.configManager.getConfig().getStringList("messages.no-pack-loaded")) {
+                    player.sendMessage(colourUtils.oldFormat(msg));
                 }
             }
         }
@@ -100,7 +101,6 @@ public class ScreenHandlersListener implements Listener {
     @EventHandler
     public void onSlotClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-
         if (plugin.screeningManager.playersScreenActive.get(player.getUniqueId()) == null) return;
 
         event.setCancelled(true);
@@ -114,7 +114,6 @@ public class ScreenHandlersListener implements Listener {
         if (!plugin.configManager.getConfig().getBoolean("player-invulnerable-during-load")) return;
 
         if (!(entity instanceof Player player)) return;
-
         if (plugin.screeningManager.playersScreenActive.get(player.getUniqueId()) == null) return;
 
         event.setCancelled(true);
@@ -127,7 +126,6 @@ public class ScreenHandlersListener implements Listener {
         if (!plugin.configManager.getConfig().getBoolean("player-invulnerable-during-load")) return;
 
         if (!(entity instanceof Player player)) return;
-
         if (plugin.screeningManager.playersScreenActive.get(player.getUniqueId()) == null) return;
 
         event.setCancelled(true);
@@ -138,7 +136,6 @@ public class ScreenHandlersListener implements Listener {
         if (!plugin.configManager.getConfig().getBoolean("player-invulnerable-during-load")) return;
 
         Player player = event.getPlayer();
-
         if (plugin.screeningManager.playersScreenActive.get(player.getUniqueId()) == null) return;
 
         event.setCancelled(true);

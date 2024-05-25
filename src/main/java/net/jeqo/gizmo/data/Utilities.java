@@ -34,14 +34,6 @@ public class Utilities {
         return PlaceholderAPI.setPlaceholders(null, ChatColor.translateAlternateColorCodes('&', message));
     }
 
-    public static void log(@NotNull String text) {
-        Bukkit.getLogger().log(Level.INFO, "[Gizmo] " + text);
-    }
-
-    public static void warn(@NotNull String text) {
-        Bukkit.getLogger().log(Level.WARNING, "[Gizmo] " + text);
-    }
-
     public static String pullConfig(String id) {
         return Utilities.chatTranslate(plugin.getConfig().getString(id, ""));
     }

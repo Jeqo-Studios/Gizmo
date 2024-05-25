@@ -1,6 +1,7 @@
 package net.jeqo.gizmo.listeners;
 
 import net.jeqo.gizmo.Gizmo;
+import net.jeqo.gizmo.Utils.ColourUtils;
 import net.jeqo.gizmo.data.Utilities;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -10,16 +11,17 @@ import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.UUID;
 
 import static net.jeqo.gizmo.data.Placeholders.*;
-import static net.jeqo.gizmo.data.Utilities.*;
 
 public class PlayerScreeningListener implements Listener {
 
     private final Gizmo plugin;
+
     private final HashMap<UUID, String> playerTracker = new HashMap<>();
+
+    private final ColourUtils colourUtils = new ColourUtils();
 
     public PlayerScreeningListener(Gizmo plugin) {
         this.plugin = plugin;
@@ -34,7 +36,7 @@ public class PlayerScreeningListener implements Listener {
             case ACCEPTED:
                 // Display the background unicode during the delay
                 if (!plugin.configManager.getConfig().getBoolean("delay-background")) return;
-                player.sendTitle(pullConfig("background-color") + pullScreensConfig("Unicodes.background"), "", 0, 999999, 0);
+                player.sendTitle(plugin.configManager.getConfig().getString("background-color") + plugin.configManager.getScreens().getString("Unicodes.background"), "", 0, 999999, 0);
                 break;
             case SUCCESSFULLY_LOADED:
                 // Play a configured sound when the pack is loaded
@@ -68,15 +70,15 @@ public class PlayerScreeningListener implements Listener {
             case FAILED_DOWNLOAD:
                 // Debug mode check; if enabled it will still send the player the welcome screen
                 if (plugin.configManager.getConfig().getBoolean("debug-mode")) {
-                    player.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "#acb5bfNo server resource pack detected and/or debug mode is enabled."));
-                    player.sendMessage(Utilities.chatTranslate(gizmoPrefix() + "#acb5bfSending welcome screen..."));
+                    player.sendMessage(colourUtils.oldFormat(gizmoPrefix() + "#acb5bfNo server resource pack detected and/or debug mode is enabled."));
+                    player.sendMessage(colourUtils.oldFormat(gizmoPrefix() + "#acb5bfSending welcome screen..."));
                     plugin.screeningManager.welcomeScreen(player);
                 } else {
                     player.removePotionEffect(PotionEffectType.BLINDNESS);
 
                     if (!plugin.configManager.getLang().getString("no-pack-loaded").equals("[]")) {
                         for (String msg : plugin.configManager.getLang().getStringList("no-pack-loaded")) {
-                            player.sendMessage(Utilities.chatTranslate(msg));
+                            player.sendMessage(colourUtils.oldFormat(msg));
                         }
                     }
                 }
