@@ -3,15 +3,12 @@ package net.jeqo.gizmo.listeners;
 import net.jeqo.gizmo.Gizmo;
 import net.jeqo.gizmo.Utils.ColourUtils;
 import net.jeqo.gizmo.data.Placeholders;
-import net.jeqo.gizmo.data.Utilities;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-
-import static net.jeqo.gizmo.data.Placeholders.screenTitle;
 
 public class ClickableItemsListener implements Listener {
 
@@ -25,7 +22,7 @@ public class ClickableItemsListener implements Listener {
 
     @EventHandler
     public void onCommandItemClick(InventoryClickEvent event) {
-        if (!event.getView().getTitle().equals(screenTitle())) return;
+        if (!event.getView().getTitle().equals(plugin.configManager.screenTitle())) return;
 
         Player player = (Player) event.getWhoClicked();
 

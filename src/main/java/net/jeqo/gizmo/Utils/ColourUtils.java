@@ -1,6 +1,7 @@
 package net.jeqo.gizmo.Utils;
 
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.entity.Player;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

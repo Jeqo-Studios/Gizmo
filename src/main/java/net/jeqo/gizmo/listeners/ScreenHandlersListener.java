@@ -17,9 +17,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.bukkit.potion.PotionEffectType;
 
-import static net.jeqo.gizmo.data.Placeholders.screenTitle;
-import static net.jeqo.gizmo.data.Placeholders.screenTitleFirstJoin;
-
 public class ScreenHandlersListener implements Listener {
 
     private final Gizmo plugin;
@@ -67,7 +64,7 @@ public class ScreenHandlersListener implements Listener {
     public void restoreInv(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
 
-        if (!event.getView().getTitle().equals(screenTitle()) || !event.getView().getTitle().equals(screenTitleFirstJoin())) return;
+        if (!event.getView().getTitle().equals(plugin.configManager.screenTitle()) || !event.getView().getTitle().equals(plugin.configManager.screenTitleFirstJoin())) return;
 
         player.getInventory().setContents(plugin.screeningManager.saveInv.get(player.getName()));
     }

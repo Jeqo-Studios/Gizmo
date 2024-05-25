@@ -3,7 +3,6 @@ package net.jeqo.gizmo.listeners;
 import net.jeqo.gizmo.Gizmo;
 import net.jeqo.gizmo.Utils.ColourUtils;
 import net.jeqo.gizmo.data.Placeholders;
-import net.jeqo.gizmo.data.Utilities;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -14,8 +13,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-
-import static net.jeqo.gizmo.data.Placeholders.screenTitle;
 
 public class ScreenAdvanceListener implements Listener {
 
@@ -33,7 +30,7 @@ public class ScreenAdvanceListener implements Listener {
     public void onClose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
 
-        if (!event.getView().getTitle().equals(screenTitle())) return;
+        if (!event.getView().getTitle().equals(plugin.configManager.screenTitle())) return;
         if (!plugin.screeningManager.playersScreenActive.get(player.getUniqueId())) return;
 
         if (processingPlayers.contains(player.getUniqueId())) return;
@@ -76,9 +73,8 @@ public class ScreenAdvanceListener implements Listener {
         }
 
         if (!player.hasPlayedBefore()) {
-            if (plugin.configManager.getScreens().getBoolean("first-join-welcome-screen")) {
-                welcomeMessageFirstJoin(player);
-            }
+            if (!plugin.configManager.getScreens().getBoolean("first-join-welcome-screen")) return;
+            welcomeMessageFirstJoin(player);
         } else {
             welcomeMessage(player);
         }

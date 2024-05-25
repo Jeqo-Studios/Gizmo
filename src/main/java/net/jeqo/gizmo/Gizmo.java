@@ -33,7 +33,9 @@ public class Gizmo extends JavaPlugin {
         loadListeners();
 
         loadCommands();
-        Metrics metrics = new Metrics(this, pluginId); updateChecker();
+        Metrics metrics = new Metrics(this, pluginId);
+
+        updateChecker();
     }
 
     @Override
@@ -64,7 +66,7 @@ public class Gizmo extends JavaPlugin {
     private void updateChecker() {
         new UpdateChecker(this, 106024).getVersion(version -> {
             if (this.getDescription().getVersion().equals(version)) return;
-            
+
             this.getLogger().warning("|---[ GIZMO ]--------------------------------------------------------|");
             this.getLogger().warning("|                  There is a new update available!                  |");
             this.getLogger().warning("|                       https://jeqo.net/gizmo                       |");

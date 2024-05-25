@@ -14,9 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import static net.jeqo.gizmo.data.Placeholders.screenTitle;
-import static net.jeqo.gizmo.data.Placeholders.screenTitleFirstJoin;
-
 public class ScreeningManager {
 
     private final Gizmo plugin;
@@ -45,7 +42,7 @@ public class ScreeningManager {
             // check if screens.yml enable-welcome-screen = true
             if (!plugin.configManager.getScreens().getBoolean("enable-welcome-screen")) return;
 
-            InventoryView screen = player.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, screenTitle()));
+            InventoryView screen = player.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, plugin.configManager.screenTitle()));
 
             if (plugin.configManager.getScreens().get("Items") != null) {
                 for (String key : plugin.configManager.getScreens().getConfigurationSection("Items").getKeys(false)) {
@@ -96,7 +93,7 @@ public class ScreeningManager {
             // check if screens.yml enable-first-join-welcome-screen = true
             if (!plugin.configManager.getScreens().getBoolean("enable-first-join-welcome-screen")) return;
 
-            InventoryView screen = player.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, screenTitleFirstJoin()));
+            InventoryView screen = player.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, plugin.configManager.screenTitleFirstJoin()));
 
             if (plugin.configManager.getScreens().get("First-Join-Items") != null) {
                 for (String key : plugin.configManager.getScreens().getConfigurationSection("First-Join-Items").getKeys(false)) {
