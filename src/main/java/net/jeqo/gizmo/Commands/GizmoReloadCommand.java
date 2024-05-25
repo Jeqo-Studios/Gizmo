@@ -8,8 +8,6 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-import static net.jeqo.gizmo.data.Placeholders.gizmoPrefix;
-
 public class GizmoReloadCommand implements SubCommands {
 
     private final Gizmo plugin;
@@ -28,7 +26,7 @@ public class GizmoReloadCommand implements SubCommands {
         }
 
         plugin.configManager.load();
-        player.sendMessage(colourUtils.oldFormat(gizmoPrefix() + plugin.configManager.getLang().getString("config-reloaded")));
+        player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("config-reloaded")));
     }
 
     @Override

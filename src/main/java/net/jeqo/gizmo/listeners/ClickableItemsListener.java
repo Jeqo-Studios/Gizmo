@@ -2,7 +2,6 @@ package net.jeqo.gizmo.listeners;
 
 import net.jeqo.gizmo.Gizmo;
 import net.jeqo.gizmo.Utils.ColourUtils;
-import net.jeqo.gizmo.data.Placeholders;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -50,7 +49,7 @@ public class ClickableItemsListener implements Listener {
                             command = command.replace("[player] ", "");
                             player.performCommand(command);
                         } else {
-                            player.sendMessage(Placeholders.gizmoPrefix() + "An error occurred. Please review the console for more information.");
+                            player.sendMessage(plugin.configManager.getLang().getString("prefix") + "An error occurred. Please review the console for more information.");
                             plugin.getLogger().warning("\"" + key + "\"" + " (screens.yml) has a command with an invalid format.");
                         }
                     }

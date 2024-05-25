@@ -12,8 +12,6 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.HashMap;
 import java.util.UUID;
 
-import static net.jeqo.gizmo.data.Placeholders.*;
-
 public class PlayerScreeningListener implements Listener {
 
     private final Gizmo plugin;
@@ -69,8 +67,8 @@ public class PlayerScreeningListener implements Listener {
             case FAILED_DOWNLOAD:
                 // Debug mode check; if enabled it will still send the player the welcome screen
                 if (plugin.configManager.getConfig().getBoolean("debug-mode")) {
-                    player.sendMessage(colourUtils.oldFormat(gizmoPrefix() + "#acb5bfNo server resource pack detected and/or debug mode is enabled."));
-                    player.sendMessage(colourUtils.oldFormat(gizmoPrefix() + "#acb5bfSending welcome screen..."));
+                    player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + "#acb5bfNo server resource pack detected and/or debug mode is enabled."));
+                    player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + "#acb5bfSending welcome screen..."));
                     plugin.screeningManager.welcomeScreen(player);
                 } else {
                     player.removePotionEffect(PotionEffectType.BLINDNESS);

@@ -14,8 +14,6 @@ import java.net.URL;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
-import static net.jeqo.gizmo.data.Placeholders.gizmoPrefix;
-
 public class UpdateChecker implements Listener {
 
     private final Gizmo plugin;
@@ -52,8 +50,8 @@ public class UpdateChecker implements Listener {
             if (plugin.getDescription().getVersion().equals(version)) return;
 
             player.sendMessage("");
-            player.sendMessage(colourUtils.oldFormat(gizmoPrefix() + "&eNew update! " + version + " is now available."));
-            player.sendMessage(colourUtils.oldFormat(gizmoPrefix() + "&eDownload it here: &nhttps://jeqo.net/gizmo"));
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + "&eNew update! " + version + " is now available."));
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + "&eDownload it here: &nhttps://jeqo.net/gizmo"));
             player.sendMessage("");
         });
     }

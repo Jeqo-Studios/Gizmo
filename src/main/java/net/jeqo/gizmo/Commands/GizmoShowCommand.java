@@ -9,8 +9,6 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-import static net.jeqo.gizmo.data.Placeholders.gizmoPrefix;
-
 public class GizmoShowCommand implements SubCommands {
 
     private final Gizmo plugin;
@@ -36,12 +34,12 @@ public class GizmoShowCommand implements SubCommands {
         Player target = Bukkit.getPlayer(args[0]);
 
         if (target == null) {
-            player.sendMessage(colourUtils.oldFormat(gizmoPrefix() + "&7That player is not online!"));
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + "&7That player is not online!"));
             return;
         }
 
         plugin.screeningManager.welcomeScreen(player);
-        player.sendMessage(colourUtils.oldFormat(gizmoPrefix() + plugin.configManager.getLang().getString("show-screen-others")));
+        player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("show-screen-others")));
     }
 
     @Override

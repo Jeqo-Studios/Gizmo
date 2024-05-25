@@ -2,7 +2,6 @@ package net.jeqo.gizmo.listeners;
 
 import net.jeqo.gizmo.Gizmo;
 import net.jeqo.gizmo.Utils.ColourUtils;
-import net.jeqo.gizmo.data.Placeholders;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -63,7 +62,7 @@ public class ScreenAdvanceListener implements Listener {
                     command = command.replace("[player] ", "");
                     player.performCommand(command);
                 } else {
-                    player.sendMessage(Placeholders.gizmoPrefix() + "An error occurred. Please review the console for more information.");
+                    player.sendMessage(plugin.configManager.getLang().getString("prefix") + "An error occurred. Please review the console for more information.");
                     plugin.getLogger().warning("Commands-on-advance (config.yml) has a command with an invalid format.");
                 }
             });

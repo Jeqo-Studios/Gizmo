@@ -9,8 +9,6 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-import static net.jeqo.gizmo.data.Placeholders.gizmoPrefix;
-
 public class GizmoFadeCommand implements SubCommands {
 
     private final Gizmo plugin;
@@ -36,12 +34,12 @@ public class GizmoFadeCommand implements SubCommands {
         Player target = Bukkit.getPlayer(args[0]);
 
         if (target == null) {
-            player.sendMessage(colourUtils.oldFormat(gizmoPrefix() + "&7That player is not online!"));
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + "&7That player is not online!"));
             return;
         }
 
         if (!args[1].matches("[0-9]+") && !args[2].matches("[0-9]+") && !args[3].matches("[0-9]+")) {
-            player.sendMessage(colourUtils.oldFormat(gizmoPrefix() + "&7Only numbers can be used for time values!"));
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + "&7Only numbers can be used for time values!"));
             return;
         }
 
