@@ -21,12 +21,12 @@ public class GizmoReloadCommand implements SubCommands {
     @Override
     public void onCommand(Player player, String[] args) {
         if (!player.hasPermission("gizmo.reload")) {
-            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("no-permission")));
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("commands.no-permission")));
             return;
         }
 
         plugin.configManager.load();
-        player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("config-reloaded")));
+        player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("commands.reload.config-reloaded")));
     }
 
     @Override

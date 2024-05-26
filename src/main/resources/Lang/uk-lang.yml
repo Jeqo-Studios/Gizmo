@@ -24,10 +24,23 @@ kick-on-decline:
   - '#acb5bfwww.jeqo.net/gizmo'
 
 no-pack-loaded: '&7Server resource pack not detected-skipping welcome screen.'
-no-permission: '#fc1c1cAccess denied.'
 player-not-found: '&7Player not found.'
 
-show-screen: '&7Displaying test screen.'
-show-screen-others: '&7Displaying test screen to %player_name%'
-
-config-reloaded: '&7Configuration reloaded.'
+commands:
+  no-permission: '#fc1c1cAccess denied.'
+  fade:
+    usage: "&7Usage: /gizmo fade [player] <in> <stay> <out>"
+    invalid-player: "&7That player is not online!"
+    invalid-numbers: "&7Only numbers can be used for time values!"
+  show:
+    usage: "&7Usage: /gizmo show [player]"
+    invalid-player: "&7That player is not online!"
+    showing: "&7Displaying test screen to %player_name%"
+  reload:
+    config-reloaded: '&7Configuration reloaded.'
+  help:
+    usage:
+      - "#ee0000Usages:"
+      - "&f/gizmo fade <player> <in> <stay> <out> &7- Displays a fade."
+      - "&f/gizmo show <player> &7- Force displays the welcome screen."
+      - "&f/gizmo reload &7- Reloads the Gizmo configs (not recommended)."

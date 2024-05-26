@@ -22,24 +22,24 @@ public class GizmoShowCommand implements SubCommands {
     @Override
     public void onCommand(Player player, String[] args) {
         if (!player.hasPermission("gizmo.show")) {
-            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("no-permission")));
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("commands.no-permission")));
             return;
         }
 
         if (args.length == 0) {
-            player.sendMessage(colourUtils.oldFormat("&7Usage: /gizmo show [player]"));
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("commands.show.usage")));
             return;
         }
 
         Player target = Bukkit.getPlayer(args[0]);
 
         if (target == null) {
-            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + "&7That player is not online!"));
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("commands.show.invalid-player")));
             return;
         }
 
         plugin.screeningManager.welcomeScreen(player);
-        player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("show-screen-others")));
+        player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("commands.show.showing")));
     }
 
     @Override

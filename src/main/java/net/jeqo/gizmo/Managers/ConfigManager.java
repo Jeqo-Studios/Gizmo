@@ -18,7 +18,6 @@ public class ConfigManager {
 
     public ConfigManager(Gizmo plugin) {
         this.plugin = plugin;
-
         load();
     }
 

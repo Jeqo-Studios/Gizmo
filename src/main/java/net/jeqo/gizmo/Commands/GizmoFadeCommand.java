@@ -22,24 +22,24 @@ public class GizmoFadeCommand implements SubCommands {
     @Override
     public void onCommand(Player player, String[] args) {
         if (!player.hasPermission("gizmo.fade")) {
-            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("no-permission")));
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("commands.no-permission")));
             return;
         }
 
         if (args.length == 0) {
-            player.sendMessage(colourUtils.oldFormat("&7Usage: /gizmo fade [player] <in> <stay> <out>"));
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("commands.fade.usage")));
             return;
         }
 
         Player target = Bukkit.getPlayer(args[0]);
 
         if (target == null) {
-            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + "&7That player is not online!"));
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("commands.fade.invalid-player")));
             return;
         }
 
         if (!args[1].matches("[0-9]+") && !args[2].matches("[0-9]+") && !args[3].matches("[0-9]+")) {
-            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + "&7Only numbers can be used for time values!"));
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("commands.fade.invalid-numbers")));
             return;
         }
 

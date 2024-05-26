@@ -21,14 +21,13 @@ public class GizmoHelpCommand implements SubCommands {
     @Override
     public void onCommand(Player player, String[] args) {
         if (!player.hasPermission("gizmo.help")) {
-            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("no-permission")));
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("commands.no-permission")));
             return;
         }
 
-        player.sendMessage(colourUtils.oldFormat("#ee0000Usages:"));
-        player.sendMessage(colourUtils.oldFormat("&f/gizmo fade <player> <in> <stay> <out> &7- Displays a fade."));
-        player.sendMessage(colourUtils.oldFormat("&f/gizmo show <player> &7- Force displays the welcome screen."));
-        player.sendMessage(colourUtils.oldFormat("&f/gizmo reload &7- Reloads the Gizmo configs (not recommended)."));
+        plugin.configManager.getLang().getStringList("commands.help.usage").forEach(string -> {
+            player.sendMessage(colourUtils.oldFormat(string));
+        });
     }
 
     @Override
