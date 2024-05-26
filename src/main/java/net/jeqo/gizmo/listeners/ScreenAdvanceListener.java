@@ -67,7 +67,7 @@ public class ScreenAdvanceListener implements Listener {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", player.getName()));
                 } else if (command.contains("[message]")) {
                     command = command.replace("[message] ", "");
-                    player.sendMessage(colourUtils.oldFormat(command.replace("%player%", player.getName())));
+                    player.sendMessage(colourUtils.oldFormat(player, command.replace("%player%", player.getName())));
                 } else if (command.contains("[player]")) {
                     command = command.replace("[player] ", "");
                     player.performCommand(command);

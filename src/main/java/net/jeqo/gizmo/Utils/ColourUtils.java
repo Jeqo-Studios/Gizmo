@@ -1,5 +1,6 @@
 package net.jeqo.gizmo.Utils;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -20,5 +21,17 @@ public class ColourUtils {
         }
 
         return ChatColor.translateAlternateColorCodes('&', message);
+    }
+
+    public String oldFormat(Player player, String message) {
+        Matcher match = pattern.matcher(message);
+
+        while (match.find()) {
+            String colour = message.substring(match.start(), match.end());
+            message = message.replace(colour, ChatColor.of(colour) + "");
+            match = pattern.matcher(message);
+        }
+
+        return PlaceholderAPI.setPlaceholders(player, ChatColor.translateAlternateColorCodes('&', message));
     }
 }
