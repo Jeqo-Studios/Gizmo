@@ -39,7 +39,7 @@ public class GizmoFadeCommand implements SubCommands {
         }
 
         if (args.length < 4) {
-            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("commands.fade.invalid-numbers-amount")));
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("commands.fade.invalid-numbers-amount")));
             return;
         }
 
