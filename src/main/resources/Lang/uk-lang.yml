@@ -1,5 +1,6 @@
 # All messages support Minecraft (&f) and hex (#ffffff) color codes.
 # Kick-on-decline and welcome messages have multi-line support.
+
 prefix: "#ee0000[Gizmo] "
 
 welcome-message:
@@ -17,14 +18,10 @@ first-join-welcome-message:
   - ' '
   - ' '
 
-kick-on-decline:
-  - '&cYou must download the server resource pack to play!'
-  - ' '
-  - '#fc1c1cGizmo - Made by Jeqo'
-  - '#acb5bfwww.jeqo.net/gizmo'
-
-no-pack-loaded: '&7Server resource pack not detected-skipping welcome screen.'
-player-not-found: '&7Player not found.'
+resource-pack:
+  kick-on-decline:
+    - '&cYou must download the server resource pack to play!'
+  no-pack-loaded: '&7Server resource pack not detected-skipping welcome screen.'
 
 commands:
   no-permission: '#fc1c1cAccess denied.'

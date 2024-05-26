@@ -84,8 +84,8 @@ public class PlayerScreeningListener implements Listener {
                 } else {
                     player.removePotionEffect(PotionEffectType.BLINDNESS);
 
-                    if (!plugin.configManager.getLang().getString("no-pack-loaded").equals("[]")) {
-                        for (String msg : plugin.configManager.getLang().getStringList("no-pack-loaded")) {
+                    if (!plugin.configManager.getLang().getString("resource-pack.no-pack-loaded").equals("[]")) {
+                        for (String msg : plugin.configManager.getLang().getStringList("resource-pack.no-pack-loaded")) {
                             player.sendMessage(colourUtils.oldFormat(msg));
                         }
                     }

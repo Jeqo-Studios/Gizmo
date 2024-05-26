@@ -40,19 +40,19 @@ public class ScreenHandlersListener implements Listener {
     public void onPackLoad(PlayerResourcePackStatusEvent event) {
         Player player = event.getPlayer();
 
-        if (plugin.configManager.getConfig().getBoolean("kick-on-decline")) {
+        if (plugin.configManager.getConfig().getBoolean("resource-pack.kick-on-decline")) {
             if (event.getStatus() == PlayerResourcePackStatusEvent.Status.SUCCESSFULLY_LOADED) {
                 disableEffects(player);
             } else if (event.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED || event.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
                 disableEffects(player);
-                player.kickPlayer(colourUtils.oldFormat(plugin.configManager.getConfig().getString("kick-on-decline")).replace(",", "\n").replace("[", "").replace("]", ""));
+                player.kickPlayer(colourUtils.oldFormat(plugin.configManager.getConfig().getString("resource-pack.kick-on-decline")).replace(",", "\n").replace("[", "").replace("]", ""));
             }
-        } else if (!plugin.configManager.getConfig().getBoolean("kick-on-decline")) {
+        } else if (!plugin.configManager.getConfig().getBoolean("resource-pack.kick-on-decline")) {
             if (event.getStatus() == PlayerResourcePackStatusEvent.Status.SUCCESSFULLY_LOADED) {
                 disableEffects(player);
             } else if (event.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED || event.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
                 disableEffects(player);
-                for (String msg : plugin.configManager.getConfig().getStringList("no-pack-loaded")) {
+                for (String msg : plugin.configManager.getConfig().getStringList("resource-pack.no-pack-loaded")) {
                     player.sendMessage(colourUtils.oldFormat(msg));
                 }
             }
