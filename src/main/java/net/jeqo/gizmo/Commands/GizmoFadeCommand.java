@@ -38,12 +38,17 @@ public class GizmoFadeCommand implements SubCommands {
             return;
         }
 
+        if (args.length < 4) {
+            player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("commands.fade.invalid-numbers-amount")));
+            return;
+        }
+
         if (!args[1].matches("[0-9]+") && !args[2].matches("[0-9]+") && !args[3].matches("[0-9]+")) {
             player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("commands.fade.invalid-numbers")));
             return;
         }
 
-        player.sendTitle(plugin.configManager.getConfig().getString("Unicodes.background"), "", Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+        player.sendTitle(colourUtils.oldFormat(plugin.configManager.getScreens().getString("Unicodes.background")), "", Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
     }
 
     @Override

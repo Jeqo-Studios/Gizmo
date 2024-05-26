@@ -38,8 +38,8 @@ public class GizmoShowCommand implements SubCommands {
             return;
         }
 
-        plugin.screeningManager.welcomeScreen(player);
-        player.sendMessage(colourUtils.oldFormat(plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("commands.show.showing")));
+        plugin.screeningManager.welcomeScreen(target);
+        player.sendMessage(colourUtils.oldFormat(target, plugin.configManager.getLang().getString("prefix") + plugin.configManager.getLang().getString("commands.show.showing")));
     }
 
     @Override

@@ -35,7 +35,7 @@ public class GizmoCommandManager implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmdd, @NotNull String cmd, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String arg, @NotNull String[] args) {
         if (sender instanceof Player player) {
             if (args.length == 0) {
                 Bukkit.dispatchCommand(player, "gizmo help");
@@ -49,7 +49,7 @@ public class GizmoCommandManager implements CommandExecutor, TabCompleter {
             command.onCommand(player, newArgs);
         }
 
-        return false;
+        return true;
     }
 
     @Nullable

@@ -31,11 +31,12 @@ commands:
   fade:
     usage: "&7Usage: /gizmo fade [player] <in> <stay> <out>"
     invalid-player: "&7That player is not online!"
+    invalid-numbers-amount: "&7You need to provide at least 3 numbers."
     invalid-numbers: "&7Only numbers can be used for time values!"
   show:
     usage: "&7Usage: /gizmo show [player]"
     invalid-player: "&7That player is not online!"
-    showing: "&7Displaying test screen to %player_name%"
+    showing: "&7Displaying screen to %player_name%"
   reload:
     config-reloaded: '&7Configuration reloaded.'
   help:
