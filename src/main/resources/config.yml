@@ -37,13 +37,13 @@ kick-on-decline: false # Kick the player if they don't accept the pack.
 hide-join-messages: false # If true, player join messages will be hidden.
 hide-quit-messages: false # If true, player quit messages will be hidden.
 
-sound-on-pack-load: # Play a sound when the player's pack finishes loading.
+sound-on-pack-load: # Play a sound when the player's pack finishes loading. [supports custom sound]
   enable: true
   sound: ENTITY_PLAYER_LEVELUP
   volume: 0.5
   pitch: 1
 
-sound-on-advance: # Play a sound when the player advances from the welcome screen.
+sound-on-advance: # Play a sound when the player advances from the welcome screen. [supports custom sound]
   enable: true
   sound: ENTITY_CHICKEN_EGG
   volume: 0.5
