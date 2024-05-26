@@ -1,9 +1,11 @@
 package net.jeqo.gizmo.Managers.Commands;
 
 import net.jeqo.gizmo.Commands.GizmoFadeCommand;
+import net.jeqo.gizmo.Commands.GizmoHelpCommand;
 import net.jeqo.gizmo.Commands.GizmoReloadCommand;
 import net.jeqo.gizmo.Commands.GizmoShowCommand;
 import net.jeqo.gizmo.Gizmo;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,12 +31,16 @@ public class GizmoCommandManager implements CommandExecutor, TabCompleter {
         commands.add(new GizmoFadeCommand(plugin));
 
         commands.add(new GizmoReloadCommand(plugin));
+        commands.add(new GizmoHelpCommand(plugin));
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmdd, @NotNull String cmd, @NotNull String[] args) {
         if (sender instanceof Player player) {
-            if (args.length == 0) return true;
+            if (args.length == 0) {
+                Bukkit.dispatchCommand(player, "gizmo help");
+                return true;
+            }
 
             SubCommands command = getCommand(args[0]);
             if (command == null) return true;

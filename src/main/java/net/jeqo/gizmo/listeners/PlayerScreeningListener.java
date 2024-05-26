@@ -37,10 +37,21 @@ public class PlayerScreeningListener implements Listener {
                 break;
             case SUCCESSFULLY_LOADED:
                 // Play a configured sound when the pack is loaded
-                if (plugin.configManager.getConfig().getBoolean("sound-on-pack-load.enable")) {
-                    player.playSound(player.getLocation(), Sound.valueOf(plugin.getConfig().getString("sound-on-pack-load.sound")),
-                            Float.parseFloat(plugin.configManager.getConfig().getString("sound-on-pack-load.volume")),
-                            Float.parseFloat(plugin.configManager.getConfig().getString("sound-on-pack-load.pitch")));
+                try {
+                    if (plugin.configManager.getConfig().getBoolean("sound-on-pack-load.enable")) {
+                        String soundID = plugin.configManager.getConfig().getString("sound-on-pack-load.sound");
+                        float soundVolume = Float.parseFloat(plugin.configManager.getConfig().getString("sound-on-pack-load.volume"));
+                        float soundPitch = Float.parseFloat(plugin.configManager.getConfig().getString("sound-on-pack-load.pitch"));
+
+                        try {
+                            Sound sound = Sound.valueOf(soundID.toUpperCase());
+                            player.playSound(player.getLocation(), sound, soundVolume, soundPitch);
+                        } catch (IllegalArgumentException err) {
+                            player.playSound(player.getLocation(), soundID, soundVolume, soundPitch);
+                        }
+                    }
+                } catch (NullPointerException ex) {
+                    plugin.getLogger().warning("sound-on-pack is not configured correctly.");
                 }
 
                 // Display first time welcome screen

@@ -3,7 +3,10 @@ package net.jeqo.gizmo.listeners;
 import net.jeqo.gizmo.Gizmo;
 import net.jeqo.gizmo.Utils.ColourUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -42,9 +45,16 @@ public class ScreenAdvanceListener implements Listener {
 
         try {
             if (plugin.configManager.getConfig().getBoolean("sound-on-advance.enable")) {
-                player.playSound(player.getLocation(), Sound.valueOf(plugin.configManager.getConfig().getString("sound-on-advance.sound")),
-                        Float.parseFloat(plugin.configManager.getConfig().getString("sound-on-advance.volume")),
-                        Float.parseFloat(plugin.configManager.getConfig().getString("sound-on-advance.pitch")));
+                String soundID = plugin.configManager.getConfig().getString("sound-on-advance.sound");
+                float soundVolume = Float.parseFloat(plugin.configManager.getConfig().getString("sound-on-advance.volume"));
+                float soundPitch = Float.parseFloat(plugin.configManager.getConfig().getString("sound-on-advance.pitch"));
+
+                try {
+                    Sound sound = Sound.valueOf(soundID.toUpperCase());
+                    player.playSound(player.getLocation(), sound, soundVolume, soundPitch);
+                } catch (IllegalArgumentException err) {
+                    player.playSound(player.getLocation(), soundID, soundVolume, soundPitch);
+                }
             }
         } catch (NullPointerException ex) {
             plugin.getLogger().warning("sound-on-advance is not configured correctly.");
