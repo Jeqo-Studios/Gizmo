@@ -16,8 +16,6 @@ import java.util.logging.Level;
 
 public class Gizmo extends JavaPlugin {
 
-    //TODO change colour support to minimessage as the & will be removed in the future
-
     private final int pluginId = 16873;
 
     public ConfigManager configManager;

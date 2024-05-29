@@ -6,7 +6,7 @@
 
     <groupId>net.jeqo</groupId>
     <artifactId>Gizmo</artifactId>
-    <version>1.2.3</version>
+    <version>1.2.2</version>
     <packaging>jar</packaging>
 
     <name>Gizmo</name>
