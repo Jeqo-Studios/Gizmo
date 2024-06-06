@@ -5,18 +5,27 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.jeqo</groupId>
-    <artifactId>Gizmo</artifactId>
+    <artifactId>gizmo</artifactId>
     <version>1.2.1</version>
     <packaging>jar</packaging>
 
     <name>Gizmo</name>
 
     <description>A unique utility plugin by Jeqo.</description>
+    <url>https://jeqo.net/</url>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/Jeqo-Studios/Gizmos</url>
+        </repository>
+    </distributionManagement>
+
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <url>https://jeqo.net/</url>
 
     <build>
         <plugins>
