@@ -5,18 +5,27 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.jeqo</groupId>
-    <artifactId>Gizmo</artifactId>
+    <artifactId>gizmo</artifactId>
     <version>1.2.1</version>
     <packaging>jar</packaging>
 
     <name>Gizmo</name>
 
     <description>A unique utility plugin by Jeqo.</description>
+    <url>https://jeqo.net/</url>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/Jeqo-Studios/Gizmos</url>
+        </repository>
+    </distributionManagement>
+
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>1.17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <url>https://jeqo.net/</url>
 
     <build>
         <plugins>
@@ -60,8 +69,8 @@
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
         <repository>
-            <id>spigotmc-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+            <id>papermc-repo</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
         <repository>
             <id>sonatype</id>
@@ -71,15 +80,21 @@
 
     <dependencies>
         <dependency>
-            <groupId>me.clip</groupId>
-            <artifactId>placeholderapi</artifactId>
-            <version>2.11.2</version>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.20.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.20-R0.1-SNAPSHOT</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.32</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.11.6</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
