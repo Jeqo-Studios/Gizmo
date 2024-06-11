@@ -1,4 +1,4 @@
-package net.jeqo.gizmo.data;
+package net.jeqo.gizmo.commands.manager;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class CommandsTabManager implements TabCompleter {
+public class CommandTabCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (sender.hasPermission("gizmo.reload")) {
