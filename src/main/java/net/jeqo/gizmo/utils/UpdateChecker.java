@@ -1,6 +1,7 @@
-package net.jeqo.gizmo.data;
+package net.jeqo.gizmo.utils;
 
 import net.jeqo.gizmo.Gizmo;
+import net.jeqo.gizmo.data.Utilities;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

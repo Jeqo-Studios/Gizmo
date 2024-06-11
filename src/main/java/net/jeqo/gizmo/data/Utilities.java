@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 public class Utilities {
     static Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
 
@@ -34,16 +33,12 @@ public class Utilities {
         return PlaceholderAPI.setPlaceholders(null, ChatColor.translateAlternateColorCodes('&', message));
     }
 
-
-
     public static void log(@NotNull String text) {
         Bukkit.getLogger().log(Level.INFO, "[Gizmo] " + text);
     }
     public static void warn(@NotNull String text) {
         Bukkit.getLogger().log(Level.WARNING, "[Gizmo] " + text);
     }
-
-
 
     public static String pullConfig(String id) {
         return Utilities.chatTranslate(plugin.getConfig().getString(id, ""));

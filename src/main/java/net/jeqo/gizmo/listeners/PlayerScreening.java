@@ -24,13 +24,9 @@ import static net.jeqo.gizmo.data.Placeholders.*;
 import static net.jeqo.gizmo.data.Utilities.*;
 
 public class PlayerScreening implements Listener {
-
-
     static Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
     public static HashMap<String, ItemStack[]> saveInv = new HashMap<>();
     public static HashMap<UUID, Boolean> playersScreenActive = new HashMap<>();
-
-
 
     // Resource pack status event
     @EventHandler
@@ -87,9 +83,6 @@ public class PlayerScreening implements Listener {
         }
         return false;
     }
-
-
-
 
     // Welcome screen
     public static void welcomeScreen(Player e) {
@@ -148,9 +141,6 @@ public class PlayerScreening implements Listener {
             }
         }, plugin.getConfig().getInt("delay"));
     }
-
-
-
 
     // Welcome screen first join
     public void welcomeScreenInitial(Player e) {

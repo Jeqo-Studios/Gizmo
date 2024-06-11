@@ -15,9 +15,7 @@ import java.util.Objects;
 import static net.jeqo.gizmo.data.Placeholders.screenTitle;
 
 public class ClickableItems implements Listener {
-
     static Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
-
 
     @EventHandler
     public void onCommandItemClick(InventoryClickEvent e) {

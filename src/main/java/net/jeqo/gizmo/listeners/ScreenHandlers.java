@@ -24,10 +24,7 @@ import static net.jeqo.gizmo.data.Placeholders.screenTitleFirstJoin;
 import static net.jeqo.gizmo.listeners.PlayerScreening.saveInv;
 
 public class ScreenHandlers implements Listener {
-
     Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
-
-
 
     // Player join handlers
     @EventHandler
@@ -37,7 +34,6 @@ public class ScreenHandlers implements Listener {
             e.getPlayer().addPotionEffect(PotionEffectType.BLINDNESS.createEffect(999999, 1));
         }
     }
-
 
     // Resource pack status handler
     @EventHandler
@@ -63,8 +59,6 @@ public class ScreenHandlers implements Listener {
         }
     }
 
-
-
     // Restore player inventory event
     @EventHandler
     public void restoreInv(InventoryCloseEvent e) {
@@ -74,10 +68,6 @@ public class ScreenHandlers implements Listener {
         }
     }
 
-
-
-
-
     // Disable all potion effects
     private void disableEffects(Player p) {
         for (PotionEffectType effect : PotionEffectType.values()) {
@@ -86,10 +76,6 @@ public class ScreenHandlers implements Listener {
             }
         }
     }
-
-
-
-
 
     // Disabled events while screen is active
     @EventHandler
@@ -124,10 +110,6 @@ public class ScreenHandlers implements Listener {
             }
         }
     }
-
-
-
-
 
     // Toggleable damage events
     @EventHandler
@@ -171,7 +153,4 @@ public class ScreenHandlers implements Listener {
             }
         }
     }
-
-
-
 }

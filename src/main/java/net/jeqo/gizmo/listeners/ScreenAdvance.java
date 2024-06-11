@@ -15,10 +15,8 @@ import static net.jeqo.gizmo.data.Placeholders.screenTitle;
 import static net.jeqo.gizmo.data.Utilities.pullConfig;
 import static net.jeqo.gizmo.data.Utilities.pullScreensConfig;
 
-
 public class ScreenAdvance implements Listener {
     Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
-
 
     @EventHandler
     public void onClose(InventoryCloseEvent e) {
@@ -72,8 +70,6 @@ public class ScreenAdvance implements Listener {
         }
     }
 
-
-
     private void welcomeMessage(Player p) {
         String welcomeMessage = (plugin.getMessagesConfig().getString("welcome-message"));
         assert welcomeMessage != null;
@@ -83,8 +79,6 @@ public class ScreenAdvance implements Listener {
             p.sendMessage(Utilities.chatTranslate(welcomeMessage));
         }
     }
-
-
 
     private void welcomeMessageFirstJoin(Player p) {
         String welcomeMessage = (plugin.getMessagesConfig().getString("first-join-welcome-message"));
