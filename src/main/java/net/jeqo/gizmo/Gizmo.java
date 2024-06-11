@@ -2,35 +2,26 @@ package net.jeqo.gizmo;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.jeqo.gizmo.data.*;
+import net.jeqo.gizmo.commands.manager.CommandCore;
 import net.jeqo.gizmo.listeners.*;
 import net.jeqo.gizmo.logger.Logger;
 import net.jeqo.gizmo.utils.Configurations;
+import net.jeqo.gizmo.utils.Metrics;
 import net.jeqo.gizmo.utils.UpdateChecker;
-import org.bukkit.command.TabCompleter;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.UUID;
 
 public final class Gizmo extends JavaPlugin {
-    @Getter @Setter
-    public static File messagesConfigFile;
-    @Getter @Setter
-    public static FileConfiguration messagesConfig;
-    @Getter @Setter
-    public static File screensConfigFile;
-    @Getter @Setter
-    public static FileConfiguration screensConfig;
     @Getter @Setter
     public static Gizmo instance;
     @Getter
     public static HashMap<UUID, String> playerTracker = new HashMap<>();
     @Getter @Setter
     private static ListenerCore listenerCore;
+    @Getter @Setter
+    private static CommandCore commandCore;
 
     @Override
     public void onEnable() {
@@ -41,7 +32,7 @@ public final class Gizmo extends JavaPlugin {
         Logger.logStartup();
 
         // Register core managers within the plugin
-        loadCommands();
+        setCommandCore(new CommandCore(getInstance()));
         setListenerCore(new ListenerCore(getInstance()));
 
         // Stage listeners
@@ -49,6 +40,7 @@ public final class Gizmo extends JavaPlugin {
         getListenerCore().stageListener(new ScreenHandlers());
         getListenerCore().stageListener(new ScreenAdvance());
         getListenerCore().stageListener(new ClickableItems());
+        getListenerCore().stageListener(new DamageListener());
 
         // Register all handlers
         getListenerCore().registerListeners();
@@ -72,15 +64,6 @@ public final class Gizmo extends JavaPlugin {
 
         // Unregister all listeners in the manager
         getListenerCore().unregisterListeners();
-    }
-
-    /**
-     * Loads all Gizmo commands and tab completions
-     */
-    public void loadCommands() {
-        Objects.requireNonNull(getCommand("gizmo")).setExecutor(new Commands());
-        TabCompleter tabCompleter = new CommandsTabManager();
-        Objects.requireNonNull(this.getCommand("gizmo")).setTabCompleter(tabCompleter);
     }
 
     /**

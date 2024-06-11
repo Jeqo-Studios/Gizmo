@@ -1,14 +1,12 @@
-package net.jeqo.gizmo.data;
+package net.jeqo.gizmo.utils;
 
 import net.jeqo.gizmo.Gizmo;
 import org.bukkit.ChatColor;
 
-import static net.jeqo.gizmo.data.Utilities.pullConfig;
-import static net.jeqo.gizmo.data.Utilities.pullScreensConfig;
+import static net.jeqo.gizmo.utils.Utilities.pullConfig;
+import static net.jeqo.gizmo.utils.Utilities.pullScreensConfig;
 
 public class Placeholders {
-    static Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
-
     public static String gizmoPrefix() {
         return "#ee0000[Gizmo] ";
     }
@@ -17,13 +15,13 @@ public class Placeholders {
     }
 
     public static String shift48() {
-        return plugin.getScreensConfig().getString("Unicodes.shift-48");
+        return Configurations.getScreensConfig().getString("Unicodes.shift-48");
     }
     public static String shift1013() {
-        return plugin.getScreensConfig().getString("Unicodes.shift-1013");
+        return Configurations.getScreensConfig().getString("Unicodes.shift-1013");
     }
     public static String shift1536() {
-        return plugin.getScreensConfig().getString("Unicodes.shift-1536");
+        return Configurations.getScreensConfig().getString("Unicodes.shift-1536");
     }
 
     public static String screenTitle() {

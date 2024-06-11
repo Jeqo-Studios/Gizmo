@@ -1,7 +1,6 @@
 package net.jeqo.gizmo.utils;
 
 import net.jeqo.gizmo.Gizmo;
-import net.jeqo.gizmo.data.Utilities;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,7 +14,7 @@ import java.net.URL;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
-import static net.jeqo.gizmo.data.Placeholders.gizmoPrefix;
+import static net.jeqo.gizmo.utils.Placeholders.gizmoPrefix;
 
 public class UpdateChecker implements Listener {
 

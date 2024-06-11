@@ -1,10 +1,9 @@
-package net.jeqo.gizmo.data;
+package net.jeqo.gizmo.utils;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.jeqo.gizmo.Gizmo;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
@@ -33,20 +32,13 @@ public class Utilities {
         return PlaceholderAPI.setPlaceholders(null, ChatColor.translateAlternateColorCodes('&', message));
     }
 
-    public static void log(@NotNull String text) {
-        Bukkit.getLogger().log(Level.INFO, "[Gizmo] " + text);
-    }
-    public static void warn(@NotNull String text) {
-        Bukkit.getLogger().log(Level.WARNING, "[Gizmo] " + text);
-    }
-
     public static String pullConfig(String id) {
         return Utilities.chatTranslate(plugin.getConfig().getString(id, ""));
     }
     public static String pullScreensConfig(String id) {
-        return Utilities.chatTranslate(plugin.getScreensConfig().getString(id, ""));
+        return Utilities.chatTranslate(Configurations.getScreensConfig().getString(id, ""));
     }
     public static String pullMessagesConfig(String id) {
-        return Utilities.chatTranslate(plugin.getMessagesConfig().getString(id, ""));
+        return Utilities.chatTranslate(Configurations.getMessagesConfig().getString(id, ""));
     }
 }

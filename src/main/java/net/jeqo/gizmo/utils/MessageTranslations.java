@@ -1,15 +1,15 @@
 package net.jeqo.gizmo.utils;
 
-import net.jeqo.gizmo.Gizmo;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * A utility class intended to get messages from the config.yml file
  *
  * @param instance The instance of the plugin
  */
-public record MessageTranslations(Gizmo instance) {
+public record MessageTranslations(JavaPlugin instance) {
 
     /**
      * Get a message from the messages.yml file
@@ -18,7 +18,7 @@ public record MessageTranslations(Gizmo instance) {
      * @return The formatted message
      */
     public String getMessage(String id, String arg) {
-        return String.format(this.instance.getMessagesConfig().getString(id, ""), arg);
+        return String.format(Configurations.getMessagesConfig().getString(id, ""), arg);
     }
 
     /**
@@ -27,7 +27,7 @@ public record MessageTranslations(Gizmo instance) {
      * @return The message as a string
      */
     public String getMessage(String id) {
-        return this.instance.getMessagesConfig().getString(id, "");
+        return Configurations.getMessagesConfig().getString(id, "");
     }
 
     /**

@@ -1,51 +1,49 @@
 package net.jeqo.gizmo.listeners;
 
 import net.jeqo.gizmo.Gizmo;
-import net.jeqo.gizmo.data.Placeholders;
-import net.jeqo.gizmo.data.Utilities;
+import net.jeqo.gizmo.logger.Logger;
+import net.jeqo.gizmo.utils.Configurations;
+import net.jeqo.gizmo.utils.MessageTranslations;
+import net.jeqo.gizmo.utils.Placeholders;
+import net.jeqo.gizmo.utils.Utilities;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.Objects;
-
-import static net.jeqo.gizmo.data.Placeholders.screenTitle;
+import static net.jeqo.gizmo.utils.Placeholders.screenTitle;
 
 public class ClickableItems implements Listener {
-    static Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
 
     @EventHandler
-    public void onCommandItemClick(InventoryClickEvent e) {
+    public void onCommandItemClick(InventoryClickEvent event) {
 
-        if (e.getView().getTitle().equals(screenTitle())) {
+        if (event.getView().getTitle().equals(screenTitle())) {
 
-            Player p = (Player) e.getWhoClicked();
+            MessageTranslations messageTranslations = new MessageTranslations(Gizmo.getInstance());
+            Player player = (Player) event.getWhoClicked();
+            int rawSlot = event.getRawSlot();
 
-            ItemStack clickedItem = e.getCurrentItem();
-            int rawSlot = e.getRawSlot();
-
-            for (String key : plugin.getScreensConfig().getConfigurationSection("Items").getKeys(false)) {
-                if (plugin.getScreensConfig().getInt("Items." + key + ".slot") == rawSlot) {
-                    if (plugin.getScreensConfig().getString("Items." + key + ".commands") != null) {
-                        if (plugin.getScreensConfig().getString("Items." + key + ".close-on-click").equals("true")) {
-                            p.closeInventory();
+            for (String key : Configurations.getScreensConfig().getConfigurationSection("Items").getKeys(false)) {
+                if (Configurations.getScreensConfig().getInt("Items." + key + ".slot") == rawSlot) {
+                    if (Configurations.getScreensConfig().getString("Items." + key + ".commands") != null) {
+                        if (Configurations.getScreensConfig().getString("Items." + key + ".close-on-click").equals("true")) {
+                            player.closeInventory();
                         }
-                        for (String command : plugin.getScreensConfig().getStringList("Items." + key + ".commands")) {
+                        for (String command : Configurations.getScreensConfig().getStringList("Items." + key + ".commands")) {
                             if (command.contains("[console]")) {
                                 command = command.replace("[console] ", "");
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", p.getName()));
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", player.getName()));
                             } else if (command.contains("[message]")) {
                                 command = command.replace("[message] ", "");
-                                p.sendMessage(Utilities.chatTranslate(command.replace("%player%", p.getName())));
+                                player.sendMessage(messageTranslations.getSerializedString(command.replace("%player%", player.getName())));
                             } else if (command.contains("[player]")) {
                                 command = command.replace("[player] ", "");
-                                p.performCommand(command);
+                                player.performCommand(command);
                             } else {
-                                p.sendMessage(Placeholders.gizmoPrefix() + "An error occurred. Please review the console for more information.");
-                                Utilities.warn("\"" + key + "\"" + " (screens.yml) has a command with an invalid format.");
+                                Logger.logToPlayer(player, Placeholders.gizmoPrefix() + "An error occurred. Please review the console for more information.");
+                                Logger.logWarning("\"" + key + "\"" + " (screens.yml) has a command with an invalid format.");
                             }
                         }
 
