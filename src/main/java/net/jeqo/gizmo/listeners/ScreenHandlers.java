@@ -80,6 +80,13 @@ public class ScreenHandlers implements Listener {
 
     // Disable all potion effects
     private void disableEffects(Player p) {
+
+        if (Objects.equals(plugin.getConfig().getString("clear-effects-on-load"), "false")){
+            p.removePotionEffect(PotionEffectType.BLINDNESS);
+            return;
+        }
+
+
         for (PotionEffectType effect : PotionEffectType.values()) {
             if (p.hasPotionEffect(effect)) {
                 p.removePotionEffect(effect);
