@@ -131,7 +131,6 @@ public class PlayerScreening implements Listener {
                                     meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
                                     meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                                     meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
-                                    meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
                                     meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
                                 }
                                 meta.setCustomModelData(keySection.getInt("custom-model-data"));
@@ -191,7 +190,6 @@ public class PlayerScreening implements Listener {
                                     meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
                                     meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                                     meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
-                                    meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
                                     meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
                                 }
                                 meta.setCustomModelData(keySection.getInt("custom-model-data"));
