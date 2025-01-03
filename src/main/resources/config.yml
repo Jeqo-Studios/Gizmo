@@ -31,6 +31,8 @@ commands-on-advance:
 player-invulnerable-during-load: true
 blindness-during-prompt: true # Give players blindness when they have the pack prompt.
 
+clear-effects-on-load: true
+
 kick-on-decline: false # Kick the player if they don't accept the pack.
 
 hide-join-messages: false # If true, player join messages will be hidden.
