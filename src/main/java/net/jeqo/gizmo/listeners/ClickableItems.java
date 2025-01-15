@@ -5,7 +5,6 @@ import net.jeqo.gizmo.logger.Logger;
 import net.jeqo.gizmo.utils.Configurations;
 import net.jeqo.gizmo.utils.MessageTranslations;
 import net.jeqo.gizmo.utils.Placeholders;
-import net.jeqo.gizmo.utils.Utilities;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
