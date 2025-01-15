@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.potion.PotionEffectType;
+
 import java.util.Objects;
 
 import static net.jeqo.gizmo.data.Placeholders.screenTitle;
@@ -43,6 +45,7 @@ public class ScreenAdvance implements Listener {
 
 
             PlayerScreening.playersScreenActive.remove(p.getUniqueId());
+            p.removePotionEffect(PotionEffectType.BLINDNESS);
 
 
             for (String command : plugin.getConfig().getStringList("commands-on-advance")) {
@@ -75,13 +78,14 @@ public class ScreenAdvance implements Listener {
 
 
     private void welcomeMessage(Player p) {
-        String welcomeMessage = (plugin.getMessagesConfig().getString("welcome-message"));
-        assert welcomeMessage != null;
-        if (welcomeMessage.equals("[]")) {
-        } else {
-            welcomeMessage = welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "");
-            p.sendMessage(Utilities.chatTranslate(welcomeMessage));
+        String welcomeMessage = plugin.getMessagesConfig().getString("welcome-message");
+
+        if (welcomeMessage == null) {
+            return;
         }
+
+        welcomeMessage = welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "");
+        p.sendMessage(Utilities.chatTranslate(welcomeMessage));
     }
 
 

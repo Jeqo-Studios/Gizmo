@@ -31,7 +31,12 @@ public class Utilities {
             message = message.replace(hexCode, builder.toString());
             matcher = pattern.matcher(message);
         }
-        return PlaceholderAPI.setPlaceholders(null, ChatColor.translateAlternateColorCodes('&', message));
+        try {
+            return PlaceholderAPI.setPlaceholders(null, ChatColor.translateAlternateColorCodes('&', message));
+        } catch (NoClassDefFoundError e) {
+            warn("PlaceholderAPI is not currently installed! Please install PlaceholderAPI to use its features.");
+            return message;
+        }
     }
 
 

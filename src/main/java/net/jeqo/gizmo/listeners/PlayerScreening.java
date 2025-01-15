@@ -110,7 +110,7 @@ public class PlayerScreening implements Listener {
 
                         InventoryView screen = e.getPlayer().openInventory(plugin.getServer().createInventory(null, 54, screenTitle()));
 
-                        if (pullScreensConfig("Items") != null) {
+                        if (plugin.getScreensConfig().getConfigurationSection("Items") != null) {
                             for (String key : Objects.requireNonNull(plugin.getScreensConfig().getConfigurationSection("Items")).getKeys(false)) {
                                 ConfigurationSection keySection = Objects.requireNonNull(plugin.getScreensConfig().getConfigurationSection("Items")).getConfigurationSection(key);
                                 assert keySection != null;
@@ -131,7 +131,6 @@ public class PlayerScreening implements Listener {
                                     meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
                                     meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                                     meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
-                                    meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
                                     meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
                                 }
                                 meta.setCustomModelData(keySection.getInt("custom-model-data"));
@@ -191,7 +190,6 @@ public class PlayerScreening implements Listener {
                                     meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
                                     meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                                     meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
-                                    meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
                                     meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
                                 }
                                 meta.setCustomModelData(keySection.getInt("custom-model-data"));

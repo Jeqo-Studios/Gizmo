@@ -29,28 +29,30 @@ public class ClickableItems implements Listener {
             ItemStack clickedItem = e.getCurrentItem();
             int rawSlot = e.getRawSlot();
 
-            for (String key : plugin.getScreensConfig().getConfigurationSection("Items").getKeys(false)) {
-                if (plugin.getScreensConfig().getInt("Items." + key + ".slot") == rawSlot) {
-                    if (plugin.getScreensConfig().getString("Items." + key + ".commands") != null) {
-                        if (plugin.getScreensConfig().getString("Items." + key + ".close-on-click").equals("true")) {
-                            p.closeInventory();
-                        }
-                        for (String command : plugin.getScreensConfig().getStringList("Items." + key + ".commands")) {
-                            if (command.contains("[console]")) {
-                                command = command.replace("[console] ", "");
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", p.getName()));
-                            } else if (command.contains("[message]")) {
-                                command = command.replace("[message] ", "");
-                                p.sendMessage(Utilities.chatTranslate(command.replace("%player%", p.getName())));
-                            } else if (command.contains("[player]")) {
-                                command = command.replace("[player] ", "");
-                                p.performCommand(command);
-                            } else {
-                                p.sendMessage(Placeholders.gizmoPrefix() + "An error occurred. Please review the console for more information.");
-                                Utilities.warn("\"" + key + "\"" + " (screens.yml) has a command with an invalid format.");
+            if (plugin.getScreensConfig().getConfigurationSection("Items") != null) {
+                for (String key : Objects.requireNonNull(plugin.getScreensConfig().getConfigurationSection("Items")).getKeys(false)) {
+                    if (plugin.getScreensConfig().getInt("Items." + key + ".slot") == rawSlot) {
+                        if (plugin.getScreensConfig().getString("Items." + key + ".commands") != null) {
+                            if (plugin.getScreensConfig().getString("Items." + key + ".close-on-click").equals("true")) {
+                                p.closeInventory();
                             }
-                        }
+                            for (String command : plugin.getScreensConfig().getStringList("Items." + key + ".commands")) {
+                                if (command.contains("[console]")) {
+                                    command = command.replace("[console] ", "");
+                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", p.getName()));
+                                } else if (command.contains("[message]")) {
+                                    command = command.replace("[message] ", "");
+                                    p.sendMessage(Utilities.chatTranslate(command.replace("%player%", p.getName())));
+                                } else if (command.contains("[player]")) {
+                                    command = command.replace("[player] ", "");
+                                    p.performCommand(command);
+                                } else {
+                                    p.sendMessage(Placeholders.gizmoPrefix() + "An error occurred. Please review the console for more information.");
+                                    Utilities.warn("\"" + key + "\"" + " (screens.yml) has a command with an invalid format.");
+                                }
+                            }
 
+                        }
                     }
                 }
             }
