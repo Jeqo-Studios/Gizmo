@@ -1,4 +1,4 @@
-package net.jeqo.gizmo.data;
+package net.jeqo.gizmo.utils;
 
 import net.jeqo.gizmo.Gizmo;
 import org.bukkit.Bukkit;
@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
-import static net.jeqo.gizmo.data.Placeholders.gizmoPrefix;
+import static net.jeqo.gizmo.utils.Placeholders.gizmoPrefix;
 
 public class UpdateChecker implements Listener {
 

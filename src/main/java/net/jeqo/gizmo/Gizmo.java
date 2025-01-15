@@ -1,119 +1,81 @@
 package net.jeqo.gizmo;
 
-import net.jeqo.gizmo.data.*;
+import lombok.Getter;
+import lombok.Setter;
+import net.jeqo.gizmo.commands.manager.CommandCore;
 import net.jeqo.gizmo.listeners.*;
-import org.bukkit.Bukkit;
-import org.bukkit.command.TabCompleter;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.Listener;
+import net.jeqo.gizmo.logger.Logger;
+import net.jeqo.gizmo.utils.Configurations;
+import net.jeqo.gizmo.utils.Metrics;
+import net.jeqo.gizmo.utils.UpdateChecker;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.UUID;
 
-public final class Gizmo extends JavaPlugin implements Listener {
+public final class Gizmo extends JavaPlugin {
+    @Getter @Setter
+    public static Gizmo instance;
+    @Getter
+    public static HashMap<UUID, String> playerTracker = new HashMap<>();
+    @Getter @Setter
+    private static ListenerCore listenerCore;
+    @Getter @Setter
+    private static CommandCore commandCore;
 
     @Override
     public void onEnable() {
-        Utilities.log("|---[ GIZMO ]--------------------------------------------------------|");
-        Utilities.log("|                           Plugin loaded.                           |");
-        Utilities.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
+        // Create an instance of the plugin
+        setInstance(this);
 
-        instance = this;
-        loadListeners(); loadCommands();
-        Metrics metrics = new Metrics(this, pluginId); updateChecker();
+        // Send startup message
+        Logger.logStartup();
 
-        getConfig().options().copyDefaults(); saveDefaultConfig();
-        createScreensConfig(); createMessagesConfig();
+        // Register core managers within the plugin
+        setCommandCore(new CommandCore(getInstance()));
+        setListenerCore(new ListenerCore(getInstance()));
+
+        // Stage listeners
+        getListenerCore().stageListener(new PlayerScreening());
+        getListenerCore().stageListener(new ScreenHandlers());
+        getListenerCore().stageListener(new ScreenAdvance());
+        getListenerCore().stageListener(new ClickableItems());
+        getListenerCore().stageListener(new DamageListener());
+
+        // Register all handlers
+        getListenerCore().registerListeners();
+
+        // Startup metrics and update checker
+        int pluginId = 16873;
+        new Metrics(this, pluginId);
+        updateChecker();
+
+        // Generate config(s) and set defaults
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
+        Configurations.generateScreensConfiguration();
+        Configurations.generateMessagesConfiguration();
     }
+
     @Override
     public void onDisable() {
-        Utilities.log("|---[ GIZMO ]--------------------------------------------------------|");
-        Utilities.log("|                          Shutting down...                          |");
-        Utilities.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
+        // Log shutdown message
+        Logger.logShutdown();
+
+        // Unregister all listeners in the manager
+        getListenerCore().unregisterListeners();
     }
 
-
-
-    public static HashMap<UUID, String> playerTracker = new HashMap<>();
-    public static Gizmo instance;
-    int pluginId = 16873;
-    public static Gizmo getInstance() {
-        return instance;
-    }
-
-    public void loadListeners() {
-        Bukkit.getPluginManager().registerEvents(new PlayerScreening(), this);
-        Bukkit.getPluginManager().registerEvents(new ScreenHandlers(), this);
-        Bukkit.getPluginManager().registerEvents(new ScreenAdvance(), this);
-        Bukkit.getPluginManager().registerEvents(new ClickableItems(), this);
-    }
-    public void loadCommands() {
-        Objects.requireNonNull(getCommand("gizmo")).setExecutor(new Commands());
-        TabCompleter tc = new CommandsTabManager(); Objects.requireNonNull(this.getCommand("gizmo")).setTabCompleter(tc);
-    }
-
-
-
+    /**
+     * Checks for updates and notifies the user via a log to console
+     * getDescription() is still used because of the usage of a plugin.yml.
+     * Not planned to change
+     */
     public void updateChecker() {
         new UpdateChecker(this, 106024).getVersion(version -> {
             if (!this.getDescription().getVersion().equals(version)) {
-                Utilities.warn("|---[ GIZMO ]--------------------------------------------------------|");
-                Utilities.warn("|                  There is a new update available!                  |");
-                Utilities.warn("|                       https://jeqo.net/gizmo                       |");
-                Utilities.warn("|-------------------------------------------------[ MADE BY JEQO ]---|");
+                Logger.logUpdateNotificationConsole();
             }
         });
-    }
-
-
-
-    // screens.yml
-    private File screensConfigFile;
-    private FileConfiguration screensConfig;
-    public FileConfiguration getScreensConfig() {
-        return this.screensConfig;
-    }
-    private void createScreensConfig() {
-        screensConfigFile = new File(getDataFolder(), "screens.yml");
-        if (!screensConfigFile.exists()) {
-            screensConfigFile.getParentFile().mkdirs();
-            saveResource("screens.yml", false);
-        }
-
-        screensConfig = new YamlConfiguration();
-        try {
-            screensConfig.load(screensConfigFile);
-        } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-    // messages.yml
-    private File messagesConfigFile;
-    private FileConfiguration messagesConfig;
-    public FileConfiguration getMessagesConfig() {
-        return this.messagesConfig;
-    }
-    private void createMessagesConfig() {
-        messagesConfigFile = new File(getDataFolder(), "messages.yml");
-        if (!messagesConfigFile.exists()) {
-            messagesConfigFile.getParentFile().mkdirs();
-            saveResource("messages.yml", false);
-        }
-
-        messagesConfig = new YamlConfiguration();
-        try {
-            messagesConfig.load(messagesConfigFile);
-        } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
-        }
     }
 }

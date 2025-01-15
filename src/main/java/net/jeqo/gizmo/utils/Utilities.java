@@ -1,16 +1,14 @@
-package net.jeqo.gizmo.data;
+package net.jeqo.gizmo.utils;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.jeqo.gizmo.Gizmo;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 public class Utilities {
     static Gizmo plugin = Gizmo.getPlugin(Gizmo.class);
@@ -39,24 +37,13 @@ public class Utilities {
         }
     }
 
-
-
-    public static void log(@NotNull String text) {
-        Bukkit.getLogger().log(Level.INFO, "[Gizmo] " + text);
-    }
-    public static void warn(@NotNull String text) {
-        Bukkit.getLogger().log(Level.WARNING, "[Gizmo] " + text);
-    }
-
-
-
     public static String pullConfig(String id) {
         return Utilities.chatTranslate(plugin.getConfig().getString(id, ""));
     }
     public static String pullScreensConfig(String id) {
-        return Utilities.chatTranslate(plugin.getScreensConfig().getString(id, ""));
+        return Utilities.chatTranslate(Configurations.getScreensConfig().getString(id, ""));
     }
     public static String pullMessagesConfig(String id) {
-        return Utilities.chatTranslate(plugin.getMessagesConfig().getString(id, ""));
+        return Utilities.chatTranslate(Configurations.getMessagesConfig().getString(id, ""));
     }
 }
