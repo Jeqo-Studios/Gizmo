@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.potion.PotionEffectType;
+
 import java.util.Objects;
 
 import static net.jeqo.gizmo.data.Placeholders.screenTitle;
@@ -43,7 +45,7 @@ public class ScreenAdvance implements Listener {
 
 
             PlayerScreening.playersScreenActive.remove(p.getUniqueId());
-            p.clearActivePotionEffects();
+            p.removePotionEffect(PotionEffectType.BLINDNESS);
 
 
             for (String command : plugin.getConfig().getStringList("commands-on-advance")) {
