@@ -43,6 +43,7 @@ public class ScreenAdvance implements Listener {
 
 
             PlayerScreening.playersScreenActive.remove(p.getUniqueId());
+            p.clearActivePotionEffects();
 
 
             for (String command : plugin.getConfig().getStringList("commands-on-advance")) {
@@ -75,13 +76,14 @@ public class ScreenAdvance implements Listener {
 
 
     private void welcomeMessage(Player p) {
-        String welcomeMessage = (plugin.getMessagesConfig().getString("welcome-message"));
-        assert welcomeMessage != null;
-        if (welcomeMessage.equals("[]")) {
-        } else {
-            welcomeMessage = welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "");
-            p.sendMessage(Utilities.chatTranslate(welcomeMessage));
+        String welcomeMessage = plugin.getMessagesConfig().getString("welcome-message");
+
+        if (welcomeMessage == null) {
+            return;
         }
+
+        welcomeMessage = welcomeMessage.replace(", ", "\n").replace("[", "").replace("]", "");
+        p.sendMessage(Utilities.chatTranslate(welcomeMessage));
     }
 
 
