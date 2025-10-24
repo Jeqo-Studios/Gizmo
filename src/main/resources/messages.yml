@@ -3,23 +3,23 @@
 welcome-message:
   - ' '
   - ' '
-  - '                           #fc1c1cGizmo - Made by Jeqo. Renewed by Gucci Fox'
-  - '                             #acb5bfdiscord.gg/CFmhHMJD4u'
+  - '                           #fc1c1cGizmo - Made by Jeqo'
+  - '                             #acb5bfwww.jeqo.net/gizmo'
   - ' '
   - ' '
 first-join-welcome-message:
   - ' '
   - ' '
-  - '                           #fc1c1cGizmo - Made by Jeqo. Renewed by Gucci Fox'
-  - '                             #acb5bfdiscord.gg/CFmhHMJD4u'
+  - '                           #fc1c1cGizmo - Made by Jeqo'
+  - '                             #acb5bfwww.jeqo.net/gizmo'
   - ' '
   - ' '
 
 kick-on-decline:
   - '&cYou must download the server resource pack to play!'
   - ' '
-  - '#fc1c1cGizmo - Made by Jeqo. Renewed by Gucci Fox'
-  - '#acb5bfdiscord.gg/CFmhHMJD4u'
+  - '#fc1c1cGizmo - Made by Jeqo'
+  - '#acb5bfwww.jeqo.net/gizmo'
 
 no-pack-loaded: '&7Server resource pack not detected-skipping welcome screen.'
 no-permission: '#fc1c1cAccess denied.'

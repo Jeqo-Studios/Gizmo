@@ -1,9 +1,9 @@
-name: 'GizmoRenewed'
+name: 'Gizmo'
 version: '${project.version}'
-main: com.iantapply.gizmo.GizmoRenewed
+main: net.jeqo.gizmo.Gizmo
 api-version: 1.21
-prefix: GizmoRenewed
-authors: [GucciFox, Jeqo]
+prefix: Gizmo
+authors: [Jeqo, GucciFox]
 description: A unique utility plugin.
 softdepend: [PlaceholderAPI]
 commands:
