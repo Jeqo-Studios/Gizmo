@@ -1,13 +1,11 @@
-name: Gizmo
+name: 'Gizmo'
 version: '${project.version}'
 main: net.jeqo.gizmo.Gizmo
 api-version: 1.21
 prefix: Gizmo
-authors: [Jeqo]
+authors: [Jeqo, GucciFox]
 description: A unique utility plugin.
-website: https://jeqo.net/
-softdepend:
-  - PlaceholderAPI
+softdepend: [PlaceholderAPI]
 commands:
   gizmo:
     aliases: g

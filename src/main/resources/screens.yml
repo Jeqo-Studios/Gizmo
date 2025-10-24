@@ -10,10 +10,8 @@ Unicodes:
   shift-1536: 
   background: 
   welcome-screen: 
-  first-join-welcome-screen-unicode: 
+  first-join-welcome-screen: 
   first-join-background: 
-
-
 
 # Welcome Screen
 # -------------------------
@@ -34,7 +32,7 @@ Items:
     # Valid prefixes: [player], [console], [message]
     # Here you can remove the commands section if you don't want to execute commands.
     commands:
-      - '[player] i diamond 1'
+      - '[player] say I like emeralds!'
       - '[console] give %player% emerald 1'
       - '[message] A diamond and emerald, such a dynamic duo.'
     close-on-click: true # If true, the welcome screen will close when the player clicks this item.
@@ -50,8 +48,6 @@ Items:
     name: '&bShiny Diamond'
     lore:
       - '&3Property of Jeqo'
-
-
 
 # First Join Welcome Screen
 # -------------------------

@@ -1,0 +1,21 @@
+services:
+  gizmo-main-server:
+    container_name: gizmo-main-server
+    image: itzg/minecraft-server:2025.6.2
+    environment:
+      TYPE: SPIGOT
+      VERSION: 1.21.5
+      EULA: "TRUE"
+      SERVER_PORT: 25565
+      MEMORY: 4G
+    ports:
+      - "25565:25565"
+      - "2873:2873"
+    volumes:
+      - ./main:/data
+    networks:
+      - gizmo-network
+
+networks:
+  gizmo-network:
+    driver: bridge

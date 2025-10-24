@@ -1,3 +1,6 @@
+# Gizmo SDK specific
+/gizmo_sdk/main/
+
 # User-specific stuff
 .idea/
 
