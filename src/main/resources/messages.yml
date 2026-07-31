@@ -4,14 +4,14 @@ welcome-message:
   - ' '
   - ' '
   - '                           #fc1c1cGizmo - Made by Jeqo'
-  - '                             #acb5bfwww.jeqo.net/gizmo'
+  - '                             #acb5bfwww.jeqo.net/plugins/gizmo'
   - ' '
   - ' '
 first-join-welcome-message:
   - ' '
   - ' '
   - '                           #fc1c1cGizmo - Made by Jeqo'
-  - '                             #acb5bfwww.jeqo.net/gizmo'
+  - '                             #acb5bfwww.jeqo.net/plugins/gizmo'
   - ' '
   - ' '
 
@@ -19,7 +19,7 @@ kick-on-decline:
   - '&cYou must download the server resource pack to play!'
   - ' '
   - '#fc1c1cGizmo - Made by Jeqo'
-  - '#acb5bfwww.jeqo.net/gizmo'
+  - '#acb5bfwww.jeqo.net/plugins/gizmo'
 
 no-pack-loaded: '&7Server resource pack not detected-skipping welcome screen.'
 no-permission: '#fc1c1cAccess denied.'
