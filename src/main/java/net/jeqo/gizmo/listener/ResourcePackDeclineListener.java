@@ -21,15 +21,17 @@ public class ResourcePackDeclineListener implements Listener {
                 disablePotionEffects(p);
             } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED || e.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
                 disablePotionEffects(p);
-                p.kickPlayer(ChatTranslate.translate(null, Objects.requireNonNull(Gizmo.getInstance().getConfig().getString("messages.kick-on-decline")).replace(",", "\n").replace("[", "").replace("]", "")));
+                java.util.List<String> kickMsgs = Gizmo.getInstance().getMessagesConfigurationCore().getStringList("kick-on-decline");
+                String kickReason = ChatTranslate.translate(p, String.join("\n", kickMsgs));
+                p.kickPlayer(kickReason);
             }
         } else if (Objects.equals(Gizmo.getInstance().getConfig().getString("kick-on-decline"), "false")) {
             if (e.getStatus() == PlayerResourcePackStatusEvent.Status.SUCCESSFULLY_LOADED) {
                 disablePotionEffects(p);
             } else if (e.getStatus() == PlayerResourcePackStatusEvent.Status.DECLINED || e.getStatus() == PlayerResourcePackStatusEvent.Status.FAILED_DOWNLOAD) {
                 disablePotionEffects(p);
-                for (String msg : Gizmo.getInstance().getConfig().getStringList("messages.no-pack-loaded")) {
-                    p.sendMessage(ChatTranslate.translate(null, msg));
+                for (String msg : Gizmo.getInstance().getMessagesConfigurationCore().getStringList("no-pack-loaded")) {
+                    p.sendMessage(ChatTranslate.translate(p, msg));
                 }
             }
         }
@@ -42,10 +44,8 @@ public class ResourcePackDeclineListener implements Listener {
             return;
         }
 
-        for (PotionEffectType effect : PotionEffectType.values()) {
-            if (p.hasPotionEffect(effect)) {
-                p.removePotionEffect(effect);
-            }
+        for (org.bukkit.potion.PotionEffect effect : p.getActivePotionEffects()) {
+            p.removePotionEffect(effect.getType());
         }
     }
 }
