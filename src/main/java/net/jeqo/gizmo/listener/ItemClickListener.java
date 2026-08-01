@@ -25,7 +25,14 @@ public class ItemClickListener implements Listener {
 
     @EventHandler
     public void onCommandItemClick(InventoryClickEvent e) {
-        if (!e.getView().getTitle().equals(screenTitle())) return;
+        String sectionName;
+        if (e.getView().getTitle().equals(screenTitle())) {
+            sectionName = "Items";
+        } else if (e.getView().getTitle().equals(Placeholders.screenTitleFirstJoin())) {
+            sectionName = "First-Join-Items";
+        } else {
+            return;
+        }
 
         Player p = (Player) e.getWhoClicked();
         ItemStack clickedItem = e.getCurrentItem();
@@ -34,7 +41,7 @@ public class ItemClickListener implements Listener {
         if (clickedItem == null || clickedItem.getType().isAir()) return;
 
         ConfigurationCore config = Gizmo.getInstance().getScreensConfigurationCore();
-        Set<String> itemKeys = config.getSectionKeys("Items");
+        Set<String> itemKeys = config.getSectionKeys(sectionName);
         if (itemKeys == null) return;
 
         for (String key : itemKeys) {

@@ -23,7 +23,7 @@ public class ScreenAdvanceListener implements Listener {
     public void onClose(InventoryCloseEvent e) {
         Player p = (Player) e.getPlayer();
 
-        if (e.getView().getTitle().equals(screenTitle())) {
+        if (e.getView().getTitle().equals(screenTitle()) || e.getView().getTitle().equals(screenTitleFirstJoin())) {
 
             if (Objects.equals(Gizmo.getInstance().getConfig().getString("enable-fade"), "true")) {
                 p.sendTitle(ChatTranslate.translate(null, Gizmo.getInstance().getConfigConfigurationCore().getString("background-color") + Gizmo.getInstance().getScreensConfigurationCore().getString("Unicodes.background")), "", 0, 5, Gizmo.getInstance().getConfigConfigurationCore().getInteger("fade-time"));
